@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セルフ簡易エンディングノートメーカー｜終活人.jp</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;background:#f8f8f6;color:#1a1a18;}
+  .app{max-width:720px;margin:0 auto;padding:1.5rem 1rem 3rem;}
+  h1{font-size:18px;font-weight:500;color:#0C447C;text-align:center;margin-bottom:6px;}
+  .site-name{text-align:center;font-size:15px;font-weight:500;margin-bottom:1.25rem;}
+  .site-name a{color:#185FA5;text-decoration:none;border-bottom:1.5px solid #B5D4F4;padding-bottom:1px;}
+  .site-name a:hover{color:#0C447C;border-bottom-color:#185FA5;}
+  .site-credit{text-align:center;font-size:11px;color:#aaa;margin-bottom:1.25rem;}
+  .step{display:none;} .step.active{display:block;}
+  .intro{background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;}
+  .intro p{font-size:13px;color:#555;line-height:1.8;}
+  .note-badge{display:inline-block;background:#FAEEDA;border:0.5px solid #854F0B;color:#633806;font-size:11px;padding:2px 8px;border-radius:4px;margin-top:6px;}
+  .section-block{background:#fff;border:0.5px solid #ddd;border-radius:12px;margin-bottom:10px;overflow:hidden;}
+  .section-header{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none;}
+  .section-header:hover{background:#f1efe8;}
+  .sec-color{width:6px;height:36px;border-radius:3px;flex-shrink:0;}
+  .sec-title{font-size:14px;font-weight:500;flex:1;}
+  .sec-check{font-size:11px;color:#999;}
+  .section-items{border-top:0.5px solid #ddd;padding:12px 16px;display:none;}
+  .section-items.open{display:block;}
+  .item-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}
+  .item-label{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:13px;line-height:1.5;border:0.5px solid #ddd;background:#f8f8f6;}
+  .item-label:hover{background:#E6F1FB;}
+  .item-label input{margin-top:2px;flex-shrink:0;}
+  .item-label.important{border-color:#993C1D;background:#FAECE7;}
+  .item-label.important span{color:#712B13;}
+  .important-note{font-size:11px;color:#993C1D;margin-top:6px;padding:6px 8px;background:#FAECE7;border-radius:6px;line-height:1.7;}
+  .finance-note{font-size:11px;color:#185FA5;margin-bottom:8px;padding:6px 8px;background:#E6F1FB;border-radius:6px;line-height:1.7;}
+  .cover-row{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#f1efe8;border-radius:8px;margin-bottom:12px;}
+  .cover-row label{font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;}
+  .btn-row{display:flex;gap:10px;margin-top:1.25rem;}
+  .btn{padding:10px 24px;border-radius:8px;font-size:14px;cursor:pointer;border:0.5px solid #bbb;background:#fff;color:#1a1a18;}
+  .btn-primary{background:#185FA5;color:#fff;border-color:#185FA5;}
+  .btn:hover{opacity:0.85;}
+  .selected-count{font-size:12px;color:#555;margin-top:8px;}
+
+  /* プレビュー */
+  .preview-controls{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;}
+  .preview-area{background:#fff;border:0.5px solid #ccc;border-radius:8px;}
+  .print-note{font-size:11px;color:#999;text-align:center;margin-top:8px;}
+
+  /* A4ページ */
+  .a4page{width:100%;padding:32px 36px;box-sizing:border-box;border-bottom:1px dashed #ddd;}
+  .a4page:last-child{border-bottom:none;}
+
+  /* 表紙 */
+  .cover-page{text-align:center;min-height:520px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;}
+  .cover-title{font-size:28px;font-weight:500;color:#0C447C;letter-spacing:0.1em;}
+  .cover-sub{font-size:14px;color:#555;}
+  .cover-draft{font-size:11px;color:#999;border:0.5px solid #ddd;border-radius:4px;padding:3px 10px;display:inline-block;}
+  .cover-line{width:60%;height:1px;background:#B5D4F4;margin:4px auto;}
+  .cover-fields{margin-top:24px;width:80%;text-align:left;}
+  .cover-field{display:flex;align-items:baseline;gap:8px;margin-bottom:16px;border-bottom:1px solid #ddd;padding-bottom:4px;}
+  .cover-field-label{font-size:12px;color:#555;min-width:90px;}
+  .cover-field-line{flex:1;min-height:22px;}
+  .cover-footer{font-size:11px;color:#aaa;margin-top:32px;line-height:1.8;}
+
+  /* コンテンツページ */
+  .note-section{margin-bottom:20px;}
+  .note-section-title{font-size:13px;font-weight:500;margin-bottom:10px;padding-left:8px;}
+  .note-field{display:flex;align-items:baseline;gap:6px;margin-bottom:9px;}
+  .note-field-label{font-size:11px;color:#444;min-width:120px;flex-shrink:0;line-height:1.5;}
+  .note-field-line{flex:1;border-bottom:1px solid #ccc;min-height:20px;}
+  .choice-field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
+  .choice-field-label{font-size:11px;color:#444;}
+  .choice-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .choice-box{border:1px solid #bbb;border-radius:6px;padding:5px 14px;font-size:11px;min-width:72px;text-align:center;color:#555;}
+  .free-field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
+  .free-field-label{font-size:11px;color:#444;}
+  .free-area{border:1px solid #ccc;border-radius:6px;padding:8px 10px;min-height:56px;width:100%;font-size:11px;color:#bbb;}
+
+  @media print{
+    .preview-controls,.btn-row,.step-1,.print-note,h1,.site-name{display:none!important;}
+    body{background:#fff;}
+    .app{padding:0;max-width:100%;}
+    .preview-area{border:none;border-radius:0;}
+    .a4page{padding:15mm 18mm;border-bottom:none;page-break-after:always;}
+    .a4page:last-child{page-break-after:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>セルフ簡易エンディングノートメーカー</h1>
+  <p class="site-name"><a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a></p>
+  <p class="site-credit">&copy; 終活人.jp ／ 無断転載・商用利用禁止</p>
+
+  <!-- Step 1: 項目選択 -->
+  <div class="step active" id="step1">
+    <div class="intro">
+      <p>必要な項目だけチェックしてください。選んだ項目だけのエンディングノートが作成されます。残高など不要な情報は最初から項目にありません。</p>
+      <p style="margin-top:8px;">作成できるエンディングノートは<strong>簡易版</strong>です。市販のエンディングノートの<strong>下書き</strong>としてご活用ください。</p>
+      <span class="note-badge">簡易版 ／ 下書き用途</span>
+    </div>
+
+    <div class="cover-row">
+      <label><input type="checkbox" id="cover-check" checked> 表紙ページを付ける</label>
+      <span style="font-size:11px;color:#999;">（氏名・作成日・保管場所の記入欄）</span>
+    </div>
+
+    <!-- 基本情報 -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#534AB7;"></div>
+        <span class="sec-title">基本情報</span>
+        <span class="sec-check" id="cnt-basic">▼ 開く</span>
+      </div>
+      <div class="section-items" id="items-basic">
+        <div class="item-grid">
+          <label class="item-label"><input type="checkbox" class="item" data-sec="basic" data-label="氏名（ふりがな）" checked><span>氏名・ふりがな</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="basic" data-label="生年月日・年齢" checked><span>生年月日・年齢</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="basic" data-label="血液型"><span>血液型</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="basic" data-label="現住所" checked><span>現住所</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="basic" data-label="本籍地"><span>本籍地</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="basic" data-label="マイナンバーカード保管場所"><span>マイナンバー保管場所</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="basic" data-label="パスポート・免許証保管場所"><span>パスポート・免許証</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="basic" data-label="印鑑・実印保管場所"><span>印鑑・実印保管場所</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 緊急連絡先 -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#D85A30;"></div>
+        <span class="sec-title">緊急連絡先・家族</span>
+        <span class="sec-check" id="cnt-family">▼ 開く</span>
+      </div>
+      <div class="section-items" id="items-family">
+        <div class="item-grid">
+          <label class="item-label"><input type="checkbox" class="item" data-sec="family" data-label="第1連絡先（氏名・続柄・電話番号）" checked><span>第1連絡先</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="family" data-label="第2連絡先（氏名・続柄・電話番号）"><span>第2連絡先</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="family" data-label="かかりつけ医（病院名・電話番号）" checked><span>かかりつけ医</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="family" data-label="介護・ケアマネジャー連絡先"><span>ケアマネジャー</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="family" data-label="弁護士・司法書士連絡先"><span>弁護士・司法書士</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="family" data-label="税理士・FP連絡先"><span>税理士・FP</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 金融・資産 -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#534AB7;"></div>
+        <span class="sec-title">金融口座・資産</span>
+        <span class="sec-check" id="cnt-finance">▼ 開く</span>
+      </div>
+      <div class="section-items" id="items-finance">
+        <p class="finance-note">※残高の記入は不要です。銀行名・支店名・口座番号下3桁があれば、法定相続人が正規手続きで口座特定と残高確認ができます。</p>
+        <div class="item-grid">
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="銀行口座①（銀行名・支店名・種別・口座番号下3桁）" checked><span>銀行口座①</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="銀行口座②（銀行名・支店名・種別・口座番号下3桁）"><span>銀行口座②</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="銀行口座③（銀行名・支店名・種別・口座番号下3桁）"><span>銀行口座③</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="証券口座（証券会社名・口座番号下3桁）"><span>証券口座</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="生命保険（保険会社・証券番号・担当者連絡先）" checked><span>生命保険</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="損害保険（保険会社・証券番号）"><span>損害保険</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="不動産（所在地・名義・登記簿保管場所）" checked><span>不動産</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="借入・ローン（金融機関・担当者連絡先）"><span>借入・ローン</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="年金（種別・年金番号保管場所）"><span>年金</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="finance" data-label="その他資産・貴重品の保管場所"><span>その他資産・貴重品</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 医療・終末期 -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#993C1D;"></div>
+        <span class="sec-title">医療・終末期の希望 <span style="font-size:11px;color:#993C1D;">★特に重要</span></span>
+        <span class="sec-check" id="cnt-medical">▼ 開く</span>
+      </div>
+      <div class="section-items" id="items-medical">
+        <div class="important-note">本人の意識がない状態になった時、ここが明確でないと家族が判断を迫られます。できる限り記入することをお勧めします。</div>
+        <div class="item-grid" style="margin-top:10px;">
+          <label class="item-label important"><input type="checkbox" class="item" data-sec="medical" data-label="延命措置の希望（望む・条件付き・望まない）" checked><span>延命措置の希望</span></label>
+          <label class="item-label important"><input type="checkbox" class="item" data-sec="medical" data-label="人工呼吸器の使用（望む・望まない）" checked><span>人工呼吸器</span></label>
+          <label class="item-label important"><input type="checkbox" class="item" data-sec="medical" data-label="胃ろう・経管栄養（望む・望まない）" checked><span>胃ろう・経管栄養</span></label>
+          <label class="item-label important"><input type="checkbox" class="item" data-sec="medical" data-label="心肺蘇生（CPR）の希望（望む・望まない）"><span>心肺蘇生（CPR）</span></label>
+          <label class="item-label important"><input type="checkbox" class="item" data-sec="medical" data-label="緩和ケア・ホスピスの希望（希望する・しない・わからない）" checked><span>緩和ケア・ホスピス</span></label>
+          <label class="item-label important"><input type="checkbox" class="item" data-sec="medical" data-label="最期を迎えたい場所（自宅・病院・施設・その他）" checked><span>最期を迎えたい場所</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="medical" data-label="臓器提供の意思（提供する・しない・一部のみ）"><span>臓器提供の意思</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="medical" data-label="献体の意思（希望する・しない）"><span>献体の意思</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="medical" data-label="かかりつけ医・主治医への連絡希望" checked><span>主治医への連絡希望</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="medical" data-label="医療に関するその他の希望（自由記述）"><span>その他医療の希望</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 葬儀・お墓 -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#5F5E5A;"></div>
+        <span class="sec-title">葬儀・お墓の希望</span>
+        <span class="sec-check" id="cnt-funeral">▼ 開く</span>
+      </div>
+      <div class="section-items" id="items-funeral">
+        <div class="item-grid">
+          <label class="item-label"><input type="checkbox" class="item" data-sec="funeral" data-label="葬儀の形式（一般葬・家族葬・直葬・無宗教など）" checked><span>葬儀の形式</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="funeral" data-label="葬儀社の希望（会社名・連絡先）"><span>葬儀社の希望</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="funeral" data-label="宗教・宗派・菩提寺"><span>宗教・宗派・菩提寺</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="funeral" data-label="お墓の場所・種類（墓地・納骨堂・樹木葬など）" checked><span>お墓の場所・種類</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="funeral" data-label="散骨・手元供養の希望"><span>散骨・手元供養</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="funeral" data-label="葬儀に呼んでほしい人・呼ばなくていい人"><span>参列者の希望</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="funeral" data-label="遺影に使ってほしい写真の保管場所"><span>遺影の希望</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="funeral" data-label="葬儀費用の準備状況・保管場所"><span>葬儀費用の準備</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 相続・遺言 -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#D85A30;"></div>
+        <span class="sec-title">相続・遺言</span>
+        <span class="sec-check" id="cnt-estate">▼ 開く</span>
+      </div>
+      <div class="section-items" id="items-estate">
+        <div class="item-grid">
+          <label class="item-label"><input type="checkbox" class="item" data-sec="estate" data-label="遺言書の有無・保管場所" checked><span>遺言書の有無・保管場所</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="estate" data-label="遺言執行者の氏名・連絡先"><span>遺言執行者</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="estate" data-label="形見分けの希望（品物・渡したい人）"><span>形見分けの希望</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="estate" data-label="相続人への一言メモ（自由記述）"><span>相続人への一言</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ペット -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#0F6E56;"></div>
+        <span class="sec-title">ペットのこと</span>
+        <span class="sec-check" id="cnt-pet">▼ 開く</span>
+      </div>
+      <div class="section-items" id="items-pet">
+        <div class="item-grid">
+          <label class="item-label"><input type="checkbox" class="item" data-sec="pet" data-label="ペットの名前・種類・年齢"><span>ペットの基本情報</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="pet" data-label="かかりつけ動物病院（病院名・電話番号）"><span>かかりつけ動物病院</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="pet" data-label="お世話をお願いしたい人（氏名・連絡先）"><span>預け先の希望</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="pet" data-label="ペットの食事・薬・注意事項"><span>ペットの注意事項</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 家族へのメッセージ -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#185FA5;"></div>
+        <span class="sec-title">家族へのメッセージ</span>
+        <span class="sec-check" id="cnt-message">▼ 開く</span>
+      </div>
+      <div class="section-items" id="items-message">
+        <div class="item-grid">
+          <label class="item-label"><input type="checkbox" class="item" data-sec="message" data-label="配偶者・パートナーへのメッセージ"><span>配偶者・パートナーへ</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="message" data-label="子どもたちへのメッセージ"><span>子どもたちへ</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="message" data-label="孫へのメッセージ"><span>孫へ</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="message" data-label="その他大切な人へのメッセージ"><span>その他大切な人へ</span></label>
+          <label class="item-label"><input type="checkbox" class="item" data-sec="message" data-label="自分の人生で大切にしてきたこと"><span>大切にしてきたこと</span></label>
+        </div>
+      </div>
+    </div>
+
+    <p class="selected-count" id="selected-count">0項目が選択されています</p>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="generateNote()">選んだ項目でノートを作成 →</button>
+    </div>
+  </div>
+
+  <!-- Step 2: プレビュー・印刷 -->
+  <div class="step" id="step2">
+    <div class="preview-controls">
+      <button class="btn" onclick="goBack()">← 項目を選び直す</button>
+      <button class="btn btn-primary" onclick="window.print()">印刷する（A4）</button>
+    </div>
+    <div class="preview-area" id="preview-area"></div>
+    <p class="print-note">※印刷時はブラウザの印刷メニューで「背景のグラフィック」をオンにしてください</p>
+  </div>
+</div>
+
+<script>
+function toggleSec(header){
+  const id=header.querySelector('.sec-check').id.replace('cnt-','items-');
+  const items=document.getElementById(id);
+  const cnt=header.querySelector('.sec-check');
+  if(items.classList.contains('open')){items.classList.remove('open');cnt.textContent='▼ 開く';}
+  else{items.classList.add('open');cnt.textContent='▲ 閉じる';}
+  updateCount();
+}
+function updateCount(){
+  const n=document.querySelectorAll('.item:checked').length;
+  document.getElementById('selected-count').textContent=n+'項目が選択されています';
+}
+document.querySelectorAll('.item').forEach(cb=>cb.addEventListener('change',updateCount));
+updateCount();
+
+const SEC_LABELS={
+  basic:'基本情報',family:'緊急連絡先・家族',finance:'金融口座・資産',
+  medical:'医療・終末期の希望',funeral:'葬儀・お墓の希望',
+  estate:'相続・遺言',pet:'ペットのこと',message:'家族へのメッセージ'
+};
+const SEC_COLORS={
+  basic:'#534AB7',family:'#D85A30',finance:'#534AB7',medical:'#993C1D',
+  funeral:'#5F5E5A',estate:'#D85A30',pet:'#0F6E56',message:'#185FA5'
+};
+const CHOICE_MAP={
+  '延命措置の希望（望む・条件付き・望まない）':['望む','条件付き','望まない'],
+  '人工呼吸器の使用（望む・望まない）':['望む','望まない'],
+  '胃ろう・経管栄養（望む・望まない）':['望む','望まない'],
+  '心肺蘇生（CPR）の希望（望む・望まない）':['望む','望まない'],
+  '緩和ケア・ホスピスの希望（希望する・しない・わからない）':['希望する','希望しない','わからない'],
+  '最期を迎えたい場所（自宅・病院・施設・その他）':['自宅','病院','施設','その他'],
+  '臓器提供の意思（提供する・しない・一部のみ）':['提供する','一部のみ','提供しない'],
+  '献体の意思（希望する・しない）':['希望する','希望しない'],
+};
+const FREE_KEYS=['メッセージ','大切にしてきた','一言','その他医療','自由記述'];
+
+function isChoice(label){return !!CHOICE_MAP[label];}
+function isFree(label){return FREE_KEYS.some(k=>label.includes(k));}
+
+function generateNote(){
+  const items={};
+  document.querySelectorAll('.item:checked').forEach(cb=>{
+    const sec=cb.dataset.sec;
+    if(!items[sec])items[sec]=[];
+    items[sec].push(cb.dataset.label);
+  });
+  if(Object.keys(items).length===0){alert('項目を1つ以上選択してください');return;}
+
+  const withCover=document.getElementById('cover-check').checked;
+  let html='';
+
+  if(withCover){
+    html+=`<div class="a4page cover-page">
+      <div class="cover-title">わたしのエンディングノート</div>
+      <div class="cover-line"></div>
+      <div class="cover-sub">— 大切な人への手紙 —</div>
+      <div class="cover-draft">簡易版 ／ 市販エンディングノートの下書きとしてご活用ください</div>
+      <div class="cover-fields">
+        <div class="cover-field"><span class="cover-field-label">氏名</span><div class="cover-field-line"></div></div>
+        <div class="cover-field"><span class="cover-field-label">作成日</span><div class="cover-field-line"></div></div>
+        <div class="cover-field"><span class="cover-field-label">最終更新日</span><div class="cover-field-line"></div></div>
+        <div class="cover-field"><span class="cover-field-label">保管場所</span><div class="cover-field-line"></div></div>
+        <div class="cover-field"><span class="cover-field-label">緊急連絡先</span><div class="cover-field-line"></div></div>
+      </div>
+      <div class="cover-footer">このノートは私の意思を家族に伝えるために作成しました。<br>見つけた方はご家族にお知らせください。</div>
+    </div>`;
+  }
+
+  const secOrder=['basic','family','finance','medical','funeral','estate','pet','message'];
+  let pageHtml='<div class="a4page">';
+  let fieldCount=0;
+  const MAX=13;
+
+  secOrder.forEach(sec=>{
+    if(!items[sec])return;
+    const fields=items[sec];
+    if(fieldCount>0&&fieldCount+fields.length+2>MAX){
+      pageHtml+='</div>';html+=pageHtml;
+      pageHtml='<div class="a4page">';fieldCount=0;
+    }
+    pageHtml+=`<div class="note-section"><div class="note-section-title" style="border-left:3px solid ${SEC_COLORS[sec]};padding-left:8px;color:${SEC_COLORS[sec]};">${SEC_LABELS[sec]}</div>`;
+    fields.forEach(label=>{
+      const shortLabel=label.replace(/（[^）]*）/g,'');
+      if(isChoice(label)){
+        const choices=CHOICE_MAP[label];
+        pageHtml+=`<div class="choice-field"><span class="choice-field-label">${shortLabel}</span><div class="choice-row">${choices.map(c=>`<div class="choice-box">${c}</div>`).join('')}</div></div>`;
+      } else if(isFree(label)){
+        pageHtml+=`<div class="free-field"><span class="free-field-label">${label}</span><div class="free-area">（ここに記入してください）</div></div>`;
+      } else {
+        pageHtml+=`<div class="note-field"><span class="note-field-label">${shortLabel}</span><div class="note-field-line"></div></div>`;
+      }
+      fieldCount++;
+    });
+    pageHtml+='</div>';fieldCount+=2;
+  });
+  pageHtml+='</div>';html+=pageHtml;
+
+  document.getElementById('preview-area').innerHTML=html;
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goBack(){
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step1').classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
