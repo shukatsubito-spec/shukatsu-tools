@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法定相続分 判定ツール｜終活人.jp</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{font-size:16px;}
+  body{font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;background:#f8f8f6;color:#1a1a18;}
+  .app{max-width:720px;margin:0 auto;padding:1.5em 1em 3em;}
+
+  /* 文字サイズ */
+  .fs-bar{display:flex;align-items:center;justify-content:center;gap:0.5em;padding:0.5em 1em;background:#fff;border:0.5px solid #ddd;border-radius:8px;margin-bottom:1.2em;}
+  .fs-bar span{font-size:0.85em;color:#888;}
+  .fs-btn{padding:0.25em 1em;border-radius:6px;border:0.5px solid #B5D4F4;background:#f8f8f6;color:#185FA5;font-size:0.85em;cursor:pointer;}
+  .fs-btn.active{background:#185FA5;color:#fff;border-color:#185FA5;}
+
+  h1{font-size:1.2em;font-weight:500;color:#0C447C;text-align:center;margin-bottom:0.75em;}
+
+  /* 注意書きボックス */
+  .warning-box{background:#fff3cd;border:2px solid #cc7700;border-radius:10px;padding:1.2em 1.4em;margin-bottom:1.5em;}
+  .warning-box .warning-title{font-size:1em;font-weight:500;color:#7a4500;margin-bottom:0.75em;display:flex;align-items:center;gap:0.4em;}
+  .warning-box ol{padding-left:1.5em;margin-top:0.5em;}
+  .warning-box li{font-size:0.85em;color:#5a3300;line-height:1.8;margin-bottom:0.5em;}
+  .warning-box .privacy-note{font-size:0.8em;color:#7a4500;background:#ffe8a0;border-radius:6px;padding:0.5em 0.75em;margin-top:0.75em;line-height:1.7;}
+
+  /* 同意チェック */
+  .consent-box{background:#fff;border:0.5px solid #ddd;border-radius:10px;padding:1em 1.2em;margin-bottom:1.2em;}
+  .consent-label{display:flex;align-items:flex-start;gap:0.75em;cursor:pointer;font-size:0.9em;color:#1a1a18;line-height:1.7;}
+  .consent-label input{margin-top:3px;flex-shrink:0;width:1.1em;height:1.1em;accent-color:#185FA5;cursor:pointer;}
+  .consent-link{color:#185FA5;text-decoration:none;border-bottom:1px solid #B5D4F4;}
+
+  /* スタート選択 */
+  .start-card{background:#fff;border:0.5px solid #ddd;border-radius:10px;padding:1.2em;margin-bottom:1.2em;}
+  .start-title{font-size:0.95em;font-weight:500;color:#0C447C;margin-bottom:0.75em;}
+  .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75em;}
+  .start-btn{padding:1em;border-radius:8px;border:2px solid #ddd;background:#f8f8f6;cursor:pointer;text-align:center;font-family:inherit;transition:all 0.15s;}
+  .start-btn:hover{border-color:#185FA5;background:#E6F1FB;}
+  .start-btn.selected{border-color:#185FA5;background:#E6F1FB;}
+  .start-btn .sb-title{font-size:1.2em;font-weight:500;color:#0C447C;margin-bottom:0.4em;}
+  .start-btn .sb-desc{font-size:0.85em;color:#555;line-height:1.5;}
+
+  /* 質問カード */
+  .q-card{background:#fff;border:0.5px solid #ddd;border-radius:10px;padding:1.1em 1.2em;margin-bottom:0.75em;display:none;}
+  .q-card.show{display:block;}
+  .q-num{font-size:0.75em;color:#185FA5;font-weight:500;margin-bottom:0.3em;}
+  .q-text{font-size:0.95em;font-weight:500;color:#1a1a18;margin-bottom:0.5em;line-height:1.6;}
+  .q-note{font-size:0.78em;color:#555;background:#f8f8f6;border-radius:6px;padding:0.4em 0.7em;margin-bottom:0.75em;line-height:1.7;border-left:3px solid #ddd;}
+  .q-note.important{background:#FAECE7;border-left-color:#993C1D;color:#712B13;}
+
+  /* ラジオ・選択肢 */
+  .radio-group{display:flex;flex-direction:column;gap:0.4em;}
+  .radio-label{display:flex;align-items:center;gap:0.6em;padding:0.6em 0.875em;border-radius:6px;cursor:pointer;font-size:1em;border:0.5px solid #ddd;background:#f8f8f6;transition:background 0.15s;}
+  .radio-label:hover{background:#E6F1FB;}
+  .radio-label input{flex-shrink:0;width:1em;height:1em;accent-color:#185FA5;}
+  .radio-label.selected{background:#E6F1FB;border-color:#185FA5;}
+
+  /* 数値入力 */
+  .num-row{display:flex;align-items:center;gap:0.5em;margin-top:0.3em;}
+  .num-row input{width:70px;padding:0.4em 0.5em;border:0.5px solid #ccc;border-radius:6px;font-size:0.95em;text-align:center;font-family:inherit;}
+  .num-row span{font-size:0.85em;color:#555;}
+
+  /* 結果 */
+  .result-box{background:#fff;border:2px solid #185FA5;border-radius:12px;padding:1.5em;margin-top:1em;display:none;}
+  .result-box.show{display:block;}
+  .result-title{font-size:1.1em;font-weight:500;color:#0C447C;margin-bottom:1em;padding-bottom:0.5em;border-bottom:2px solid #E6F1FB;text-align:center;}
+  .heir-table{width:100%;border-collapse:collapse;margin-bottom:1em;font-size:0.9em;}
+  .heir-table th{background:#E6F1FB;color:#0C447C;padding:0.5em 0.75em;text-align:left;font-weight:500;border:0.5px solid #bbb;}
+  .heir-table td{padding:0.5em 0.75em;border:0.5px solid #bbb;vertical-align:top;}
+  .heir-table .fraction{font-weight:500;color:#185FA5;font-size:1em;}
+  .heir-tag{display:inline-block;font-size:0.72em;padding:1px 6px;border-radius:3px;margin-left:4px;background:#EAF3DE;color:#27500A;vertical-align:middle;}
+
+  .result-note{font-size:0.8em;color:#555;background:#f8f8f6;border-radius:6px;padding:0.75em 1em;margin-bottom:0.75em;line-height:1.8;}
+  .result-special{font-size:0.8em;color:#712B13;background:#FAECE7;border:0.5px solid #993C1D;border-radius:6px;padding:0.75em 1em;margin-bottom:0.75em;line-height:1.8;}
+  .result-expert{background:#0F6E56;color:#fff;border-radius:10px;padding:1em 1.2em;text-align:center;font-size:0.88em;line-height:1.8;margin-top:0.75em;}
+  .result-expert a{color:#9FE1CB;border-bottom:1px solid #5DCAA5;}
+
+  /* 印刷チェック */
+  .print-consent{background:#EAF3DE;border:0.5px solid #3B6D11;border-radius:8px;padding:0.75em 1em;margin-top:0.75em;}
+  .print-consent-label{display:flex;align-items:flex-start;gap:0.6em;cursor:pointer;font-size:0.85em;color:#27500A;line-height:1.7;}
+  .print-consent-label input{margin-top:2px;flex-shrink:0;accent-color:#27500A;}
+  .print-btn{display:none;margin-top:0.75em;width:100%;padding:0.75em;border-radius:8px;border:none;background:#0F6E56;color:#fff;font-size:0.9em;cursor:pointer;font-family:inherit;}
+  .print-btn.show{display:block;}
+  .print-btn:hover{opacity:0.85;}
+
+  /* ボタン */
+  .btn-row{display:flex;gap:0.75em;margin-top:1.2em;flex-wrap:wrap;}
+  .btn{padding:0.6em 1.5em;border-radius:8px;font-size:0.9em;cursor:pointer;border:0.5px solid #bbb;background:#fff;color:#1a1a18;font-family:inherit;}
+  .btn-primary{background:#185FA5;color:#fff;border-color:#185FA5;}
+  .btn:hover{opacity:0.85;}
+  .btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+  /* フッター */
+  .footer{margin-top:2em;padding-top:1em;border-top:0.5px solid #ddd;text-align:center;}
+  .footer a{color:#185FA5;text-decoration:none;font-size:1em;font-weight:500;border-bottom:1.5px solid #B5D4F4;}
+  .footer-credit{font-size:0.75em;color:#aaa;margin-top:6px;line-height:1.8;}
+
+  @media print{
+    .fs-bar,.btn-row,.print-consent,.no-print{display:none!important;}
+    body{background:#fff;}
+    .app{padding:0;}
+    .result-box{border:1px solid #333;}
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <h1>法定相続分 判定ツール</h1>
+
+  <!-- 注意書き -->
+  <div class="warning-box">
+    <div class="warning-title">⚠ ご利用前に必ずお読みください（重要）</div>
+    <p style="font-size:0.85em;color:#5a3300;line-height:1.8;margin-bottom:0.75em;">
+      本ツールは、民法に定める法定相続分の概算を把握するための参考ツールです。入力情報は外部に送信されず、データの保存も行いません。ただし、以下の点にご注意ください。
+    </p>
+    <ol>
+      <li>他人（ご家族を含む）に知られたくない情報を扱う場合は、必ず周囲に誰もいない環境でご利用ください。画面の覗き見にご注意ください。</li>
+      <li>印刷機能をご利用になる場合は、印刷同意欄の <strong>☑</strong> にチェックをしなければPDFの印刷はできません。☑をつけた場合、印刷したPDFおよびそれを実際にプリントアウトした書面の保管・保存管理の責任はご利用者本人に帰属します。当システムの運営者は一切免責とさせていただきます。紛失・盗難・第三者への漏洩等が生じた場合も同様です。</li>
+      <li>法定相続分 判定ツールを使用された後、ブラウザの履歴を消去ください。</li>
+      <li>本ツールのご利用は、上記1〜3および本ウェブサイトの<a href="https://www.shukatsubito.jp/legal" class="consent-link" target="_blank" rel="noopener">利用規約・プライバシーポリシー</a>への同意を条件とします。以下の同意チェックボックスにチェックをいただいた時点で、これらの条件に同意したものとみなします。</li>
+    </ol>
+    <div class="privacy-note">
+      【個人情報・プライバシーに関する補足】本ツールへの入力内容は、お使いの端末のブラウザ内のみで処理されます。氏名・財産額・家族構成等の情報が当サイト運営者・第三者に送信・記録されることは一切ありません。
+    </div>
+  </div>
+
+  <!-- 同意チェック -->
+  <div class="consent-box" id="consent-box">
+    <label class="consent-label">
+      <input type="checkbox" id="consent-check" onchange="handleConsent(this)">
+      上記1〜3の注意事項および<a href="https://www.shukatsubito.jp/legal" class="consent-link" target="_blank" rel="noopener">利用規約・プライバシーポリシー</a>を確認し、同意の上でツールを利用します。
+    </label>
+  </div>
+
+  <!-- メインコンテンツ（同意後に表示） -->
+  <div id="main-content" style="display:none;">
+
+    <div class="fs-bar">
+      <span>文字サイズ</span>
+      <button class="fs-btn active" onclick="setFS(16,this)">標準</button>
+      <button class="fs-btn" onclick="setFS(19,this)">大きく</button>
+      <button class="fs-btn" onclick="setFS(22,this)">さらに大きく</button>
+    </div>
+
+    <!-- スタート選択 -->
+    <div class="start-card" id="start-card">
+      <div class="start-title">どちらの相続を整理しますか？</div>
+      <div class="start-grid">
+        <button class="start-btn" onclick="selectStart('self')">
+          <div class="sb-title">自分の相続</div>
+          <div class="sb-desc">自分が亡くなった場合に、誰がどのくらい相続するかを確認したい</div>
+        </button>
+        <button class="start-btn" onclick="selectStart('parent')">
+          <div class="sb-title">親・家族の相続</div>
+          <div class="sb-desc">親や家族が亡くなった場合に、自分を含む相続人と相続分を確認したい</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- 質問エリア -->
+    <div id="questions">
+
+      <!-- Q1: 配偶者 -->
+      <div class="q-card" id="q1">
+        <div class="q-num">質問 1</div>
+        <div class="q-text" id="q1-text">被相続人（亡くなった方）に、死亡時点で法律上の配偶者（婚姻届を提出した夫または妻）はいますか？</div>
+        <div class="q-note">※内縁関係（事実婚）のパートナーは法定相続人にはなりません。ただし、特別縁故者として財産分与が認められる場合があります（民法第958条の2）。<br>※離婚した元配偶者は相続人ではありません。<br><strong>【重要】離婚しても子どもの相続権は消えません。</strong>離婚した元配偶者との間に生まれた子どもは、被相続人（親）の法定相続人として同等の相続権を持ちます（民法第887条）。再婚している場合でも、前婚の子と現在の配偶者との子の相続分は同等です。</div>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="q1" value="yes" onchange="onAnswer('q1','yes')"> はい（法律上の配偶者がいる）</label>
+          <label class="radio-label"><input type="radio" name="q1" value="no" onchange="onAnswer('q1','no')"> いいえ（配偶者はいない・死別・離婚）</label>
+        </div>
+      </div>
+
+      <!-- Q2: 子ども有無 -->
+      <div class="q-card" id="q2">
+        <div class="q-num">質問 2</div>
+        <div class="q-text" id="q2-text">被相続人に子ども（または子どもの代わりに相続する孫・ひ孫）はいますか？</div>
+        <div class="q-note">※ここでいう「子ども」には、実子・養子（特別養子縁組を含む）・認知した子（婚外子）が含まれます。<br>※子どもが被相続人より先に亡くなっている場合、その子ども（孫）が代わりに相続します（代襲相続・民法第887条第2項）。</div>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="q2" value="yes" onchange="onAnswer('q2','yes')"> はい（子ども・孫・ひ孫がいる）</label>
+          <label class="radio-label"><input type="radio" name="q2" value="no" onchange="onAnswer('q2','no')"> いいえ（子ども・孫・ひ孫は誰もいない）</label>
+        </div>
+      </div>
+
+      <!-- Q3: 子どもの種別 -->
+      <div class="q-card" id="q3">
+        <div class="q-num">質問 3</div>
+        <div class="q-text">子どもの状況を教えてください（該当するものをすべて選択）</div>
+        <div class="q-note">※2013年9月の民法改正により、婚外子（非嫡出子）の相続分は嫡出子と同等になりました（民法第900条第4号）。</div>
+        <div class="q-note important">【認知していない子について】認知していない子には原則として相続権はありません。ただし、被相続人の死後に認知請求訴訟（死後認知・民法第787条）が提起され、裁判所で認知が認められた場合は相続権が生じます。このような事情がある場合は、必ず弁護士にご相談ください。</div>
+        <div style="margin-top:0.5em;">
+          <div style="font-size:0.85em;color:#555;margin-bottom:0.5em;">子どもの合計人数：</div>
+          <div class="num-row">
+            <input type="number" id="child-total" min="1" max="30" value="1">
+            <span>人</span>
+          </div>
+        </div>
+        <div style="margin-top:0.75em;display:flex;flex-direction:column;gap:0.4em;" id="child-types">
+          <label class="radio-label"><input type="checkbox" id="ct-jitsu"> 実子（婚姻中に生まれた子、または婚姻前に生まれ認知された子）</label>
+          <label class="radio-label"><input type="checkbox" id="ct-youshi"> 養子（養子縁組の届出をした子・連れ子の養子縁組を含む）</label>
+          <label class="radio-label"><input type="checkbox" id="ct-ninchi"> 認知している子（婚姻関係のない相手との間に生まれ、認知届を提出した子）</label>
+          <label class="radio-label"><input type="checkbox" id="ct-daishuu"> 先に亡くなった子の子（孫・代襲相続人）がいる</label>
+          <label class="radio-label"><input type="checkbox" id="ct-saikon"> 再婚前の配偶者との間の子がいる</label>
+        </div>
+        <div class="btn-row" style="margin-top:0.75em;">
+          <button class="btn btn-primary" onclick="onAnswer('q3','done')">次へ →</button>
+        </div>
+      </div>
+
+      <!-- Q4: 直系尊属 -->
+      <div class="q-card" id="q4">
+        <div class="q-num">質問 4</div>
+        <div class="q-text">被相続人の父母（または祖父母）は存命ですか？</div>
+        <div class="q-note">子どもがいない場合、父母（直系尊属）が相続人になります（民法第889条）。父母が既に亡くなっている場合は祖父母が相続人になります。</div>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="q4" value="both" onchange="onAnswer('q4','both')"> 父母どちらも存命</label>
+          <label class="radio-label"><input type="radio" name="q4" value="one" onchange="onAnswer('q4','one')"> 父母のどちらか一方のみ存命（または祖父母が存命）</label>
+          <label class="radio-label"><input type="radio" name="q4" value="no" onchange="onAnswer('q4','no')"> 父母・祖父母ともに存命でない</label>
+        </div>
+      </div>
+
+      <!-- Q5: 兄弟姉妹 -->
+      <div class="q-card" id="q5">
+        <div class="q-num">質問 5</div>
+        <div class="q-text">被相続人に兄弟姉妹はいますか？</div>
+        <div class="q-note">子どもも直系尊属もいない場合、兄弟姉妹が相続人になります（民法第889条）。<br>※兄弟姉妹が被相続人より先に亡くなっている場合、その子（甥・姪）が代襲相続します（ただし1代限り）。<br>※父母の一方のみが同じ「半血兄弟姉妹」の相続分は、両親が同じ「全血兄弟姉妹」の2分の1です（民法第900条第4号）。</div>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="q5" value="full" onchange="onAnswer('q5','full')"> いる（全員、父母ともに同じ兄弟姉妹）</label>
+          <label class="radio-label"><input type="radio" name="q5" value="half" onchange="onAnswer('q5','half')"> いる（片方の親のみ同じ半血兄弟姉妹が含まれる）</label>
+          <label class="radio-label"><input type="radio" name="q5" value="no" onchange="onAnswer('q5','no')"> いない（または全員先に死亡・相続放棄済み）</label>
+        </div>
+      </div>
+
+      <!-- Q6: 相続放棄 -->
+      <div class="q-card" id="q6">
+        <div class="q-num">質問 6</div>
+        <div class="q-text">相続人の中に、家庭裁判所で相続放棄の手続きをした（する予定の）方はいますか？</div>
+        <div class="q-note">※相続放棄は、被相続人が亡くなったことを知った日から3ヶ月以内に家庭裁判所に申立てが必要です（民法第915条）。<br>※相続放棄をした者は、初めから相続人でなかったものとみなされます（民法第939条）。ただし、相続放棄をしても法定相続人の「数」の計算には含めます（相続税法上）。</div>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="q6" value="yes" onchange="onAnswer('q6','yes')"> いる（相続放棄した・する予定の人がいる）</label>
+          <label class="radio-label"><input type="radio" name="q6" value="no" onchange="onAnswer('q6','no')"> いない</label>
+        </div>
+      </div>
+
+    </div><!-- /questions -->
+
+    <!-- 結果 -->
+    <div class="result-box" id="result-box">
+      <div class="result-title">法定相続人と法定相続分（概算）</div>
+      <div id="result-content"></div>
+
+      <!-- 印刷同意 -->
+      <div class="print-consent">
+        <label class="print-consent-label">
+          <input type="checkbox" id="print-consent-check" onchange="togglePrint(this)">
+          印刷内容の保管・管理責任が自分に帰属することを確認し、印刷することに同意します。プリントしたPDFおよびその書面の紛失・盗難・漏洩等について、当システム運営者は一切免責であることを了解します。
+        </label>
+        <button class="print-btn" id="print-btn" onclick="window.print()">☑ 同意済み ／ 印刷する（A4）</button>
+      </div>
+
+      <div class="btn-row no-print" style="margin-top:0.75em;">
+        <button class="btn" onclick="resetAll()">最初からやり直す</button>
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+
+  <div class="footer">
+    <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a>
+    <p class="footer-credit">© 終活人.jp ／ 無断転載・商用利用禁止</p>
+  </div>
+
+</div>
+
+<script>
+function setFS(px,btn){
+  document.getElementById('app').style.fontSize=px+'px';
+  document.querySelectorAll('.fs-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function handleConsent(cb){
+  document.getElementById('main-content').style.display = cb.checked ? 'block' : 'none';
+}
+
+let startMode='';
+let answers={};
+
+function selectStart(mode){
+  startMode=mode;
+  document.querySelectorAll('.start-btn').forEach(b=>b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  // 被相続人の呼称を設定
+  const label = mode==='self' ? '自分（被相続人）' : '親・家族（被相続人）';
+  document.getElementById('q1-text').textContent =
+    `${label}に、死亡時点で法律上の配偶者（婚姻届を提出した夫または妻）はいますか？`;
+  document.getElementById('q2-text').textContent =
+    `${label}に子ども（または子どもの代わりに相続する孫・ひ孫）はいますか？`;
+  // リセットして最初の質問を表示
+  answers={};
+  document.querySelectorAll('.q-card').forEach(q=>q.classList.remove('show'));
+  document.getElementById('result-box').classList.remove('show');
+  document.getElementById('q1').classList.add('show');
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+  document.querySelectorAll('input[type=checkbox]').forEach(c=>{
+    if(c.id!=='consent-check'&&c.id!=='print-consent-check') c.checked=false;
+  });
+}
+
+function showQ(id){
+  document.getElementById(id).classList.add('show');
+  setTimeout(()=>{
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+function hideFrom(id){
+  const ids=['q1','q2','q3','q4','q5','q6'];
+  const idx=ids.indexOf(id);
+  for(let i=idx;i<ids.length;i++) document.getElementById(ids[i]).classList.remove('show');
+  document.getElementById('result-box').classList.remove('show');
+}
+
+function onAnswer(qid, val){
+  answers[qid]=val;
+  hideFrom(qid);
+  // フロー制御
+  if(qid==='q1'){
+    answers.spouse=(val==='yes');
+    showQ('q2');
+  } else if(qid==='q2'){
+    answers.hasChild=(val==='yes');
+    if(val==='yes') showQ('q3');
+    else showQ('q4');
+  } else if(qid==='q3'){
+    answers.childTotal=parseInt(document.getElementById('child-total').value)||1;
+    answers.ctJitsu=document.getElementById('ct-jitsu').checked;
+    answers.ctYoushi=document.getElementById('ct-youshi').checked;
+    answers.ctNinchi=document.getElementById('ct-ninchi').checked;
+    answers.ctDaishuu=document.getElementById('ct-daishuu').checked;
+    answers.ctSaikon=document.getElementById('ct-saikon').checked;
+    showQ('q6');
+  } else if(qid==='q4'){
+    answers.parents=val;
+    if(val==='no') showQ('q5');
+    else showQ('q6');
+  } else if(qid==='q5'){
+    answers.siblings=val;
+    showQ('q6');
+  } else if(qid==='q6'){
+    answers.renunciation=(val==='yes');
+    calcResult();
+  }
+}
+
+function calcResult(){
+  const s=answers;
+  let heirs=[];
+  let specials=[];
+  let notes=[];
+
+  if(s.hasChild){
+    // 子がいる場合
+    if(s.spouse){
+      heirs.push({name:'配偶者',fraction:'1/2',base:1,denom:2});
+      heirs.push({name:'子ども全員で',fraction:'1/2',base:1,denom:2,detail:`（${s.childTotal}人いる場合：1人あたり 1/${2*s.childTotal}）`});
+    } else {
+      heirs.push({name:'子ども全員で',fraction:'全部（1）',base:1,denom:1,detail:`（${s.childTotal}人いる場合：1人あたり 1/${s.childTotal}）`});
+    }
+    if(s.ctDaishuu) specials.push('先に亡くなった子がいる場合、その子の子ども（孫）が代わりに相続します（代襲相続・民法第887条第2項）。代襲相続人は、亡くなった子の相続分を引き継ぎます。');
+    if(s.ctSaikon) specials.push('再婚前の配偶者との間の子も、被相続人の実子として同等の相続分があります。現在の配偶者との子と区別なく、子ども全体で均等に分けます。');
+    if(s.ctNinchi) specials.push('認知した子（婚外子）は、2013年9月の民法改正以降、嫡出子と同等の相続分があります（民法第900条第4号）。認知の有無・時期については戸籍で確認してください。');
+    if(s.ctYoushi) specials.push('養子（連れ子の養子縁組を含む）は実子と同等の相続分があります。ただし、相続税計算上の法定相続人に含められる養子の数には制限があります（相続税法第15条）。');
+  } else if(s.parents && s.parents!=='no'){
+    // 子なし・親あり
+    if(s.spouse){
+      heirs.push({name:'配偶者',fraction:'2/3',base:2,denom:3});
+      if(s.parents==='both'){
+        heirs.push({name:'父',fraction:'1/6',base:1,denom:6});
+        heirs.push({name:'母',fraction:'1/6',base:1,denom:6});
+      } else {
+        heirs.push({name:'父または母（存命の一方）',fraction:'1/3',base:1,denom:3});
+      }
+    } else {
+      if(s.parents==='both'){
+        heirs.push({name:'父',fraction:'1/2',base:1,denom:2});
+        heirs.push({name:'母',fraction:'1/2',base:1,denom:2});
+      } else {
+        heirs.push({name:'父または母（存命の一方）',fraction:'全部（1）',base:1,denom:1});
+      }
+    }
+    notes.push('父母がともに亡くなっている場合は祖父母が直系尊属として相続人になります。');
+  } else if(s.siblings && s.siblings!=='no'){
+    // 子なし・親なし・兄弟姉妹あり
+    if(s.spouse){
+      heirs.push({name:'配偶者',fraction:'3/4',base:3,denom:4});
+      heirs.push({name:'兄弟姉妹全員で',fraction:'1/4',base:1,denom:4,detail:'（半血兄弟姉妹は全血兄弟姉妹の1/2の相続分）'});
+    } else {
+      heirs.push({name:'兄弟姉妹全員で',fraction:'全部（1）',base:1,denom:1,detail:'（半血兄弟姉妹は全血兄弟姉妹の1/2の相続分）'});
+    }
+    if(s.siblings==='half') specials.push('半血兄弟姉妹（父母の一方のみ同じ）の相続分は、全血兄弟姉妹（父母ともに同じ）の2分の1です（民法第900条第4号）。');
+    specials.push('兄弟姉妹が被相続人より先に亡くなっている場合、その子（甥・姪）が代襲相続します。ただし、兄弟姉妹の代襲相続は1代限りです（甥・姪の子は代襲しません）。');
+    specials.push('兄弟姉妹には遺留分（最低限保障される相続分）はありません（民法第1042条）。');
+  } else {
+    // 相続人なし
+    if(s.spouse){
+      heirs.push({name:'配偶者',fraction:'全部（1）',base:1,denom:1});
+      notes.push('子・直系尊属・兄弟姉妹がいない場合、配偶者が全財産を相続します。');
+    } else {
+      heirs=[];
+      notes.push('法定相続人が存在しない場合、相続財産は国庫（国）に帰属します（民法第959条）。ただし、特別縁故者（内縁配偶者・長期療養看護者等）が家庭裁判所に申立てることで財産分与が認められる場合があります（民法第958条の2）。');
+    }
+  }
+
+  if(s.renunciation){
+    specials.push('相続放棄をした方は、初めから相続人でなかったものとみなされます（民法第939条）。放棄した方の子どもは代襲相続しません。ただし、被相続人の子全員が放棄した場合、次順位の相続人（直系尊属または兄弟姉妹）が相続人になります。なお相続税計算上の法定相続人の数には、相続放棄した者も含まれます。');
+  }
+
+  // 表示
+  let html='';
+
+  if(heirs.length===0){
+    html+=`<div class="result-special">法定相続人が存在しない可能性があります。<br>${notes.join('<br>')}</div>`;
+  } else {
+    html+=`<table class="heir-table">
+      <tr><th>相続人</th><th>法定相続分</th><th>備考</th></tr>`;
+    heirs.forEach(h=>{
+      html+=`<tr>
+        <td>${h.name}</td>
+        <td class="fraction">${h.fraction}</td>
+        <td style="font-size:0.82em;color:#555;">${h.detail||''}</td>
+      </tr>`;
+    });
+    html+=`</table>`;
+  }
+
+  if(notes.length){
+    html+=`<div class="result-note">${notes.map(n=>'・'+n).join('<br>')}</div>`;
+  }
+  if(specials.length){
+    html+=`<div class="result-special"><strong>【ご確認いただきたい事項】</strong><br>${specials.map(s=>'・'+s).join('<br><br>')}</div>`;
+  }
+
+  html+=`<div class="result-expert" style="text-align:left;">
+    <strong style="font-size:1em;">必ず専門家にご確認ください</strong><br><br>
+    法定相続分は、遺産分割協議・遺言書の有無・特別受益・寄与分・税務上の取り扱い等により実際の取り分と異なる場合があります。また、相続放棄・限定承認・遺産分割調停・審判等の手続きが必要な場合もあります。このシステムはあくまで簡易チェック用です。真正な法定相続分を把握したい場合、必ずご自身で戸籍確認するか、あるいは専門家に戸籍確認依頼ください。<br><br>
+    <a href="https://www.shukatsubito.jp/bengoshi" target="_blank" rel="noopener">弁護士・司法書士へのご相談（終活人.jp）</a>　／　
+    <a href="https://www.courts.go.jp" target="_blank" rel="noopener">裁判所（家庭裁判所の手続き）</a>
+  </div>`;
+
+  document.getElementById('result-content').innerHTML=html;
+  document.getElementById('result-box').classList.add('show');
+  setTimeout(()=>{
+    document.getElementById('result-box').scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+function togglePrint(cb){
+  const btn=document.getElementById('print-btn');
+  btn.classList.toggle('show', cb.checked);
+}
+
+function resetAll(){
+  answers={};
+  startMode='';
+  document.querySelectorAll('.start-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.q-card').forEach(q=>q.classList.remove('show'));
+  document.getElementById('result-box').classList.remove('show');
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+  document.querySelectorAll('#questions input[type=checkbox]').forEach(c=>c.checked=false);
+  document.getElementById('print-consent-check').checked=false;
+  document.getElementById('print-btn').classList.remove('show');
+  document.getElementById('child-total').value=1;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
