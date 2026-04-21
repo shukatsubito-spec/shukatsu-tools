@@ -12,7 +12,12 @@
   .site-name{text-align:center;font-size:15px;font-weight:500;margin-bottom:1.25rem;}
   .site-name a{color:#185FA5;text-decoration:none;border-bottom:1.5px solid #B5D4F4;padding-bottom:1px;}
   .site-name a:hover{color:#0C447C;border-bottom-color:#185FA5;}
-  .site-credit{text-align:center;font-size:11px;color:#aaa;margin-bottom:1.25rem;}
+  .site-credit{text-align:center;font-size:11px;color:#aaa;margin-bottom:0.5rem;}
+  .font-size-bar{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:1rem;padding:8px 12px;background:#fff;border:0.5px solid #ddd;border-radius:8px;}
+  .font-size-bar span{font-size:12px;color:#888;}
+  .fs-btn{padding:4px 14px;border-radius:6px;border:0.5px solid #B5D4F4;background:#f8f8f6;color:#185FA5;font-size:12px;cursor:pointer;}
+  .fs-btn:hover{background:#E6F1FB;}
+  .fs-btn.active{background:#185FA5;color:#fff;border-color:#185FA5;}
   .step{display:none;} .step.active{display:block;}
   .intro{background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;}
   .intro p{font-size:13px;color:#555;line-height:1.8;}
@@ -91,6 +96,12 @@
   <h1>セルフ簡易エンディングノートメーカー</h1>
   <p class="site-name"><a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a></p>
   <p class="site-credit">&copy; 終活人.jp ／ 無断転載・商用利用禁止</p>
+  <div class="font-size-bar">
+    <span>文字サイズ</span>
+    <button class="fs-btn active" onclick="setFontSize(100, this)">標準</button>
+    <button class="fs-btn" onclick="setFontSize(125, this)">大きく</button>
+    <button class="fs-btn" onclick="setFontSize(140, this)">さらに大きく</button>
+  </div>
 
   <!-- Step 1: 項目選択 -->
   <div class="step active" id="step1">
@@ -387,6 +398,11 @@ function generateNote(){
   window.scrollTo(0,0);
 }
 
+function setFontSize(pct, btn){
+  document.querySelector(".app").style.fontSize = pct + "%";
+  document.querySelectorAll(".fs-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
 function goBack(){
   document.getElementById('step2').classList.remove('active');
   document.getElementById('step1').classList.add('active');
