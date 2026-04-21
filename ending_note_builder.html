@@ -289,6 +289,12 @@ function toggleSec(header){
   if(items.classList.contains('open')){items.classList.remove('open');cnt.textContent='▼ 開く';}
   else{items.classList.add('open');cnt.textContent='▲ 閉じる';}
   updateCount();
+  notifyHeight();
+}
+function notifyHeight(){
+  setTimeout(function(){
+    window.parent.postMessage({type:"resize",height:document.body.scrollHeight}, "*");
+  }, 50);
 }
 function updateCount(){
   const n=document.querySelectorAll('.item:checked').length;
