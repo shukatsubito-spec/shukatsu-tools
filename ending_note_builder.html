@@ -6,56 +6,52 @@
 <title>セルフ簡易エンディングノートメーカー｜終活人.jp</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;background:#f8f8f6;color:#1a1a18;}
+  html{font-size:16px;}
+  body{font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;background:#f8f8f6;color:#1a1a18;font-size:1rem;}
   .app{max-width:720px;margin:0 auto;padding:1.5rem 1rem 3rem;}
-  h1{font-size:18px;font-weight:500;color:#0C447C;text-align:center;margin-bottom:6px;}
-  .site-name{text-align:center;font-size:15px;font-weight:500;margin-bottom:1.25rem;}
+  h1{font-size:1.125rem;font-weight:500;color:#0C447C;text-align:center;margin-bottom:0.4rem;}
+  .site-name{text-align:center;font-size:0.94rem;font-weight:500;margin-bottom:0.3rem;}
   .site-name a{color:#185FA5;text-decoration:none;border-bottom:1.5px solid #B5D4F4;padding-bottom:1px;}
-  .site-name a:hover{color:#0C447C;border-bottom-color:#185FA5;}
-  .site-credit{text-align:center;font-size:11px;color:#aaa;margin-bottom:0.5rem;}
-  .font-size-bar{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:1rem;padding:8px 12px;background:#fff;border:0.5px solid #ddd;border-radius:8px;}
-  .font-size-bar span{font-size:12px;color:#888;}
-  .fs-btn{padding:4px 14px;border-radius:6px;border:0.5px solid #B5D4F4;background:#f8f8f6;color:#185FA5;font-size:12px;cursor:pointer;}
+  .site-credit{text-align:center;font-size:0.7rem;color:#aaa;margin-bottom:0.5rem;}
+
+  .font-size-bar{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:1rem;padding:0.5rem 0.75rem;background:#fff;border:0.5px solid #ddd;border-radius:8px;}
+  .font-size-bar span{font-size:0.8rem;color:#888;}
+  .fs-btn{padding:0.25rem 0.875rem;border-radius:6px;border:0.5px solid #B5D4F4;background:#f8f8f6;color:#185FA5;font-size:0.8rem;cursor:pointer;transition:background 0.15s;}
   .fs-btn:hover{background:#E6F1FB;}
   .fs-btn.active{background:#185FA5;color:#fff;border-color:#185FA5;}
+
   .step{display:none;} .step.active{display:block;}
-  .intro{background:#fff;border:0.5px solid #ddd;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;}
-  .intro p{font-size:13px;color:#555;line-height:1.8;}
-  .note-badge{display:inline-block;background:#FAEEDA;border:0.5px solid #854F0B;color:#633806;font-size:11px;padding:2px 8px;border-radius:4px;margin-top:6px;}
-  .section-block{background:#fff;border:0.5px solid #ddd;border-radius:12px;margin-bottom:10px;overflow:hidden;}
-  .section-header{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none;}
+  .intro{background:#fff;border:0.5px solid #ddd;border-radius:0.75rem;padding:1rem 1.25rem;margin-bottom:1.25rem;}
+  .intro p{font-size:0.875rem;color:#555;line-height:1.8;}
+  .note-badge{display:inline-block;background:#FAEEDA;border:0.5px solid #854F0B;color:#633806;font-size:0.75rem;padding:2px 8px;border-radius:4px;margin-top:6px;}
+  .section-block{background:#fff;border:0.5px solid #ddd;border-radius:0.75rem;margin-bottom:0.625rem;overflow:hidden;}
+  .section-header{display:flex;align-items:center;gap:0.625rem;padding:0.75rem 1rem;cursor:pointer;user-select:none;}
   .section-header:hover{background:#f1efe8;}
-  .sec-color{width:6px;height:36px;border-radius:3px;flex-shrink:0;}
-  .sec-title{font-size:14px;font-weight:500;flex:1;}
-  .sec-check{font-size:11px;color:#999;}
-  .section-items{border-top:0.5px solid #ddd;padding:12px 16px;display:none;}
+  .sec-color{width:6px;height:2.25rem;border-radius:3px;flex-shrink:0;}
+  .sec-title{font-size:0.9375rem;font-weight:500;flex:1;}
+  .sec-check{font-size:0.75rem;color:#999;}
+  .section-items{border-top:0.5px solid #ddd;padding:0.75rem 1rem;display:none;}
   .section-items.open{display:block;}
   .item-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}
-  .item-label{display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:13px;line-height:1.5;border:0.5px solid #ddd;background:#f8f8f6;}
+  .item-label{display:flex;align-items:flex-start;gap:8px;padding:0.375rem 0.5rem;border-radius:6px;cursor:pointer;font-size:0.875rem;line-height:1.5;border:0.5px solid #ddd;background:#f8f8f6;}
   .item-label:hover{background:#E6F1FB;}
   .item-label input{margin-top:2px;flex-shrink:0;}
   .item-label.important{border-color:#993C1D;background:#FAECE7;}
   .item-label.important span{color:#712B13;}
-  .important-note{font-size:11px;color:#993C1D;margin-top:6px;padding:6px 8px;background:#FAECE7;border-radius:6px;line-height:1.7;}
-  .finance-note{font-size:11px;color:#185FA5;margin-bottom:8px;padding:6px 8px;background:#E6F1FB;border-radius:6px;line-height:1.7;}
-  .cover-row{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#f1efe8;border-radius:8px;margin-bottom:12px;}
-  .cover-row label{font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;}
-  .btn-row{display:flex;gap:10px;margin-top:1.25rem;}
-  .btn{padding:10px 24px;border-radius:8px;font-size:14px;cursor:pointer;border:0.5px solid #bbb;background:#fff;color:#1a1a18;}
+  .important-note{font-size:0.75rem;color:#993C1D;margin-top:6px;padding:6px 8px;background:#FAECE7;border-radius:6px;line-height:1.7;}
+  .finance-note{font-size:0.75rem;color:#185FA5;margin-bottom:8px;padding:6px 8px;background:#E6F1FB;border-radius:6px;line-height:1.7;}
+  .cover-row{display:flex;align-items:center;gap:0.625rem;padding:0.625rem 1rem;background:#f1efe8;border-radius:8px;margin-bottom:0.75rem;}
+  .cover-row label{font-size:0.875rem;cursor:pointer;display:flex;align-items:center;gap:6px;}
+  .btn-row{display:flex;gap:0.625rem;margin-top:1.25rem;}
+  .btn{padding:0.625rem 1.5rem;border-radius:8px;font-size:0.9375rem;cursor:pointer;border:0.5px solid #bbb;background:#fff;color:#1a1a18;}
   .btn-primary{background:#185FA5;color:#fff;border-color:#185FA5;}
   .btn:hover{opacity:0.85;}
-  .selected-count{font-size:12px;color:#555;margin-top:8px;}
-
-  /* プレビュー */
+  .selected-count{font-size:0.8rem;color:#555;margin-top:8px;}
   .preview-controls{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;}
   .preview-area{background:#fff;border:0.5px solid #ccc;border-radius:8px;}
-  .print-note{font-size:11px;color:#999;text-align:center;margin-top:8px;}
-
-  /* A4ページ */
+  .print-note{font-size:0.75rem;color:#999;text-align:center;margin-top:8px;}
   .a4page{width:100%;padding:32px 36px;box-sizing:border-box;border-bottom:1px dashed #ddd;}
   .a4page:last-child{border-bottom:none;}
-
-  /* 表紙 */
   .cover-page{text-align:center;min-height:520px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;}
   .cover-title{font-size:28px;font-weight:500;color:#0C447C;letter-spacing:0.1em;}
   .cover-sub{font-size:14px;color:#555;}
@@ -66,8 +62,6 @@
   .cover-field-label{font-size:12px;color:#555;min-width:90px;}
   .cover-field-line{flex:1;min-height:22px;}
   .cover-footer{font-size:11px;color:#aaa;margin-top:32px;line-height:1.8;}
-
-  /* コンテンツページ */
   .note-section{margin-bottom:20px;}
   .note-section-title{font-size:13px;font-weight:500;margin-bottom:10px;padding-left:8px;}
   .note-field{display:flex;align-items:baseline;gap:6px;margin-bottom:9px;}
@@ -80,9 +74,8 @@
   .free-field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
   .free-field-label{font-size:11px;color:#444;}
   .free-area{border:1px solid #ccc;border-radius:6px;padding:8px 10px;min-height:56px;width:100%;font-size:11px;color:#bbb;}
-
   @media print{
-    .preview-controls,.btn-row,.step-1,.print-note,h1,.site-name{display:none!important;}
+    .preview-controls,.btn-row,.step-1,.print-note,h1,.site-name,.font-size-bar,.site-credit{display:none!important;}
     body{background:#fff;}
     .app{padding:0;max-width:100%;}
     .preview-area{border:none;border-radius:0;}
@@ -94,16 +87,14 @@
 <body>
 <div class="app">
   <h1>セルフ簡易エンディングノートメーカー</h1>
-  <p class="site-name"><a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a></p>
-  <p class="site-credit">&copy; 終活人.jp ／ 無断転載・商用利用禁止</p>
+
   <div class="font-size-bar">
     <span>文字サイズ</span>
-    <button class="fs-btn active" onclick="setFontSize(100, this)">標準</button>
-    <button class="fs-btn" onclick="setFontSize(125, this)">大きく</button>
-    <button class="fs-btn" onclick="setFontSize(140, this)">さらに大きく</button>
+    <button class="fs-btn active" onclick="setFS(16,this)">標準</button>
+    <button class="fs-btn" onclick="setFS(20,this)">大きく</button>
+    <button class="fs-btn" onclick="setFS(23,this)">さらに大きく</button>
   </div>
 
-  <!-- Step 1: 項目選択 -->
   <div class="step active" id="step1">
     <div class="intro">
       <p>必要な項目だけチェックしてください。選んだ項目だけのエンディングノートが作成されます。残高など不要な情報は最初から項目にありません。</p>
@@ -113,10 +104,9 @@
 
     <div class="cover-row">
       <label><input type="checkbox" id="cover-check" checked> 表紙ページを付ける</label>
-      <span style="font-size:11px;color:#999;">（氏名・作成日・保管場所の記入欄）</span>
+      <span style="font-size:0.75rem;color:#999;">（氏名・作成日・保管場所の記入欄）</span>
     </div>
 
-    <!-- 基本情報 -->
     <div class="section-block">
       <div class="section-header" onclick="toggleSec(this)">
         <div class="sec-color" style="background:#534AB7;"></div>
@@ -137,7 +127,6 @@
       </div>
     </div>
 
-    <!-- 緊急連絡先 -->
     <div class="section-block">
       <div class="section-header" onclick="toggleSec(this)">
         <div class="sec-color" style="background:#D85A30;"></div>
@@ -156,7 +145,6 @@
       </div>
     </div>
 
-    <!-- 金融・資産 -->
     <div class="section-block">
       <div class="section-header" onclick="toggleSec(this)">
         <div class="sec-color" style="background:#534AB7;"></div>
@@ -180,11 +168,10 @@
       </div>
     </div>
 
-    <!-- 医療・終末期 -->
     <div class="section-block">
       <div class="section-header" onclick="toggleSec(this)">
         <div class="sec-color" style="background:#993C1D;"></div>
-        <span class="sec-title">医療・終末期の希望 <span style="font-size:11px;color:#993C1D;">★特に重要</span></span>
+        <span class="sec-title">医療・終末期の希望 <span style="font-size:0.75rem;color:#993C1D;">★特に重要</span></span>
         <span class="sec-check" id="cnt-medical">▼ 開く</span>
       </div>
       <div class="section-items" id="items-medical">
@@ -204,7 +191,6 @@
       </div>
     </div>
 
-    <!-- 葬儀・お墓 -->
     <div class="section-block">
       <div class="section-header" onclick="toggleSec(this)">
         <div class="sec-color" style="background:#5F5E5A;"></div>
@@ -225,7 +211,6 @@
       </div>
     </div>
 
-    <!-- 相続・遺言 -->
     <div class="section-block">
       <div class="section-header" onclick="toggleSec(this)">
         <div class="sec-color" style="background:#D85A30;"></div>
@@ -242,7 +227,6 @@
       </div>
     </div>
 
-    <!-- ペット -->
     <div class="section-block">
       <div class="section-header" onclick="toggleSec(this)">
         <div class="sec-color" style="background:#0F6E56;"></div>
@@ -259,7 +243,6 @@
       </div>
     </div>
 
-    <!-- 家族へのメッセージ -->
     <div class="section-block">
       <div class="section-header" onclick="toggleSec(this)">
         <div class="sec-color" style="background:#185FA5;"></div>
@@ -283,7 +266,6 @@
     </div>
   </div>
 
-  <!-- Step 2: プレビュー・印刷 -->
   <div class="step" id="step2">
     <div class="preview-controls">
       <button class="btn" onclick="goBack()">← 項目を選び直す</button>
@@ -295,6 +277,11 @@
 </div>
 
 <script>
+function setFS(px, btn){
+  document.documentElement.style.fontSize = px + 'px';
+  document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 function toggleSec(header){
   const id=header.querySelector('.sec-check').id.replace('cnt-','items-');
   const items=document.getElementById(id);
@@ -309,99 +296,40 @@ function updateCount(){
 }
 document.querySelectorAll('.item').forEach(cb=>cb.addEventListener('change',updateCount));
 updateCount();
-
-const SEC_LABELS={
-  basic:'基本情報',family:'緊急連絡先・家族',finance:'金融口座・資産',
-  medical:'医療・終末期の希望',funeral:'葬儀・お墓の希望',
-  estate:'相続・遺言',pet:'ペットのこと',message:'家族へのメッセージ'
-};
-const SEC_COLORS={
-  basic:'#534AB7',family:'#D85A30',finance:'#534AB7',medical:'#993C1D',
-  funeral:'#5F5E5A',estate:'#D85A30',pet:'#0F6E56',message:'#185FA5'
-};
-const CHOICE_MAP={
-  '延命措置の希望（望む・条件付き・望まない）':['望む','条件付き','望まない'],
-  '人工呼吸器の使用（望む・望まない）':['望む','望まない'],
-  '胃ろう・経管栄養（望む・望まない）':['望む','望まない'],
-  '心肺蘇生（CPR）の希望（望む・望まない）':['望む','望まない'],
-  '緩和ケア・ホスピスの希望（希望する・しない・わからない）':['希望する','希望しない','わからない'],
-  '最期を迎えたい場所（自宅・病院・施設・その他）':['自宅','病院','施設','その他'],
-  '臓器提供の意思（提供する・しない・一部のみ）':['提供する','一部のみ','提供しない'],
-  '献体の意思（希望する・しない）':['希望する','希望しない'],
-};
+const SEC_LABELS={basic:'基本情報',family:'緊急連絡先・家族',finance:'金融口座・資産',medical:'医療・終末期の希望',funeral:'葬儀・お墓の希望',estate:'相続・遺言',pet:'ペットのこと',message:'家族へのメッセージ'};
+const SEC_COLORS={basic:'#534AB7',family:'#D85A30',finance:'#534AB7',medical:'#993C1D',funeral:'#5F5E5A',estate:'#D85A30',pet:'#0F6E56',message:'#185FA5'};
+const CHOICE_MAP={'延命措置の希望（望む・条件付き・望まない）':['望む','条件付き','望まない'],'人工呼吸器の使用（望む・望まない）':['望む','望まない'],'胃ろう・経管栄養（望む・望まない）':['望む','望まない'],'心肺蘇生（CPR）の希望（望む・望まない）':['望む','望まない'],'緩和ケア・ホスピスの希望（希望する・しない・わからない）':['希望する','希望しない','わからない'],'最期を迎えたい場所（自宅・病院・施設・その他）':['自宅','病院','施設','その他'],'臓器提供の意思（提供する・しない・一部のみ）':['提供する','一部のみ','提供しない'],'献体の意思（希望する・しない）':['希望する','希望しない']};
 const FREE_KEYS=['メッセージ','大切にしてきた','一言','その他医療','自由記述'];
-
 function isChoice(label){return !!CHOICE_MAP[label];}
 function isFree(label){return FREE_KEYS.some(k=>label.includes(k));}
-
 function generateNote(){
   const items={};
-  document.querySelectorAll('.item:checked').forEach(cb=>{
-    const sec=cb.dataset.sec;
-    if(!items[sec])items[sec]=[];
-    items[sec].push(cb.dataset.label);
-  });
+  document.querySelectorAll('.item:checked').forEach(cb=>{const sec=cb.dataset.sec;if(!items[sec])items[sec]=[];items[sec].push(cb.dataset.label);});
   if(Object.keys(items).length===0){alert('項目を1つ以上選択してください');return;}
-
   const withCover=document.getElementById('cover-check').checked;
   let html='';
-
-  if(withCover){
-    html+=`<div class="a4page cover-page">
-      <div class="cover-title">わたしのエンディングノート</div>
-      <div class="cover-line"></div>
-      <div class="cover-sub">— 大切な人への手紙 —</div>
-      <div class="cover-draft">簡易版 ／ 市販エンディングノートの下書きとしてご活用ください</div>
-      <div class="cover-fields">
-        <div class="cover-field"><span class="cover-field-label">氏名</span><div class="cover-field-line"></div></div>
-        <div class="cover-field"><span class="cover-field-label">作成日</span><div class="cover-field-line"></div></div>
-        <div class="cover-field"><span class="cover-field-label">最終更新日</span><div class="cover-field-line"></div></div>
-        <div class="cover-field"><span class="cover-field-label">保管場所</span><div class="cover-field-line"></div></div>
-        <div class="cover-field"><span class="cover-field-label">緊急連絡先</span><div class="cover-field-line"></div></div>
-      </div>
-      <div class="cover-footer">このノートは私の意思を家族に伝えるために作成しました。<br>見つけた方はご家族にお知らせください。</div>
-    </div>`;
-  }
-
+  if(withCover){html+=`<div class="a4page cover-page"><div class="cover-title">わたしのエンディングノート</div><div class="cover-line"></div><div class="cover-sub">— 大切な人への手紙 —</div><div class="cover-draft">簡易版 ／ 市販エンディングノートの下書きとしてご活用ください</div><div class="cover-fields"><div class="cover-field"><span class="cover-field-label">氏名</span><div class="cover-field-line"></div></div><div class="cover-field"><span class="cover-field-label">作成日</span><div class="cover-field-line"></div></div><div class="cover-field"><span class="cover-field-label">最終更新日</span><div class="cover-field-line"></div></div><div class="cover-field"><span class="cover-field-label">保管場所</span><div class="cover-field-line"></div></div><div class="cover-field"><span class="cover-field-label">緊急連絡先</span><div class="cover-field-line"></div></div></div><div class="cover-footer">このノートは私の意思を家族に伝えるために作成しました。<br>見つけた方はご家族にお知らせください。</div></div>`;}
   const secOrder=['basic','family','finance','medical','funeral','estate','pet','message'];
-  let pageHtml='<div class="a4page">';
-  let fieldCount=0;
-  const MAX=13;
-
+  let pageHtml='<div class="a4page">';let fieldCount=0;const MAX=13;
   secOrder.forEach(sec=>{
     if(!items[sec])return;
     const fields=items[sec];
-    if(fieldCount>0&&fieldCount+fields.length+2>MAX){
-      pageHtml+='</div>';html+=pageHtml;
-      pageHtml='<div class="a4page">';fieldCount=0;
-    }
+    if(fieldCount>0&&fieldCount+fields.length+2>MAX){pageHtml+='</div>';html+=pageHtml;pageHtml='<div class="a4page">';fieldCount=0;}
     pageHtml+=`<div class="note-section"><div class="note-section-title" style="border-left:3px solid ${SEC_COLORS[sec]};padding-left:8px;color:${SEC_COLORS[sec]};">${SEC_LABELS[sec]}</div>`;
     fields.forEach(label=>{
-      const shortLabel=label.replace(/（[^）]*）/g,'');
-      if(isChoice(label)){
-        const choices=CHOICE_MAP[label];
-        pageHtml+=`<div class="choice-field"><span class="choice-field-label">${shortLabel}</span><div class="choice-row">${choices.map(c=>`<div class="choice-box">${c}</div>`).join('')}</div></div>`;
-      } else if(isFree(label)){
-        pageHtml+=`<div class="free-field"><span class="free-field-label">${label}</span><div class="free-area">（ここに記入してください）</div></div>`;
-      } else {
-        pageHtml+=`<div class="note-field"><span class="note-field-label">${shortLabel}</span><div class="note-field-line"></div></div>`;
-      }
+      const s=label.replace(/（[^）]*）/g,'');
+      if(isChoice(label)){const c=CHOICE_MAP[label];pageHtml+=`<div class="choice-field"><span class="choice-field-label">${s}</span><div class="choice-row">${c.map(x=>`<div class="choice-box">${x}</div>`).join('')}</div></div>`;}
+      else if(isFree(label)){pageHtml+=`<div class="free-field"><span class="free-field-label">${label}</span><div class="free-area">（ここに記入してください）</div></div>`;}
+      else{pageHtml+=`<div class="note-field"><span class="note-field-label">${s}</span><div class="note-field-line"></div></div>`;}
       fieldCount++;
     });
     pageHtml+='</div>';fieldCount+=2;
   });
   pageHtml+='</div>';html+=pageHtml;
-
   document.getElementById('preview-area').innerHTML=html;
   document.getElementById('step1').classList.remove('active');
   document.getElementById('step2').classList.add('active');
   window.scrollTo(0,0);
-}
-
-function setFontSize(pct, btn){
-  document.querySelector(".app").style.fontSize = pct + "%";
-  document.querySelectorAll(".fs-btn").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
 }
 function goBack(){
   document.getElementById('step2').classList.remove('active');
