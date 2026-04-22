@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>終活×住まい 課題セレクター｜終活人.jp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blue-dark:#0C447C;
+  --blue:#185FA5;
+  --blue-light:#E6F1FB;
+  --blue-border:#B5D4F4;
+  --orange:#D85A30;
+  --orange-light:#FAECE7;
+  --green:#0F6E56;
+  --bg:#f8f8f6;
+  --card:#fff;
+  --border:#ddd;
+  --text:#1a1a18;
+  --text-sub:#555;
+  --text-muted:#999;
+  --base-font:16px;
+}
+html{font-size:var(--base-font);}
+body{
+  font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:1rem;
+  line-height:1.8;
+}
+
+/* ===== LAYOUT ===== */
+.app{max-width:960px;margin:0 auto;padding:1.5rem 1rem 4rem;}
+
+/* ===== HEADER ===== */
+.header{text-align:center;margin-bottom:1.25rem;}
+h1{font-size:1.125rem;font-weight:700;color:var(--blue-dark);margin-bottom:0.25rem;}
+.site-name{font-size:0.875rem;color:var(--text-sub);}
+.site-name a{color:var(--blue);text-decoration:none;border-bottom:1.5px solid var(--blue-border);padding-bottom:1px;}
+
+/* ===== FONT SIZE BAR ===== */
+.font-size-bar{
+  display:flex;align-items:center;justify-content:center;
+  gap:0.5rem;margin-bottom:1.25rem;
+  padding:0.5rem 0.75rem;
+  background:var(--card);border:0.5px solid var(--border);border-radius:8px;
+}
+.font-size-bar span{font-size:0.8rem;color:var(--text-muted);}
+.fs-btn{
+  padding:0.25rem 1rem;border-radius:6px;
+  border:0.5px solid var(--blue-border);
+  background:var(--bg);color:var(--blue);
+  font-family:inherit;font-size:0.8rem;cursor:pointer;
+  transition:background 0.15s;
+}
+.fs-btn:hover{background:var(--blue-light);}
+.fs-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+/* ===== INTRO ===== */
+.intro{
+  background:var(--card);border:0.5px solid var(--border);
+  border-radius:0.75rem;padding:1rem 1.25rem;margin-bottom:1.25rem;
+}
+.intro p{font-size:0.875rem;color:var(--text-sub);line-height:1.8;}
+
+/* ===== TAB ===== */
+.tab-bar{display:flex;gap:0;margin-bottom:1.25rem;border-radius:10px;overflow:hidden;border:0.5px solid var(--border);}
+.tab-btn{
+  flex:1;padding:0.75rem;text-align:center;
+  font-family:inherit;font-size:0.9375rem;font-weight:500;
+  border:none;cursor:pointer;transition:background 0.15s,color 0.15s;
+}
+.tab-btn.home{background:#f1efe8;color:var(--blue-dark);}
+.tab-btn.home.active{background:var(--blue);color:#fff;}
+.tab-btn.parents{background:#f1efe8;color:var(--blue-dark);border-left:0.5px solid var(--border);}
+.tab-btn.parents.active{background:var(--orange);color:#fff;}
+
+/* ===== MAIN PANEL ===== */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ===== ISSUE GRID ===== */
+.issues-section{
+  background:var(--card);border:0.5px solid var(--border);
+  border-radius:0.75rem;padding:1rem 1.25rem;margin-bottom:1.25rem;
+}
+.issues-section h2{
+  font-size:0.9375rem;font-weight:700;
+  color:var(--blue-dark);margin-bottom:0.875rem;
+  padding-bottom:0.5rem;border-bottom:1.5px solid var(--blue-border);
+}
+.panel.parents-panel .issues-section h2{
+  color:var(--orange);border-bottom-color:#F5C2AD;
+}
+
+.issue-list{display:flex;flex-direction:column;gap:0.5rem;}
+.issue-item{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  padding:0.625rem 0.875rem;
+  border-radius:8px;border:0.5px solid var(--border);
+  background:var(--bg);cursor:pointer;
+  transition:background 0.15s,border-color 0.15s;
+}
+.issue-item:hover{background:var(--blue-light);border-color:var(--blue-border);}
+.issue-item input[type="radio"]{
+  flex-shrink:0;margin-top:3px;accent-color:var(--blue);
+  width:16px;height:16px;cursor:pointer;
+}
+.panel.parents-panel .issue-item:hover{background:var(--orange-light);border-color:#F5C2AD;}
+.panel.parents-panel .issue-item input[type="radio"]{accent-color:var(--orange);}
+
+.issue-item.selected{background:var(--blue-light);border-color:var(--blue);}
+.panel.parents-panel .issue-item.selected{background:var(--orange-light);border-color:var(--orange);}
+
+.rank-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  font-size:0.7rem;font-weight:700;flex-shrink:0;
+}
+.panel.parents-panel .rank-badge{background:var(--orange);}
+.issue-text{font-size:0.875rem;line-height:1.7;}
+
+/* ===== RESULT AREA ===== */
+.result-area{
+  display:none;
+  background:var(--card);border:0.5px solid var(--border);
+  border-radius:0.75rem;padding:1.25rem;margin-bottom:1.25rem;
+}
+.result-area.visible{display:block;}
+
+.result-cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:640px){.result-cols{grid-template-columns:1fr;}}
+
+.result-col h3{
+  font-size:0.875rem;font-weight:700;
+  margin-bottom:0.625rem;padding-bottom:0.375rem;
+  border-bottom:1.5px solid var(--blue-border);
+  color:var(--blue-dark);
+}
+.result-col.prompt-col h3{
+  border-bottom-color:#B5D4F4;color:var(--blue-dark);
+}
+
+.issue-box{
+  background:var(--blue-light);border:0.5px solid var(--blue-border);
+  border-radius:8px;padding:0.875rem 1rem;
+  font-size:0.875rem;line-height:1.8;
+  min-height:100px;
+}
+.panel.parents-panel .issue-box{
+  background:var(--orange-light);border-color:#F5C2AD;
+}
+
+.prompt-box{
+  background:#f6f9ff;border:0.5px solid var(--blue-border);
+  border-radius:8px;padding:0.875rem 1rem;
+  font-size:0.875rem;line-height:1.8;color:var(--text);
+  min-height:100px;white-space:pre-wrap;
+}
+
+.result-actions{
+  display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.btn{
+  padding:0.5rem 1.25rem;border-radius:8px;
+  font-family:inherit;font-size:0.875rem;cursor:pointer;
+  border:0.5px solid var(--border);background:var(--card);color:var(--text);
+  transition:opacity 0.15s;
+}
+.btn:hover{opacity:0.8;}
+.btn-primary{background:var(--blue);color:#fff;border-color:var(--blue);}
+.btn-copy{background:var(--green);color:#fff;border-color:var(--green);}
+.copy-feedback{
+  display:none;font-size:0.75rem;color:var(--green);
+  align-self:center;margin-left:0.25rem;
+}
+.copy-feedback.show{display:inline;}
+
+/* ===== CAPTION ===== */
+.caption{font-size:0.75rem;color:var(--text-muted);line-height:1.7;}
+
+/* ===== FOOTER ===== */
+.footer{
+  margin-top:2rem;padding-top:1.25rem;
+  border-top:0.5px solid var(--border);
+  text-align:center;
+}
+.footer a{color:var(--blue);font-size:0.875rem;text-decoration:none;border-bottom:1px solid var(--blue-border);}
+.footer .notice{
+  font-size:0.75rem;color:var(--text-muted);
+  margin-top:0.75rem;line-height:1.8;
+  background:var(--card);border:0.5px solid var(--border);
+  border-radius:8px;padding:0.75rem 1rem;text-align:left;
+}
+
+/* ===== PRINT ===== */
+@media print{
+  .font-size-bar,.tab-bar,.intro,.issue-list,.result-actions,
+  .footer,.header,.caption{display:none!important;}
+  body{background:#fff;}
+  .app{padding:0;max-width:100%;}
+  .result-area{display:block!important;border:none;padding:0;}
+  .result-cols{grid-template-columns:1fr 1fr;}
+  .panel{display:block!important;}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <h1>終活×住まい 課題セレクター</h1>
+    <p class="site-name"><a href="https://shukatsu-jin.jp" target="_blank">終活人.jp</a></p>
+  </div>
+
+  <div class="font-size-bar">
+    <span>文字サイズ</span>
+    <button class="fs-btn active" onclick="setFS(16,this)">100%</button>
+    <button class="fs-btn" onclick="setFS(19,this)">120%</button>
+    <button class="fs-btn" onclick="setFS(22,this)">140%</button>
+  </div>
+
+  <div class="intro">
+    <p>終活の観点から「自宅」または「実家」のタブを選び、あてはまる課題をひとつ選択してください。<br>
+    左欄に課題の内容、右欄にAIへ質問するためのプロンプト例が表示されます。必要に応じて印刷してご活用ください。</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn home active" onclick="switchTab('home',this)">🏠 自宅の課題（50歳以上・本人視点）</button>
+    <button class="tab-btn parents" onclick="switchTab('parents',this)">🏡 実家の課題（子世代視点）</button>
+  </div>
+
+  <!-- ===== 自宅パネル ===== -->
+  <div class="panel home-panel active" id="panel-home">
+    <div class="issues-section">
+      <h2>自宅に関する終活上の課題 ―― 上位１〜１０位</h2>
+      <div class="issue-list" id="home-list">
+        <!-- JS で生成 -->
+      </div>
+    </div>
+
+    <div class="result-area" id="home-result">
+      <div class="result-cols">
+        <div class="result-col">
+          <h3>📌 選んだ課題</h3>
+          <div class="issue-box" id="home-issue-box"></div>
+        </div>
+        <div class="result-col prompt-col">
+          <h3>💬 AIへの質問プロンプト例</h3>
+          <div class="prompt-box" id="home-prompt-box"></div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <span class="copy-feedback" id="home-copy-feedback">✓ コピーしました</span>
+        <button class="btn btn-copy" onclick="copyPrompt('home')">プロンプトをコピー</button>
+        <button class="btn btn-primary" onclick="window.print()">印刷する</button>
+      </div>
+    </div>
+    <p class="caption">※このランキング表は特定の調査結果によるものではなく、一般公開されている複数のランキング調査をもとに終活の視点で再構成したものです。</p>
+  </div>
+
+  <!-- ===== 実家パネル ===== -->
+  <div class="panel parents-panel" id="panel-parents">
+    <div class="issues-section">
+      <h2>実家に関する終活上の課題 ―― 上位１〜１０位</h2>
+      <div class="issue-list" id="parents-list">
+        <!-- JS で生成 -->
+      </div>
+    </div>
+
+    <div class="result-area" id="parents-result">
+      <div class="result-cols">
+        <div class="result-col">
+          <h3>📌 選んだ課題</h3>
+          <div class="issue-box" id="parents-issue-box"></div>
+        </div>
+        <div class="result-col prompt-col">
+          <h3>💬 AIへの質問プロンプト例</h3>
+          <div class="prompt-box" id="parents-prompt-box"></div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <span class="copy-feedback" id="parents-copy-feedback">✓ コピーしました</span>
+        <button class="btn btn-copy" onclick="copyPrompt('parents')">プロンプトをコピー</button>
+        <button class="btn btn-primary" onclick="window.print()">印刷する</button>
+      </div>
+    </div>
+    <p class="caption">※このランキング表は特定の調査結果によるものではなく、一般公開されている複数のランキング調査をもとに終活の視点で再構成したものです。</p>
+  </div>
+
+  <div class="footer">
+    <a href="https://shukatsu-jin.jp" target="_blank">終活人.jp</a>
+    <div class="notice">
+      <strong>ご注意：</strong>本ツールで表示されるプロンプト例はあくまで参考です。AIの回答は情報提供を目的としたものであり、法律・税務・不動産に関する専門的アドバイスの代替にはなりません。具体的なご相談は弁護士・税理士・不動産専門家にご依頼ください。また、AIへの入力時に個人情報を含めないようご注意ください。
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== DATA =====
+const HOME_ISSUES = [
+  {
+    rank:1,
+    title:"建物の老朽化と修繕費用の負担",
+    detail:"自宅の建物の老朽化が進み、修繕・リフォームにかかる費用と手間が大きな負担になっている。いつ、どこを、いくらかけて直せばよいか判断が難しい。",
+    prompt:`私は50代以上で、自宅（持ち家）の老朽化と修繕費用の負担について悩んでいます。終活の観点から、以下の点を教えてください。
+1. 築年数別に優先して点検・修繕すべき箇所はどこですか？
+2. 修繕費用の目安と、費用を抑えるための補助金・助成金制度はありますか？
+3. 「修繕して住み続ける」か「売却・住み替えを検討する」か、判断するための考え方を教えてください。`
+  },
+  {
+    rank:2,
+    title:"庭の手入れや家の片付けなど維持管理の負担",
+    detail:"年齢とともに体力が落ち、庭の草刈りや掃除、家の整理など日常的な維持管理が身体的・時間的に大きな負担になっている。",
+    prompt:`私は50代以上で、自宅の庭・家の維持管理が体力的に負担になっています。終活の観点から教えてください。
+1. 無理なく維持できる庭・家の環境に変えるための具体的な方法を教えてください。
+2. 業者に依頼する場合の費用相場と、業者の選び方を教えてください。
+3. 家の片付け（生前整理）を少しずつ進めるためのステップを教えてください。`
+  },
+  {
+    rank:3,
+    title:"住まいの将来処分への不安（相続・売却）",
+    detail:"自分が亡くなった後や認知症になった場合に、家をどう相続させるか、いつ売却するか、処分の方針が決まらず不安が残っている。",
+    prompt:`私は50代以上で、自宅の将来的な相続や売却について不安があります。終活の観点から教えてください。
+1. 自宅を将来的に相続させるために、今のうちにやっておくべき準備を教えてください。
+2. 自宅を売却するタイミングや、税金（譲渡所得税など）で損をしないポイントを教えてください。
+3. 家族への負担を減らすために有効な法的な手続き（遺言書・家族信託など）の概要を教えてください。`
+  },
+  {
+    rank:4,
+    title:"不用品の処分など引っ越し作業の負担",
+    detail:"住み替えを検討してはいるが、長年の不用品・家財が多く、引っ越しの準備や処分の手間が大きすぎて踏み出せない。",
+    prompt:`私は50代以上で、自宅の住み替えや生前整理に向けて不用品の処分に困っています。終活の観点から教えてください。
+1. 長年の家財・不用品を効率よく整理するための手順を教えてください。
+2. 粗大ゴミ・買取・寄付など、処分方法と費用の目安を教えてください。
+3. 自分ひとりでは難しい場合に利用できるサービスや支援制度はありますか？`
+  },
+  {
+    rank:5,
+    title:"住み替え先を探す手間",
+    detail:"老後を見据えて住み替えを考えているが、マンション・サービス付き高齢者向け住宅・実家など選択肢が多く、探す手間と情報収集が大変で決断できない。",
+    prompt:`私は50代以上で、老後を見据えた住み替えを検討していますが、どこへ移ればよいか迷っています。終活の観点から教えてください。
+1. 50〜70代の住み替え先として代表的な選択肢（マンション・サ高住・シニア向け分譲住宅等）の特徴とメリット・デメリットを教えてください。
+2. 住み替え先を選ぶ際の重要なチェックポイントを教えてください。
+3. 住み替えにかかる全体的な費用の目安を教えてください。`
+  },
+  {
+    rank:6,
+    title:"現在の家を売却できるか不明",
+    detail:"自宅を売りたいが、築年数が古い・立地が悪い・需要があるか不明など、本当に売れるのかどうかわからず、終活の計画が立てられない。",
+    prompt:`私は50代以上で、自宅が売れるかどうか不安があります。終活の観点から教えてください。
+1. 築年数が古い家や地方の物件が売れにくい理由と、売却可能性を高めるための対策を教えてください。
+2. 不動産会社に査定を依頼する前に自分でできる相場確認の方法を教えてください。
+3. 売れなかった場合の代替手段（賃貸活用・空き家バンク・寄付等）を教えてください。`
+  },
+  {
+    rank:7,
+    title:"自宅について課題は感じているが、どのように取り組めばよいかわからない",
+    detail:"自宅のこと（生前整理・住み替え・売却・相続対策など）について何かしなければという気持ちはあるが、具体的に何から手をつければよいかわからず、なかなか動き出せない。",
+    prompt:`私は50代以上で、住まいに関する終活（生前整理・住み替え・売却・相続対策）を始めたいのですが、何から手をつけるべきかわかりません。
+1. 住まいの終活を進めるうえで、まず最初にやるべきことを3ステップで教えてください。
+2. 相談窓口としてどのような専門家や機関を活用できますか？
+3. 早めに始めることで得られるメリットと、先延ばしにするリスクを教えてください。`
+  },
+  {
+    rank:8,
+    title:"具体的に行動へ移せていないこと自体",
+    detail:"住まいの終活の必要性は感じているが、実際に行動に移している人は少なく（約5％）、自分もなかなか動けないことへの焦りや罪悪感がある。",
+    prompt:`私は住まいの終活が必要だとわかっているのに、なかなか行動できていません。
+1. 終活の行動に移せない典型的な心理的障壁と、その乗り越え方を教えてください。
+2. 「完璧にやろうとしない」ための、小さく始められる終活の最初の一歩を教えてください。
+3. モチベーションを維持しながら継続するためのコツを教えてください。`
+  },
+  {
+    rank:9,
+    title:"家族に負担をかけたくないという心理的プレッシャー",
+    detail:"自分が死んだ後や介護が必要になった時に、子どもや家族に家の処分・片付けで迷惑をかけたくないという気持ちが強く、終活を急ぎたいが具体的な方法がわからない。",
+    prompt:`私は50代以上で、将来、家族（子ども）に住まいの片付けや処分で迷惑をかけたくないと思っています。終活の観点から教えてください。
+1. 家族の負担を最小化するために、今のうちにやっておくべき「住まいの終活」の具体策を教えてください。
+2. 家族への意思伝達（どうしてほしいか）を残す方法を教えてください。
+3. 家族が困らないよう、住まいに関する情報をまとめておくリストの項目を教えてください。`
+  },
+  {
+    rank:10,
+    title:"不用品・生前整理の未着手",
+    detail:"50代以上の終活で最も多く実践されているのが生前整理だが、まだ手をつけられていない。家の中の物が多く、どこから始めればよいかわからない。",
+    prompt:`私は50代以上で、自宅の生前整理（不用品の片付け）にまだ手をつけられていません。終活の観点から教えてください。
+1. 生前整理を始める際の基本的な考え方と、部屋・場所ごとの優先順位を教えてください。
+2. 「捨てる・残す・譲る」を判断するための基準を教えてください。
+3. 貴重品・重要書類・デジタルデータの整理で特に注意すべき点を教えてください。`
+  }
+];
+
+const PARENTS_ISSUES = [
+  {
+    rank:1,
+    title:"不用品・家財の処分費用がかかる",
+    detail:"実家が片付いていないことへの懸念として最多（66.1%）。家財・不用品の量が多く、処分にかかる費用が大きな負担になることへの不安がある。",
+    prompt:`私は子世代で、親の実家の片付けと家財処分の費用について悩んでいます。終活の観点から教えてください。
+1. 実家の家財・不用品処分にかかる費用の目安と、費用を抑えるための方法を教えてください。
+2. 遺品整理業者・不用品回収業者を選ぶ際の注意点と、悪質業者を見分ける方法を教えてください。
+3. 生前に親と一緒に片付けを進める場合と、亡くなった後に行う場合で費用・手間はどう変わりますか？`
+  },
+  {
+    rank:2,
+    title:"相続時に大変になる",
+    detail:"片付いていない実家を放置すると、相続の時に家財処分・不動産整理・家族間の調整が複雑になるという懸念（39.3%）。",
+    prompt:`私は子世代で、将来の実家の相続について不安があります。終活の観点から教えてください。
+1. 実家の相続で起こりやすいトラブルとその予防策を教えてください。
+2. 実家不動産を相続した場合の選択肢（住む・貸す・売る・解体）と、それぞれのメリット・デメリットを教えてください。
+3. 相続税の観点から、実家についての節税対策として知っておくべき基本的なポイントを教えてください。`
+  },
+  {
+    rank:3,
+    title:"親がケガをしないか心配",
+    detail:"実家の片付きの悪さや老朽化した設備による転倒・事故のリスクを、子世代の30.4%が懸念している。",
+    prompt:`私は子世代で、高齢の親が実家でケガをしないか心配しています。終活の観点から教えてください。
+1. 高齢者が自宅でケガをしやすい場所と、優先すべき住環境の改善点を教えてください。
+2. バリアフリー改修・手すり設置などにかかる費用と、介護保険・補助金を活用した費用の抑え方を教えてください。
+3. 実家に帰省した際に、安全面をチェックするための確認リストを作ってください。`
+  },
+  {
+    rank:4,
+    title:"物が多く、どこから手をつければよいかわからない",
+    detail:"実家の片付けができない理由として33.9%が挙げた。物量が多すぎてどこから始めればよいか見当がつかない。",
+    prompt:`私は子世代で、実家の物が多すぎてどこから片付ければよいかわかりません。終活の観点から教えてください。
+1. 実家の片付けを効率よく進めるための、場所・物の種類別の優先順位を教えてください。
+2. 親が存命中に一緒に片付けを進めるための、声かけの仕方や段取りを教えてください。
+3. 「捨てる・残す・分ける（家族に譲る）」の判断を素早くするための実践的な基準を教えてください。`
+  },
+  {
+    rank:5,
+    title:"片付けを手伝う時間がない",
+    detail:"実家の片付けが進まない最大の理由（35.7%）。仕事や自分の家庭のことで手いっぱいで、実家に割く時間がない。",
+    prompt:`私は子世代で、仕事や育児が忙しく実家の片付けを手伝う時間がほとんどありません。終活の観点から教えてください。
+1. 時間が取れない子世代が、効率よく実家の片付けを進めるための戦略を教えてください。
+2. 専門業者（生前整理・遺品整理業者）に依頼した場合のメリットと費用相場を教えてください。
+3. 離れていても親の片付けをサポートできる方法（オンライン活用・地域サービス等）を教えてください。`
+  },
+  {
+    rank:6,
+    title:"思い出の品・趣味の物が捨てにくい",
+    detail:"感情的な障壁として30.4%が回答。親や自分の思い出が詰まった品や趣味の道具は捨てにくく、片付けが進まない。",
+    prompt:`私は子世代で、実家にある親の思い出の品や趣味の道具が捨てられず片付けが進みません。終活の観点から教えてください。
+1. 思い出の品・趣味の道具を整理する際の、心理的負担を減らす考え方を教えてください。
+2. 捨てる以外の選択肢（寄付・買取・デジタル化・フォトブック化）とその方法を教えてください。
+3. 親が自分で「残したいもの」を決めてもらうための会話のコツを教えてください。`
+  },
+  {
+    rank:7,
+    title:"片付け方法や捨て方がわからない",
+    detail:"実務知識の不足として23.2%が挙げた。何をどのように捨てればよいか、ルールや手順がわからない。",
+    prompt:`私は子世代で、実家の片付けで何をどのように処分すればよいか具体的な方法がわかりません。終活の観点から教えてください。
+1. 家電・家具・衣類・書類・薬など、カテゴリ別の正しい処分方法を教えてください。
+2. 自治体のゴミ収集・粗大ゴミ申請の基本的な手順と、注意点を教えてください。
+3. 貴重品（通帳・印鑑・権利書・保険証券等）が実家に残っている場合の確認・管理方法を教えてください。`
+  },
+  {
+    rank:8,
+    title:"親の了解が得られない・親が拒否する",
+    detail:"子世代が片付けの必要性を感じても、親が「まだ必要」「捨てないで」と拒否するケースが多く、関係性に摩擦が生じやすい。",
+    prompt:`私は子世代で、実家の片付けについて親に話すと「捨てないで」「まだ使う」と拒否されてしまいます。終活の観点から教えてください。
+1. 片付けを嫌がる高齢の親を傷つけずに、片付けの話を進めるための会話の切り出し方を教えてください。
+2. 親が物を手放せない心理的背景と、理解しながら寄り添うための接し方を教えてください。
+3. 親が同意してくれるための、段階的な片付けのアプローチを教えてください。`
+  },
+  {
+    rank:9,
+    title:"親自身に片付いていない自覚がない",
+    detail:"子世代が問題視していても、親本人は「困っていない」「片付いている」と思っており、問題認識のズレが着手を難しくしている。",
+    prompt:`私は子世代で、実家の片付けについて親自身がまったく問題意識を持っていないことに困っています。終活の観点から教えてください。
+1. 親に「片付けた方がよい」と感じてもらうための、効果的な伝え方・動機づけの方法を教えてください。
+2. 親の自覚を促すきっかけ（友人の事例・専門家の話など）の活用方法を教えてください。
+3. 親の同意なしに進められる準備（記録・書類の把握等）はどこまで可能か教えてください。`
+  },
+  {
+    rank:10,
+    title:"遠方でこまめに対応できない",
+    detail:"親に会う回数は「年に数回程度」が56.3%。距離の問題から実家の状況確認や片付けに頻繁に関われない。",
+    prompt:`私は子世代で、実家が遠方にあり頻繁に帰省できないため実家の終活が進みません。終活の観点から教えてください。
+1. 遠距離でも実家の状況を把握・管理するための方法（見守りサービス・定期連絡等）を教えてください。
+2. 帰省回数が限られている中で、効率よく片付けや手続きを進めるための段取りを教えてください。
+3. 遠距離から活用できる専門サービス（生前整理・不動産管理・見守り）の種類と選び方を教えてください。`
+  }
+];
+
+// ===== RENDER LISTS =====
+function renderList(data, containerId, panelKey) {
+  const container = document.getElementById(containerId);
+  data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'issue-item';
+    div.innerHTML = `
+      <input type="radio" name="${panelKey}-radio" id="${panelKey}-r${i}" value="${i}">
+      <label for="${panelKey}-r${i}" style="display:flex;align-items:flex-start;gap:0.5rem;cursor:pointer;flex:1;">
+        <span class="rank-badge">${item.rank}</span>
+        <span class="issue-text">${item.title}</span>
+      </label>`;
+    div.addEventListener('click', () => {
+      document.getElementById(`${panelKey}-r${i}`).checked = true;
+      showResult(panelKey, i);
+      document.querySelectorAll(`#panel-${panelKey === 'home' ? 'home' : 'parents'} .issue-item`).forEach(el => el.classList.remove('selected'));
+      div.classList.add('selected');
+    });
+    container.appendChild(div);
+  });
+}
+
+function showResult(panelKey, index) {
+  const data = panelKey === 'home' ? HOME_ISSUES : PARENTS_ISSUES;
+  const item = data[index];
+  document.getElementById(`${panelKey}-issue-box`).textContent = `【第${item.rank}位】${item.title}\n\n${item.detail}`;
+  document.getElementById(`${panelKey}-prompt-box`).textContent = item.prompt;
+  const resultEl = document.getElementById(`${panelKey}-result`);
+  resultEl.classList.add('visible');
+  resultEl.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ===== TAB SWITCH =====
+function switchTab(key, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`panel-${key === 'home' ? 'home' : 'parents'}`).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== COPY PROMPT =====
+function copyPrompt(panelKey) {
+  const text = document.getElementById(`${panelKey}-prompt-box`).textContent;
+  if (!text.trim()) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const fb = document.getElementById(`${panelKey}-copy-feedback`);
+    fb.classList.add('show');
+    setTimeout(() => fb.classList.remove('show'), 2000);
+  });
+}
+
+// ===== FONT SIZE =====
+function setFS(px, btn) {
+  document.documentElement.style.fontSize = px + 'px';
+  document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ===== INIT =====
+renderList(HOME_ISSUES, 'home-list', 'home');
+renderList(PARENTS_ISSUES, 'parents-list', 'parents');
+</script>
+</body>
+</html>
