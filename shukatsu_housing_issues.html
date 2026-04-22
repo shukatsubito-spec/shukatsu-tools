@@ -25,19 +25,17 @@
   --text-muted:#999;
   --base-font:16px;
 }
-html{font-size:var(--base-font);overflow-x:hidden;}
+html{font-size:var(--base-font);}
 body{
   font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;
   background:var(--bg);
   color:var(--text);
   font-size:1rem;
   line-height:1.8;
-  overflow-x:hidden;
-  width:100%;
 }
 
 /* ===== LAYOUT ===== */
-.app{width:100%;max-width:960px;margin:0 auto;padding:1.5rem 1rem 4rem;}
+.app{width:100%;max-width:960px;margin:0 auto;padding:1.5rem 1rem 4rem;transform-origin:top left;}
 
 /* ===== HEADER ===== */
 .header{text-align:center;margin-bottom:1.25rem;}
@@ -224,9 +222,9 @@ h1{font-size:1.125rem;font-weight:700;color:var(--blue-dark);margin-bottom:0.25r
 
   <div class="font-size-bar">
     <span>文字サイズ</span>
-    <button class="fs-btn active" onclick="setFS(16,this)">100%</button>
-    <button class="fs-btn" onclick="setFS(19,this)">120%</button>
-    <button class="fs-btn" onclick="setFS(22,this)">140%</button>
+    <button class="fs-btn active" onclick="setFS(1,this)">100%</button>
+    <button class="fs-btn" onclick="setFS(1.2,this)">120%</button>
+    <button class="fs-btn" onclick="setFS(1.4,this)">140%</button>
   </div>
 
   <div class="intro">
@@ -546,8 +544,8 @@ function copyPrompt(panelKey) {
 }
 
 // ===== FONT SIZE =====
-function setFS(px, btn) {
-  document.documentElement.style.fontSize = px + 'px';
+function setFS(scale, btn) {
+  document.querySelector('.app').style.zoom = scale;
   document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
