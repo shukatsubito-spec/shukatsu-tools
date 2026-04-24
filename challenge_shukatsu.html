@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>チャレンジ！終活｜10のテーマをクリアしていこう</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Shippori+Mincho:wght@700&display=swap');
+
+:root {
+  --ink: #1a1a2e;
+  --bg: #f5f3ef;
+  --white: #ffffff;
+  --muted: #6b7280;
+  --line: #e2ddd6;
+
+  --stage-1: #e8f4e8; --stage-1-acc: #2d6a4f;
+  --stage-2: #e8eef8; --stage-2-acc: #1a4480;
+  --stage-3: #fef6e4; --stage-3-acc: #8b5e00;
+  --stage-4: #fce8e8; --stage-4-acc: #9b2335;
+  --stage-5: #f0e8f8; --stage-5-acc: #5b2d8e;
+  --stage-6: #e8f8f5; --stage-6-acc: #1a5f4e;
+  --stage-7: #fff0e8; --stage-7-acc: #8b3a00;
+  --stage-8: #e8f0ff; --stage-8-acc: #1a3a6e;
+  --stage-9: #f8efe8; --stage-9-acc: #7a3b00;
+  --stage-10: #e8ffe8; --stage-10-acc: #1a5500;
+
+  --ok: #059669;
+  --radius: 18px;
+  --shadow: 0 4px 20px rgba(26,26,46,.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #fff;
+  padding: 56px 20px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 999px;
+  padding: 4px 16px;
+  font-size: 12px;
+  letter-spacing: .12em;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Shippori Mincho', 'Yu Mincho', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.hero h1 span { color: #fbbf24; }
+.hero-lead {
+  font-size: 14px;
+  color: rgba(255,255,255,.75);
+  max-width: 500px;
+  margin: 0 auto 28px;
+  line-height: 1.8;
+}
+
+/* 全体進捗 */
+.overall-progress {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.op-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255,255,255,.7);
+  margin-bottom: 8px;
+}
+.op-bar-wrap {
+  height: 10px;
+  background: rgba(255,255,255,.15);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.op-bar {
+  height: 10px;
+  background: linear-gradient(90deg, #34d399, #fbbf24);
+  border-radius: 999px;
+  width: 0%;
+  transition: width .6s ease;
+}
+.op-checkpoints {
+  font-size: 12px;
+  color: rgba(255,255,255,.6);
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* ===== INTRO ===== */
+.intro-section {
+  max-width: 720px;
+  margin: 32px auto 0;
+  padding: 0 16px;
+}
+.intro-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+.intro-card h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+@media(max-width:640px){ .intro-grid { grid-template-columns: 1fr; } }
+.intro-step {
+  text-align: center;
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 14px 10px;
+}
+.intro-step .step-num {
+  width: 32px; height: 32px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900;
+  font-size: 14px;
+  margin: 0 auto 8px;
+}
+.intro-step p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ===== STAGES WRAPPER ===== */
+.stages-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 16px 60px;
+}
+
+/* ===== STAGE CARD ===== */
+.stage-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: box-shadow .3s ease;
+}
+.stage-card.is-done {
+  border-color: var(--ok);
+  box-shadow: 0 0 0 2px rgba(5,150,105,.12), var(--shadow);
+}
+.stage-card.is-active {
+  box-shadow: 0 8px 32px rgba(26,26,46,.14);
+}
+
+.stage-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--white);
+  position: relative;
+}
+.stage-header:hover { background: #fafaf8; }
+
+.stage-num-badge {
+  flex: 0 0 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 2px solid var(--line);
+  transition: all .3s ease;
+}
+.stage-card.is-done .stage-num-badge {
+  background: var(--ok);
+  color: #fff;
+  border-color: var(--ok);
+}
+
+.stage-header-text { flex: 1; }
+.stage-header-text h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.stage-header-text .stage-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stage-check-icon {
+  font-size: 22px;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.stage-card.is-done .stage-check-icon { opacity: 1; }
+
+.stage-chevron {
+  width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .25s ease;
+  color: #9ca3af;
+}
+.stage-card[data-open="true"] .stage-chevron { transform: rotate(180deg); }
+
+/* STAGE BODY */
+.stage-body {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--line);
+}
+.stage-card[data-open="true"] .stage-body { display: block; }
+
+.stage-accent-bar {
+  height: 4px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+/* 理解チェックリスト */
+.understand-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 8px;
+  margin-top: 4px;
+  letter-spacing: .04em;
+}
+.check-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.check-item:hover { background: #edeae4; }
+.check-item.is-checked {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+}
+.check-item input[type="checkbox"] {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--ok);
+  flex-shrink: 0;
+}
+.check-item-text { font-size: 13px; line-height: 1.6; }
+.check-item.is-checked .check-item-text { color: #065f46; }
+
+/* ミニ進捗 */
+.mini-progress-wrap { margin: 12px 0 0; }
+.mini-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.mini-progress-bar-wrap {
+  height: 6px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.mini-progress-bar {
+  height: 6px;
+  background: linear-gradient(90deg, #34d399, #059669);
+  border-radius: 999px;
+  width: 0%;
+  transition: width .4s ease;
+}
+
+/* AIプロンプトエリア */
+.prompt-area {
+  margin-top: 16px;
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  background: #fafafa;
+  overflow: hidden;
+}
+.prompt-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: #374151;
+  text-align: left;
+}
+.prompt-toggle .pt-badge {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+}
+.prompt-items { display: none; padding: 0 14px 14px; }
+.prompt-area[data-open="true"] .prompt-items { display: block; }
+
+.prompt-item { margin-bottom: 10px; }
+.prompt-item:last-child { margin-bottom: 0; }
+.prompt-q-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.prompt-text {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #1f2937;
+}
+.prompt-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.btn-copy {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-copy:hover { background: #f3f4f6; }
+.btn-copy.ok { border-color: var(--ok); color: var(--ok); }
+.btn-chatgpt {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #10a37f;
+  background: #fff;
+  color: #10a37f;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  font-family: inherit;
+}
+.btn-chatgpt:hover { background: #f0fdf9; }
+
+/* クリアボタン */
+.clear-btn-wrap { margin-top: 16px; text-align: center; }
+.btn-clear-stage {
+  border: none;
+  background: linear-gradient(135deg, #059669, #34d399);
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(5,150,105,.25);
+  transition: all .2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-clear-stage:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(5,150,105,.35); }
+.btn-clear-stage:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* ===== 完走ゴール画面 ===== */
+.goal-banner {
+  display: none;
+  max-width: 720px;
+  margin: 0 auto 32px;
+  padding: 0 16px;
+}
+.goal-banner.show { display: block; }
+.goal-inner {
+  background: linear-gradient(135deg, #064e3b, #065f46);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+  text-align: center;
+  color: #fff;
+}
+.goal-emoji { font-size: 56px; margin-bottom: 12px; line-height: 1; }
+.goal-inner h2 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+.goal-inner p { color: rgba(255,255,255,.8); font-size: 14px; line-height: 1.8; }
+.goal-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+.goal-tag {
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+}
+.btn-reset-all {
+  display: inline-block;
+  margin-top: 20px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.3);
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-reset-all:hover { background: rgba(255,255,255,.25); }
+
+/* ===== 注意書き ===== */
+.disclaimer {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  padding: 0 16px;
+}
+.disclaimer-inner {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ===== レスポンシブ ===== */
+@media(max-width:480px) {
+  .stage-header { padding: 14px 14px; gap: 10px; }
+  .stage-body { padding: 0 14px 14px; }
+  .stage-num-badge { width: 38px; height: 38px; font-size: 14px; flex: 0 0 38px; }
+  .stage-header-text h3 { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">チャレンジ！終活</div>
+  <h1>10のテーマを<br><span>一つずつクリアしていこう</span></h1>
+  <p class="hero-lead">
+    終活には正しい順番も、完璧な答えもありません。<br>
+    まず「知る」ことから。10テーマを一つずつクリアして、<br>
+    あなたらしい終活の地図を描きましょう。
+  </p>
+  <div class="overall-progress">
+    <div class="op-label">
+      <span>全体の進捗</span>
+      <span id="opPercent">0%</span>
+    </div>
+    <div class="op-bar-wrap">
+      <div class="op-bar" id="opBar"></div>
+    </div>
+    <div class="op-checkpoints" id="opCheckpoints">0 / 10 ステージクリア</div>
+  </div>
+</section>
+
+<!-- イントロ -->
+<div class="intro-section">
+  <div class="intro-card">
+    <h2>🏃 このページの使い方</h2>
+    <div class="intro-grid">
+      <div class="intro-step">
+        <div class="step-num">1</div>
+        <p>各テーマを開いて、理解チェックリストを確認</p>
+      </div>
+      <div class="intro-step">
+        <div class="step-num">2</div>
+        <p>気になった質問はAIプロンプトをコピーして相談</p>
+      </div>
+      <div class="intro-step">
+        <div class="step-num">3</div>
+        <p>「理解した・確認済み」にチェックを入れてクリア</p>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">※一度に全部やる必要はありません。途中で閉じても進捗は保存されます。</p>
+  </div>
+</div>
+
+<!-- ゴールバナー（全クリア時に表示） -->
+<div class="goal-banner" id="goalBanner">
+  <div class="goal-inner">
+    <div class="goal-emoji">🏆</div>
+    <h2>チャレンジ完了おめでとうございます！</h2>
+    <p>10のテーマをすべてクリアしました。<br>
+    終活の全体像を把握できたことが、最大の財産です。<br>
+    次は「気になるテーマ」の専門家に相談してみましょう。</p>
+    <div class="goal-tags" id="goalTags"></div>
+    <button class="btn-reset-all" id="resetAllBtn">最初からやり直す</button>
+  </div>
+</div>
+
+<!-- ステージ一覧 -->
+<div class="stages-wrap" id="stagesWrap"></div>
+
+<!-- 注意書き -->
+<div class="disclaimer">
+  <div class="disclaimer-inner">
+    <b>ご利用にあたって：</b>
+    本ページは終活の入口として「知る・整理する」ことを目的とした学習用コンテンツです。
+    遺言・相続・税務・法務・医療・介護に関する最終判断は、必ず専門家（税理士・司法書士・弁護士・ケアマネジャー等）にご確認ください。
+    AIへの質問時には、個人を特定できる情報（氏名・住所・口座番号等）は入力しないようお願いします。
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+// ===== データ定義 =====
+const STAGES = [
+  {
+    id: 'will',
+    title: '遺言・相続の準備',
+    sub: '法定相続・遺言の方式と費用・手続き',
+    color: '#2d6a4f', colorLight: '#e8f4e8',
+    checks: [
+      '法定相続分の基本ルールを知っている',
+      '自筆証書・公正証書・秘密証書の3種類の違いを把握した',
+      '法務局の自筆証書遺言保管制度を知っている',
+      '遺言を残す・残さない場合のリスクを理解した'
+    ],
+    prompts: [
+      '自筆証書遺言保管制度の利用方法と流れを、必要書類・手数料・注意点まで簡潔に説明してください。',
+      '公正証書遺言の作成手順（準備書類・証人・費用構造・保管）を、一般的な金額感と所要時間の目安つきで説明してください。',
+      '遺言を残さないと起こりうる問題を、具体的な事例イメージで3つ挙げてください。'
+    ]
+  },
+  {
+    id: 'endingnote',
+    title: 'エンディングノート（最小限主義）',
+    sub: '書きすぎず・安全に・家族に伝える',
+    color: '#1a4480', colorLight: '#e8eef8',
+    checks: [
+      '最低限書くべき項目（連絡先・書類の所在・希望）を把握した',
+      '口座番号・パスワードは書かないことを理解した',
+      '紙とデジタルの安全な保管方法を知っている',
+      '"きっかけ情報"（金融機関名・保険会社名）の書き方を理解した'
+    ],
+    prompts: [
+      'エンディングノートに最低限だけ書く項目リストを作ってください。機微情報は書かないよう注意書きも含めて。',
+      '紙とデジタル別の安全な保管・更新方法の手順を作ってください。',
+      '家族が後から調べられる"きっかけ情報"の書き方を具体例つきで説明してください。'
+    ]
+  },
+  {
+    id: 'housing',
+    title: '住まいの見直し・住み替え',
+    sub: '売却・賃貸・リフォーム・二世帯化の4択',
+    color: '#8b5e00', colorLight: '#fef6e4',
+    checks: [
+      '売却・賃貸・リフォーム・二世帯化の判断軸を知っている',
+      'バリアフリー要件（段差・手すり・浴室等）を把握した',
+      '相続予定の不動産の活用オプションを考えた',
+      '住み替え時の費用感の目安を理解した'
+    ],
+    prompts: [
+      '現在の住まいを売却・賃貸・リフォーム・二世帯化の4案で比較する判断軸を表形式で作ってください。',
+      '高齢期の住み替え時に確認すべきバリアフリー要件をチェックリスト化してください。',
+      '相続予定の不動産を含む「住まい」の評価と活用オプションを整理する質問リストを作ってください。'
+    ]
+  },
+  {
+    id: 'medical',
+    title: '医療・介護の希望表明',
+    sub: '延命・在宅・施設の意思を見える化する',
+    color: '#9b2335', colorLight: '#fce8e8',
+    checks: [
+      '延命治療・在宅医療・施設入所の選好を整理した',
+      '事前指示書（リビングウィル）の概要を知っている',
+      '代理人指定（家族・後見人）の仕組みを理解した',
+      '地域包括支援センターの役割と相談方法を知っている'
+    ],
+    prompts: [
+      '延命治療・在宅医療・施設入所の選好を家族と共有するための意思表示シートの雛形を作ってください。',
+      '事前指示書・代理人指定・家族との話し合い記録の作り方を手順化してください。',
+      '地域包括支援センターの探し方と初回相談で用意すべき情報を箇条書きにしてください。'
+    ]
+  },
+  {
+    id: 'insurance',
+    title: '保険・年金の整理',
+    sub: '受取人・保障・公的年金の棚卸し',
+    color: '#5b2d8e', colorLight: '#f0e8f8',
+    checks: [
+      '加入保険の棚卸し方法（契約者・受取人・保管場所）を知っている',
+      'ねんきんネットで公的年金の見込み額を確認できる',
+      '受取人見直しが必要なケース（離婚・再婚等）を理解した',
+      '繰下げ受給と収入・健康のバランスを考えた'
+    ],
+    prompts: [
+      '加入保険の棚卸しテンプレート（契約者・被保険者・受取人・満期・保管場所）を作ってください。',
+      '公的年金の見込み額と不足額のざっくり試算手順を説明してください。',
+      '受取人指定の見直しが必要になる典型ケースと手続きの要点をまとめてください。'
+    ]
+  },
+  {
+    id: 'digital',
+    title: 'デジタル終活',
+    sub: 'アカウントの棚卸しと安全な引き継ぎ設計',
+    color: '#1a5f4e', colorLight: '#e8f8f5',
+    checks: [
+      '利用中のオンラインサービス（金融・SNS・サブスク等）を把握した',
+      'パスワードを書かずに引き継ぐ設計方法を知っている',
+      'アカウント停止・追悼化の代表的な手順を知っている',
+      'デジタル遺品の整理について家族と話したことがある'
+    ],
+    prompts: [
+      '利用中のオンラインサービスを棚卸しするチェックリスト（金融/通信/サブスク/SNS/メール）を作ってください。',
+      'パスワード自体は書かずに、家族が後からたどれる引き継ぎ設計を説明してください。',
+      '亡くなった後のアカウント停止・追悼化・データダウンロードの代表的なやり方を手順化してください。'
+    ]
+  },
+  {
+    id: 'funeral',
+    title: '葬儀・供養・お墓',
+    sub: '形式と費用の違い、生前準備の要点',
+    color: '#8b3a00', colorLight: '#fff0e8',
+    checks: [
+      '家族葬・直葬・一般葬・樹木葬の費用感を大まかに把握した',
+      'お布施の考え方と見積時の注意点を知っている',
+      '生前契約（互助会等）のメリット・注意点を理解した',
+      '自分の希望する葬儀の形式を考えたことがある'
+    ],
+    prompts: [
+      '家族葬・直葬・一般葬・樹木葬の違いを費用感・所要日数・準備項目で比較表にしてください。',
+      'お布施の考え方と見積時の注意点を要点だけ説明してください。',
+      '生前契約（互助会等）のメリット・注意点・解約時の留意点を整理してください。'
+    ]
+  },
+  {
+    id: 'contacts',
+    title: '連絡先・契約・書類整理',
+    sub: '「何がどこにあるか」を家族が辿れる状態に',
+    color: '#1a3a6e', colorLight: '#e8f0ff',
+    checks: [
+      '重要書類の所在リスト（保険証券・登記簿・年金手帳・通帳等）を作った',
+      '解約・名義変更に必要な情報の整理方法を知っている',
+      '家族が最初に連絡すべき先の優先順位を考えた',
+      '書類の保管場所を家族の誰かに伝えている'
+    ],
+    prompts: [
+      '重要書類の所在リスト（保険証券・登記簿・年金手帳・通帳・実印・印鑑証明等）のテンプレートを作ってください。',
+      '解約/名義変更に必要な情報のメモ欄を含む表を作ってください。',
+      '家族が最初に連絡すべき先（親族・主治医・金融機関等）の優先順位リストを作ってください。'
+    ]
+  },
+  {
+    id: 'experts',
+    title: '専門家の使い方と費用感',
+    sub: '自分でやる・頼むの線引きと費用の目安',
+    color: '#7a3b00', colorLight: '#f8efe8',
+    checks: [
+      '相続・遺言・不動産・税務で専門家が必要な場面を理解した',
+      '初回相談で準備すべき資料の種類を知っている',
+      '費用感の目安レンジ（遺言サポート・登記・申告）を把握した',
+      '地域の相談窓口（法テラス・司法書士会等）を知っている'
+    ],
+    prompts: [
+      '相続/遺言/不動産/税務それぞれで「自分でできること」と「専門家に任せるべきこと」の線引きを表で整理してください。',
+      '初回相談で準備すべき資料チェックリストを作ってください。',
+      '費用感の目安レンジと見積比較の観点を挙げてください。'
+    ]
+  },
+  {
+    id: 'reskilling',
+    title: 'リスキリングと新しい働き方',
+    sub: 'AI・ノーコードで"70歳現役"を支える学び直し',
+    color: '#1a5500', colorLight: '#e8ffe8',
+    checks: [
+      '中高年が身につけやすいデジタルスキルの種類を知っている',
+      '在宅ワークに適した住環境のチェックポイントを理解した',
+      'AI活用（生成AI・ノーコード等）の入口を知っている',
+      '60〜70歳の働き方プランを大まかに考えたことがある'
+    ],
+    prompts: [
+      '中高年が最短で身につけやすいデジタルスキル（生成AIプロンプト・ノーコード・表計算自動化）の学び順ロードマップを作ってください。',
+      '在宅ワークに適した住環境（回線・静音・照明・机/椅子・防犯）のチェックリストを作ってください。',
+      '60代〜70代が活躍しやすい新しい働き方と、AIを活用したスキルアップ方法を教えてください。'
+    ]
+  }
+];
+
+// ===== 状態管理 =====
+const STATE_KEY = 'challenge-shukatsu-v1';
+let state = {};
+
+function loadState(){
+  try {
+    const raw = localStorage.getItem(STATE_KEY);
+    if(raw) state = JSON.parse(raw);
+  } catch(_){ state = {}; }
+}
+function saveState(){
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(_){}
+}
+function getStageState(id){
+  if(!state[id]) state[id] = { checks: {}, cleared: false, open: false };
+  return state[id];
+}
+
+// ===== 全体進捗の更新 =====
+function updateOverallProgress(){
+  const total = STAGES.length;
+  const cleared = STAGES.filter(s => getStageState(s.id).cleared).length;
+  const pct = Math.round(cleared / total * 100);
+  document.getElementById('opBar').style.width = pct + '%';
+  document.getElementById('opPercent').textContent = pct + '%';
+  document.getElementById('opCheckpoints').textContent = cleared + ' / ' + total + ' ステージクリア';
+
+  // ゴール
+  const banner = document.getElementById('goalBanner');
+  if(cleared === total){
+    banner.classList.add('show');
+    const tags = STAGES.map(s => `<span class="goal-tag">✓ ${s.title}</span>`).join('');
+    document.getElementById('goalTags').innerHTML = tags;
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    banner.classList.remove('show');
+  }
+}
+
+// ===== ステージカードの描画 =====
+function renderStages(){
+  const wrap = document.getElementById('stagesWrap');
+  wrap.innerHTML = '';
+  STAGES.forEach((stage, idx) => {
+    const ss = getStageState(stage.id);
+    const card = document.createElement('div');
+    card.className = 'stage-card' + (ss.cleared ? ' is-done' : '') + (ss.open ? ' is-active' : '');
+    card.dataset.id = stage.id;
+    card.dataset.open = ss.open ? 'true' : 'false';
+
+    // チェック済み数
+    const checkedCount = stage.checks.filter((_, ci) => ss.checks[ci]).length;
+    const allChecked = checkedCount === stage.checks.length;
+
+    // ヘッダー
+    const header = document.createElement('div');
+    header.className = 'stage-header';
+    header.innerHTML = `
+      <div class="stage-num-badge">${ss.cleared ? '✓' : (idx + 1)}</div>
+      <div class="stage-header-text">
+        <h3>${stage.title}</h3>
+        <div class="stage-sub">${stage.sub}</div>
+      </div>
+      <span class="stage-check-icon">✅</span>
+      <div class="stage-chevron">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    `;
+    header.addEventListener('click', () => toggleStage(stage.id));
+    card.appendChild(header);
+
+    // ボディ
+    const body = document.createElement('div');
+    body.className = 'stage-body';
+
+    // アクセントバー
+    body.innerHTML += `<div class="stage-accent-bar" style="background:${stage.color};margin-top:16px;"></div>`;
+
+    // 理解チェック
+    body.innerHTML += `<div class="understand-title">📋 理解チェック（${checkedCount}/${stage.checks.length}）</div>`;
+    const ul = document.createElement('ul');
+    ul.className = 'check-list';
+    stage.checks.forEach((chk, ci) => {
+      const li = document.createElement('li');
+      li.className = 'check-item' + (ss.checks[ci] ? ' is-checked' : '');
+      li.innerHTML = `
+        <input type="checkbox" id="chk-${stage.id}-${ci}" ${ss.checks[ci] ? 'checked' : ''}>
+        <span class="check-item-text">${chk}</span>
+      `;
+      li.addEventListener('click', (e) => {
+        if(e.target.tagName === 'INPUT') return;
+        const inp = li.querySelector('input');
+        inp.checked = !inp.checked;
+        onCheckChange(stage.id, ci, inp.checked);
+      });
+      li.querySelector('input').addEventListener('change', (e) => {
+        onCheckChange(stage.id, ci, e.target.checked);
+      });
+      ul.appendChild(li);
+    });
+    body.appendChild(ul);
+
+    // ミニ進捗
+    const miniWrap = document.createElement('div');
+    miniWrap.className = 'mini-progress-wrap';
+    miniWrap.innerHTML = `
+      <div class="mini-progress-label">
+        <span>理解度</span><span>${checkedCount}/${stage.checks.length}</span>
+      </div>
+      <div class="mini-progress-bar-wrap">
+        <div class="mini-progress-bar" style="width:${checkedCount/stage.checks.length*100}%"></div>
+      </div>
+    `;
+    body.appendChild(miniWrap);
+
+    // AIプロンプト
+    const promptArea = document.createElement('div');
+    promptArea.className = 'prompt-area';
+    promptArea.dataset.open = 'false';
+    let promptsHTML = `<button class="prompt-toggle" onclick="this.parentElement.dataset.open=this.parentElement.dataset.open==='true'?'false':'true'">
+      <span class="pt-badge">AI</span> ChatGPTへ相談する質問テンプレ（クリックで開閉）
+    </button>
+    <div class="prompt-items">`;
+    stage.prompts.forEach((p, pi) => {
+      promptsHTML += `
+        <div class="prompt-item">
+          <div class="prompt-q-label">質問${pi+1}</div>
+          <div class="prompt-text">${escapeHTML(p)}</div>
+          <div class="prompt-actions">
+            <button class="btn-copy" data-text="${escapeAttr(p)}">コピー</button>
+            <a class="btn-chatgpt" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPTを開く ↗</a>
+          </div>
+        </div>
+      `;
+    });
+    promptsHTML += '</div>';
+    promptArea.innerHTML = promptsHTML;
+    body.appendChild(promptArea);
+
+    // クリアボタン
+    const clearWrap = document.createElement('div');
+    clearWrap.className = 'clear-btn-wrap';
+    const clearBtn = document.createElement('button');
+    clearBtn.className = 'btn-clear-stage';
+    clearBtn.textContent = ss.cleared ? '✅ クリア済み（取消）' : '🏁 このステージをクリアする';
+    clearBtn.disabled = !allChecked && !ss.cleared;
+    clearBtn.addEventListener('click', () => toggleClearStage(stage.id));
+    clearWrap.appendChild(clearBtn);
+    body.appendChild(clearWrap);
+
+    card.appendChild(body);
+
+    // コピーボタン初期化
+    card.querySelectorAll('.btn-copy').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const text = btn.dataset.text;
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.textContent = 'コピー済み ✓';
+          btn.classList.add('ok');
+          setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('ok'); }, 1500);
+        } catch(_){
+          alert('コピーできませんでした。手動でコピーしてください。');
+        }
+      });
+    });
+
+    wrap.appendChild(card);
+  });
+
+  updateOverallProgress();
+}
+
+function toggleStage(id){
+  const ss = getStageState(id);
+  ss.open = !ss.open;
+  saveState();
+  renderStages();
+  if(ss.open){
+    const card = document.querySelector(`.stage-card[data-id="${id}"]`);
+    if(card) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+
+function onCheckChange(id, ci, checked){
+  const ss = getStageState(id);
+  ss.checks[ci] = checked;
+  saveState();
+  renderStages();
+}
+
+function toggleClearStage(id){
+  const ss = getStageState(id);
+  ss.cleared = !ss.cleared;
+  saveState();
+  renderStages();
+}
+
+function escapeHTML(s){ return s.replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function escapeAttr(s){ return s.replace(/"/g,'&quot;'); }
+
+// リセット
+document.getElementById('resetAllBtn').addEventListener('click', () => {
+  if(!confirm('進捗をすべてリセットします。よろしいですか？')) return;
+  state = {};
+  saveState();
+  renderStages();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// 初期化
+loadState();
+renderStages();
+
+// 最初の未クリアステージを自動で開く
+window.addEventListener('DOMContentLoaded', () => {
+  const firstUnclear = STAGES.find(s => !getStageState(s.id).cleared);
+  if(firstUnclear){
+    const ss = getStageState(firstUnclear.id);
+    if(!ss.open){
+      ss.open = true;
+      saveState();
+      renderStages();
+    }
+  }
+});
+
+})();
+</script>
+</body>
+</html>
