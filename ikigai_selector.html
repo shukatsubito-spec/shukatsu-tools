@@ -4,220 +4,127 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>暮らしと生きがいセレクター｜終活人.jp</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+  /* ===== FONT ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+  /* ===== BASE ===== */
+  html { font-size: 16px; }
+
   :root {
     --teal: #4db6ac;
     --teal-dark: #00897b;
     --teal-light: #e0f2f1;
     --navy: #2c3e50;
-    --gray-light: #f5f5f5;
     --gray-mid: #e0e0e0;
     --gray-text: #666;
     --white: #fff;
     --star-color: #f5a623;
-    --btn-blue: #1a73e8;
-    --btn-blue-dark: #1558b0;
+    --main-blue: #185FA5;
+    --main-blue-dark: #0C447C;
+    --sub-blue: #E6F1FB;
+    --bg-page: #F5F0E8;
+    --bg-card: #FDFAF5;
+    --bg-hover: #EDE8DF;
     --hint-bg: #fffde7;
     --hint-border: #ffe082;
     --hint-text: #5d4037;
     --radius: 10px;
-    --font-size: 16px;
-    --font-caption: 12px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
   body {
-    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-    font-size: var(--font-size);
-    background: #f9f9f9;
+    font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-size: 1em;
+    background: var(--bg-page);
     color: var(--navy);
     line-height: 1.7;
   }
 
   /* ===== FONT SIZE BAR ===== */
-  .font-bar {
+  .fs-bar {
     background: var(--white);
     border-bottom: 1px solid var(--gray-mid);
-    padding: 8px 16px;
+    padding: 0.5em 1em;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
-    font-size: 0.85em;
+    gap: 0.5em;
+    font-size: 0.875em;
     color: var(--gray-text);
   }
-  .font-bar span { margin-right: 4px; }
-  .font-btn {
+  .fs-bar span { margin-right: 0.25em; }
+  .fs-btn {
     border: 1px solid var(--gray-mid);
     background: var(--white);
-    padding: 4px 12px;
+    padding: 0.25em 0.75em;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 0.875em;
     transition: background 0.2s;
   }
-  .font-btn.active, .font-btn:hover { background: var(--btn-blue); color: var(--white); border-color: var(--btn-blue); }
+  .fs-btn.active, .fs-btn:hover {
+    background: var(--main-blue);
+    color: var(--white);
+    border-color: var(--main-blue);
+  }
 
   /* ===== HEADER ===== */
   .site-header {
     background: linear-gradient(135deg, var(--teal-dark), var(--teal));
     color: var(--white);
     text-align: center;
-    padding: 18px 16px 14px;
+    padding: 1.125em 1em 0.875em;
   }
   .site-header h1 { font-size: 1.25em; font-weight: bold; letter-spacing: 0.05em; }
-  .site-header p { font-size: 0.85em; opacity: 0.9; margin-top: 4px; }
-  .site-link { color: var(--white); text-decoration: none; font-size: 0.8em; opacity: 0.85; }
+  .site-header p  { font-size: 0.875em; opacity: 0.9; margin-top: 0.25em; }
+  .site-link { color: var(--white); text-decoration: none; font-size: 0.75em; opacity: 0.85; }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 0.75em 2em;
+  }
 
   /* ===== DESCRIPTION ===== */
   .description-box {
-    background: var(--white);
+    background: var(--bg-card);
     border: 1px solid var(--gray-mid);
     border-radius: var(--radius);
-    margin: 16px auto;
+    margin: 1em auto;
     max-width: 720px;
-    padding: 16px 20px;
-    font-size: 0.92em;
+    padding: 1em 1.25em;
+    font-size: 0.9375em;
     color: #444;
     line-height: 1.8;
   }
 
   /* ===== HINT BOX ===== */
-  .hint-box { font-size: var(--font-caption) !important;
+  .hint-box {
     background: var(--hint-bg);
     border-left: 4px solid var(--hint-border);
     border-radius: 0 var(--radius) var(--radius) 0;
-    padding: 10px 16px;
-    font-size: 0.85em;
+    padding: 0.625em 1em;
+    font-size: 0.75em;
     color: var(--hint-text);
     line-height: 1.7;
-    margin: 14px 0;
+    margin: 0.875em 0;
   }
-  .hint-box::before {
-    content: '💡 ';
-    font-size: 1em;
-  }
-
-  /* ===== MAIN CONTAINER ===== */
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 12px 32px;
-  }
-
-  /* ===== STEP ===== */
-  .step { display: none; }
-  .step.active { display: block; }
-
-  .step-label {
-    background: var(--teal-dark);
-    color: var(--white);
-    font-size: 0.8em;
-    font-weight: bold;
-    padding: 4px 12px;
-    border-radius: 20px;
-    display: inline-block;
-    margin-bottom: 10px;
-    letter-spacing: 0.05em;
-  }
-
-  .step-title {
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-bottom: 6px;
-    color: var(--navy);
-  }
-
-  .step-sub { font-size: var(--font-caption) !important;
-    font-size: 0.85em;
-    color: var(--gray-text);
-    margin-bottom: 16px;
-  }
-
-  /* ===== CHOICE CARDS ===== */
-  .choice-grid {
-    display: grid;
-    gap: 12px;
-  }
-  .choice-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
-
-  .choice-card {
-    background: var(--white);
-    border: 2px solid var(--gray-mid);
-    border-radius: var(--radius);
-    padding: 16px 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.95em;
-    font-weight: bold;
-    color: var(--navy);
-  }
-  .choice-card:hover { border-color: var(--teal); background: var(--teal-light); }
-  .choice-card.selected { border-color: var(--teal-dark); background: var(--teal-light); color: var(--teal-dark); }
-  .choice-card .icon { font-size: 1.8em; display: block; margin-bottom: 8px; }
-  .choice-card .sub { font-size: 0.78em; color: var(--gray-text); font-weight: normal; margin-top: 4px; display: block; }
-
-  /* ===== STAR SELECTOR ===== */
-  .cost-list { display: flex; flex-direction: column; gap: 10px; }
-  .cost-item {
-    background: var(--white);
-    border: 2px solid var(--gray-mid);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: all 0.2s;
-  }
-  .cost-item:hover { border-color: var(--teal); background: var(--teal-light); }
-  .cost-item.selected { border-color: var(--teal-dark); background: var(--teal-light); }
-  .cost-stars { color: var(--star-color); font-size: 1.1em; min-width: 90px; }
-  .cost-range { font-weight: bold; font-size: 0.95em; color: var(--navy); }
-  .cost-range span { font-size: 0.8em; color: var(--gray-text); font-weight: normal; margin-left: 6px; }
-
-  /* ===== NAV BUTTONS ===== */
-  .nav-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    gap: 10px;
-  }
-  .nav-btn {
-    background: var(--btn-blue);
-    color: var(--white);
-    border: none;
-    border-radius: 6px;
-    padding: 10px 24px;
-    font-size: 0.95em;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: background 0.2s;
-  }
-  .nav-btn:hover { background: var(--btn-blue-dark); }
-  .nav-btn.secondary {
-    background: var(--white);
-    color: var(--btn-blue);
-    border: 2px solid var(--btn-blue);
-  }
-  .nav-btn.secondary:hover { background: #e8f0fe; }
-  .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .hint-box::before { content: '💡 '; }
 
   /* ===== PROGRESS ===== */
   .progress-bar {
     background: var(--gray-mid);
     border-radius: 10px;
     height: 6px;
-    margin: 12px 0 20px;
+    margin: 0.75em 0 1.25em;
     overflow: hidden;
   }
   .progress-fill {
@@ -227,105 +134,206 @@
     transition: width 0.4s ease;
   }
 
+  /* ===== STEP ===== */
+  .step { display: none; }
+  .step.active { display: block; }
+
+  .step-label {
+    background: var(--teal-dark);
+    color: var(--white);
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 0.25em 0.75em;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 0.625em;
+    letter-spacing: 0.05em;
+  }
+
+  .step-title {
+    font-size: 1.125em;
+    font-weight: bold;
+    margin-bottom: 0.375em;
+    color: var(--navy);
+  }
+
+  .step-sub {
+    font-size: 0.75em;
+    color: var(--gray-text);
+    margin-bottom: 1em;
+  }
+
+  /* ===== CHOICE CARDS ===== */
+  .choice-grid { display: grid; gap: 0.75em; }
+  .choice-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .choice-card {
+    background: var(--bg-card);
+    border: 2px solid var(--gray-mid);
+    border-radius: var(--radius);
+    padding: 1em 0.75em;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9375em;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  .choice-card:hover   { border-color: var(--teal); background: var(--bg-hover); }
+  .choice-card.selected { border-color: var(--teal-dark); background: var(--teal-light); color: var(--teal-dark); }
+  .choice-card .icon { font-size: 1.75em; display: block; margin-bottom: 0.5em; }
+  .choice-card .sub  { font-size: 0.75em; color: var(--gray-text); font-weight: normal; margin-top: 0.25em; display: block; }
+
+  /* ===== COST SELECTOR ===== */
+  .cost-list { display: flex; flex-direction: column; gap: 0.625em; }
+  .cost-item {
+    background: var(--bg-card);
+    border: 2px solid var(--gray-mid);
+    border-radius: var(--radius);
+    padding: 0.875em 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.875em;
+    transition: all 0.2s;
+  }
+  .cost-item:hover    { border-color: var(--teal); background: var(--bg-hover); }
+  .cost-item.selected { border-color: var(--teal-dark); background: var(--teal-light); }
+  .cost-stars { color: var(--star-color); font-size: 1.125em; min-width: 5.625em; }
+  .cost-range { font-weight: bold; font-size: 0.9375em; color: var(--navy); }
+  .cost-range span { font-size: 0.75em; color: var(--gray-text); font-weight: normal; margin-left: 0.375em; }
+
+  /* ===== NAV BUTTONS ===== */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.25em;
+    gap: 0.625em;
+  }
+  .nav-btn {
+    background: var(--main-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    padding: 0.625em 1.5em;
+    font-size: 0.9375em;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.375em;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: var(--main-blue-dark); }
+  .nav-btn.secondary {
+    background: var(--white);
+    color: var(--main-blue);
+    border: 2px solid var(--main-blue);
+  }
+  .nav-btn.secondary:hover { background: var(--sub-blue); }
+  .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
   /* ===== RESULT ===== */
   .result-box {
-    background: var(--white);
+    background: var(--bg-card);
     border: 2px solid var(--teal);
     border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: 1.25em;
+    margin-bottom: 1em;
   }
   .result-box h3 {
     font-size: 1em;
     color: var(--teal-dark);
-    margin-bottom: 12px;
+    margin-bottom: 0.75em;
     border-bottom: 1px solid var(--teal-light);
-    padding-bottom: 8px;
+    padding-bottom: 0.5em;
   }
-  .result-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .result-tags { display: flex; flex-wrap: wrap; gap: 0.5em; margin-bottom: 0.75em; }
   .result-tag {
     background: var(--teal-light);
     color: var(--teal-dark);
     border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 0.85em;
+    padding: 0.25em 0.875em;
+    font-size: 0.875em;
     font-weight: bold;
   }
   .activity-list { list-style: none; padding: 0; }
   .activity-list li {
-    padding: 8px 0;
+    padding: 0.5em 0;
     border-bottom: 1px solid var(--gray-mid);
-    font-size: 0.9em;
+    font-size: 0.9375em;
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: 0.5em;
   }
   .activity-list li:last-child { border-bottom: none; }
-  .activity-list li::before { content: '✦'; color: var(--teal); font-size: 0.8em; margin-top: 3px; flex-shrink: 0; }
+  .activity-list li::before { content: '✦'; color: var(--teal); font-size: 0.75em; margin-top: 0.25em; flex-shrink: 0; }
 
   .prompt-box {
-    background: #f0f7ff;
+    background: var(--sub-blue);
     border: 1px solid #b3d1f7;
     border-radius: var(--radius);
-    padding: 16px;
-    font-size: 0.88em;
+    padding: 1em;
+    font-size: 0.875em;
     line-height: 1.8;
     color: #2c3e6e;
     white-space: pre-wrap;
     word-break: break-word;
   }
   .copy-btn {
-    margin-top: 10px;
-    background: var(--btn-blue);
+    margin-top: 0.625em;
+    background: var(--main-blue);
     color: var(--white);
     border: none;
     border-radius: 6px;
-    padding: 8px 20px;
-    font-size: 0.88em;
+    padding: 0.5em 1.25em;
+    font-size: 0.875em;
     cursor: pointer;
     font-weight: bold;
   }
-  .copy-btn:hover { background: var(--btn-blue-dark); }
+  .copy-btn:hover { background: var(--main-blue-dark); }
 
-  .ai-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .ai-links { display: flex; flex-wrap: wrap; gap: 0.625em; margin-top: 0.625em; }
   .ai-link {
     display: inline-block;
-    padding: 7px 16px;
+    padding: 0.4375em 1em;
     border-radius: 20px;
-    font-size: 0.82em;
+    font-size: 0.8125em;
     font-weight: bold;
     text-decoration: none;
     border: 2px solid;
-    transition: all 0.2s;
+    transition: opacity 0.2s;
   }
   .ai-link.chatgpt { color: #10a37f; border-color: #10a37f; }
-  .ai-link.claude { color: #c96442; border-color: #c96442; }
-  .ai-link.gemini { color: #4285f4; border-color: #4285f4; }
+  .ai-link.claude  { color: #c96442; border-color: #c96442; }
+  .ai-link.gemini  { color: #4285f4; border-color: #4285f4; }
   .ai-link:hover { opacity: 0.75; }
 
   /* ===== NOTICE ===== */
-  .notice-box { font-size: var(--font-caption) !important;
-    background: var(--white);
+  .notice-box {
+    background: var(--bg-card);
     border: 1px solid var(--gray-mid);
     border-radius: var(--radius);
-    padding: 14px 18px;
-    font-size: 0.8em;
+    padding: 0.875em 1.125em;
+    font-size: 0.75em;
     color: var(--gray-text);
     line-height: 1.7;
-    margin: 16px auto;
+    margin: 1em auto;
     max-width: 720px;
   }
 
   /* ===== FOOTER ===== */
-  .site-footer { font-size: var(--font-caption) !important;
+  .site-footer {
     text-align: center;
-    padding: 16px;
-    font-size: 0.85em;
+    padding: 1em;
+    font-size: 0.75em;
     color: var(--gray-text);
     border-top: 1px solid var(--gray-mid);
-    margin-top: 24px;
+    margin-top: 1.5em;
   }
   .site-footer a { color: var(--teal-dark); text-decoration: none; }
+  .site-footer p { margin-top: 0.25em; }
 
   @media (max-width: 480px) {
     .choice-grid.col3 { grid-template-columns: 1fr; }
@@ -335,18 +343,18 @@
 <body>
 
 <!-- FONT SIZE BAR -->
-<div class="font-bar">
+<div class="fs-bar">
   <span>文字サイズ</span>
-  <button class="font-btn active" onclick="setFont('16px', this)">100%</button>
-  <button class="font-btn" onclick="setFont('19px', this)">120%</button>
-  <button class="font-btn" onclick="setFont('22px', this)">140%</button>
+  <button class="fs-btn active" onclick="setFS(16,this)">100%</button>
+  <button class="fs-btn" onclick="setFS(19,this)">120%</button>
+  <button class="fs-btn" onclick="setFS(22,this)">140%</button>
 </div>
 
 <!-- HEADER -->
 <div class="site-header">
   <h1>暮らしと生きがいセレクター</h1>
   <p>あなたの生き方スタイルに合った生きがい活動を見つけましょう</p>
-  <a href="https://shukatsu.jp" class="site-link">終活人.jp</a>
+  <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener" class="site-link">終活人.jp</a>
 </div>
 
 <div class="container">
@@ -356,7 +364,7 @@
     毎日の暮らしに「生きがい」があるか――それは終活において最も大切なテーマのひとつです。ゴルフや旅行など、体力・経済面で続けにくくなった趣味の「次」を考えていますか？このセレクターでは、あなたの生き方スタイル・アウトドア／インドアの志向・月々の費用感の3ステップで、無理なく長く続けられる生きがい活動とAIへの相談プロンプトをご提案します。
   </div>
 
-  <!-- HINT 1: さりげなく冒頭に -->
+  <!-- HINT 1 -->
   <div class="hint-box">
     身近なところに意外なヒントが。お住まいの広報誌や、図書館・公民館の掲示板をのぞいてみると、新しい出会いが見つかることがあります。
   </div>
@@ -392,9 +400,8 @@
         <span class="sub">バランスよく両方</span>
       </div>
     </div>
-
-    <!-- HINT 2: STEP1の下にさりげなく -->
-    <div class="hint-box" style="margin-top:20px;">
+    <!-- HINT 2 -->
+    <div class="hint-box" style="margin-top:1.25em;">
       「一人がいいけど、たまには誰かと話したい」という方も多いもの。地域のサークルや公民館講座は、気軽に参加できるものが増えています。
     </div>
   </div>
@@ -421,9 +428,8 @@
         <span class="sub">2Wayで楽しみたい</span>
       </div>
     </div>
-
-    <!-- HINT 3: STEP2の下 -->
-    <div class="hint-box" style="margin-top:20px;">
+    <!-- HINT 3 -->
+    <div class="hint-box" style="margin-top:1.25em;">
       アウトドアとインドアの2つを持っておくと、体調や季節に合わせて無理なく続けられます。図書館や公民館はインドア活動の入口として使いやすい場所です。
     </div>
   </div>
@@ -455,9 +461,8 @@
         <div><div class="cost-range">30,000円〜／月<span>ゴルフ・旅行など上級レベル</span></div></div>
       </div>
     </div>
-
-    <!-- HINT 4: STEP3の下 -->
-    <div class="hint-box" style="margin-top:20px;">
+    <!-- HINT 4 -->
+    <div class="hint-box" style="margin-top:1.25em;">
       費用をかけなくても楽しめる活動はたくさんあります。今の趣味が続けにくくなったとき、★ひとつの活動を「次の柱」として育てておくのもひとつの考え方です。
     </div>
   </div>
@@ -476,29 +481,26 @@
     <div class="result-box">
       <h3>✦ おすすめ生きがい活動</h3>
       <ul class="activity-list" id="activityList"></ul>
-
-      <!-- HINT 5: 活動リストの直後 -->
-      <div class="hint-box" style="margin-top:16px;">
+      <!-- HINT 5 -->
+      <div class="hint-box" style="margin-top:1em;">
         気になる活動があれば、まずはお住まいの広報誌や、図書館・公民館・地域の掲示板をのぞいてみてください。思いがけない出会いがあるかもしれません。
       </div>
     </div>
 
     <div class="result-box">
       <h3>🤖 AIへのプロンプト例</h3>
-      <p style="font-size:0.83em; color:var(--gray-text); margin-bottom:10px;">以下をコピーしてAIに貼り付けると、あなたに合った活動をさらに深掘りできます。</p>
+      <p style="font-size:0.8125em; color:var(--gray-text); margin-bottom:0.625em;">以下をコピーしてAIに貼り付けると、あなたに合った活動をさらに深掘りできます。</p>
       <div class="prompt-box" id="promptBox"></div>
       <button class="copy-btn" onclick="copyPrompt()">📋 コピーしてAIに貼り付ける</button>
-
-      <!-- HINT 6: プロンプトの下、AIリンクの上 -->
-      <div class="hint-box" style="margin-top:14px;">
+      <!-- HINT 6 -->
+      <div class="hint-box" style="margin-top:0.875em;">
         AIへの入力時は、住所・氏名などの個人情報を含めないようご注意ください。地域の具体的な施設・サービスは、ご自身でお調べいただくのがおすすめです。
       </div>
-
-      <div style="margin-top:10px; font-size:0.85em; color:var(--gray-text); margin-bottom:6px;">コピーしたらAIに貼り付けてください：</div>
+      <div style="margin-top:0.625em; font-size:0.875em; color:var(--gray-text); margin-bottom:0.375em;">コピーしたらAIに貼り付けてください：</div>
       <div class="ai-links">
-        <a href="https://chat.openai.com" target="_blank" class="ai-link chatgpt">ChatGPT</a>
-        <a href="https://claude.ai" target="_blank" class="ai-link claude">Claude</a>
-        <a href="https://gemini.google.com" target="_blank" class="ai-link gemini">Gemini</a>
+        <a href="https://chat.openai.com" target="_blank" rel="noopener" class="ai-link chatgpt">ChatGPT</a>
+        <a href="https://claude.ai" target="_blank" rel="noopener" class="ai-link claude">Claude</a>
+        <a href="https://gemini.google.com" target="_blank" rel="noopener" class="ai-link gemini">Gemini</a>
       </div>
     </div>
   </div>
@@ -518,7 +520,8 @@
 
 <!-- FOOTER -->
 <div class="site-footer">
-  <a href="https://shukatsu.jp">終活人.jp</a>
+  <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a>
+  <p>© 終活人.jp ／ 無断転載・商用利用禁止</p>
 </div>
 
 <script>
@@ -526,11 +529,9 @@
   let currentStep = 1;
   const totalSteps = 3;
 
-  function setFont(size, btn) {
-    document.documentElement.style.setProperty('--font-size', size);
-    const capMap = {'16px':'12px','19px':'14px','22px':'16px'};
-    document.documentElement.style.setProperty('--font-caption', capMap[size] || '12px');
-    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  function setFS(px, btn) {
+    document.documentElement.style.fontSize = px + 'px';
+    document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
 
@@ -564,7 +565,6 @@
     if (currentStep === 1 && !state.style) { alert('生き方スタイルを選んでください'); return; }
     if (currentStep === 2 && !state.type)  { alert('アウトドア／インドアを選んでください'); return; }
     if (currentStep === 3 && !state.cost)  { alert('費用負担レベルを選んでください'); return; }
-
     showStep(currentStep, false);
     currentStep++;
     if (currentStep > totalSteps) {
@@ -610,7 +610,6 @@
     const styleLabel = { alone: '🧍 一人で生きていく', together: '👥 仲間と生きていく', both: '🧍👥 一人＋仲間' };
     const typeLabel  = { outdoor: '🌿 アウトドア派', indoor: '📚 インドア派', both: '🌿📚 両方' };
     const costLabel  = ['','★ 〜3,000円/月','★★ 〜10,000円/月','★★★ 〜20,000円/月','★★★★ 〜30,000円/月','★★★★★ 30,000円〜/月'];
-
     const tags = document.getElementById('resultTags');
     tags.innerHTML = '';
     [styleLabel[state.style], typeLabel[state.type], costLabel[state.cost]].forEach(t => {
@@ -619,9 +618,7 @@
       el.textContent = t;
       tags.appendChild(el);
     });
-
-    const list = document.getElementById('activityList');
-    list.innerHTML = getActivities().map(a => `<li>${a}</li>`).join('');
+    document.getElementById('activityList').innerHTML = getActivities().map(a => `<li>${a}</li>`).join('');
     document.getElementById('promptBox').textContent = buildPrompt();
   }
 
@@ -642,23 +639,19 @@
         5: ['大学院・シニア向け大学','本格アート制作・個展開催','起業・副業（セミナー講師等）','海外留学・語学学校'],
       },
     };
-
     const c = Math.min(state.cost, 5);
     let result = [];
     if (state.type === 'outdoor') result = [...(pool.outdoor[c] || [])];
     else if (state.type === 'indoor') result = [...(pool.indoor[c] || [])];
     else {
-      const o = pool.outdoor[c] || [];
-      const i = pool.indoor[c] || [];
+      const o = pool.outdoor[c] || [], i = pool.indoor[c] || [];
       result = [o[0], o[1], i[0], i[1]].filter(Boolean);
     }
-
     if (state.style === 'together') {
       result.push('地域コミュニティ・シニアサークルへの参加');
       result.push('SNSグループ・オンラインコミュニティ');
     }
     if (state.style === 'both') result.push('おひとりさま時間＋定期的なグループ活動の両立');
-
     return result.slice(0, 6);
   }
 
@@ -666,7 +659,6 @@
     const styleText = { alone: '一人で自分のペースで生きていきたい', together: '仲間とのつながりを大切にして生きていきたい', both: '一人の時間も仲間との時間も両方大切にしたい' };
     const typeText  = { outdoor: 'アウトドア（外出・自然・体を動かすこと）が好き', indoor: 'インドア（学ぶ・創る・デジタル活用）が好き', both: 'アウトドアとインドア両方楽しみたい（2Way志向）' };
     const costText  = ['','月0〜3,000円（ほぼ無料）','月3,000〜10,000円','月10,000〜20,000円','月20,000〜30,000円','月30,000円以上'];
-
     return `私は50代以上で、これからの暮らしと生きがいについて考えています。
 
 【私のスタイル】
