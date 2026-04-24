@@ -628,20 +628,116 @@ function setFsz(pct, btn){
 <!-- ナビタブ -->
 <nav class="nav-tabs" aria-label="ページ内ナビ">
   <div class="nav-tabs-inner">
-    <button class="tab-btn active" onclick="scrollToSection('sec-diag', this)">老後診断</button>
+    <button class="tab-btn active" onclick="scrollToSection('sec-lp', this)">収支計算</button>
+    <button class="tab-btn" onclick="scrollToSection('sec-diag', this)">老後診断</button>
     <button class="tab-btn" onclick="scrollToSection('sec-ab', this)">収支・年金</button>
     <button class="tab-btn" onclick="scrollToSection('sec-cd', this)">iDeCo・節約</button>
-    <button class="tab-btn" onclick="scrollToSection('sec-lp', this)">収支計算</button>
     <button class="tab-btn" onclick="scrollToSection('sec-ins', this)">保険診断</button>
   </div>
 </nav>
 
 <main class="main-wrap">
 
-  <!-- ① 老後診断チェック -->
-  <section class="content-sec" id="sec-diag">
+  <!-- ① 収支計算ツール -->
+  <section class="content-sec" id="sec-lp">
     <div class="sec-header">
       <div class="sec-num">1</div>
+      <h2>収支計算ツール</h2>
+    </div>
+    <div class="lp-wrap">
+      <p class="diag-lead">収入と支出を万円単位で入力すると、月間・年間の収支を自動計算します。</p>
+      <div class="lp-layout">
+
+        <!-- 左カラム：収入＋仕切り＋支出 -->
+        <div class="lp-left">
+          <!-- 収入ブロック -->
+          <div class="lp-block">
+            <div class="lp-block-head">
+              <h4>
+                <span class="lp-section-label lp-income-label">収　入</span>
+                <small>月額・万円</small>
+              </h4>
+              <div class="bonus-ctrl">賞与: <input type="number" id="bonusMonths" step="0.5" min="0" value="0"> か月/年</div>
+            </div>
+            <div class="lp-rows" id="incomeRows"></div>
+          </div>
+
+          <!-- 仕切り線（支出ラベル付き） -->
+          <div class="lp-divider"></div>
+
+          <!-- 支出ブロック -->
+          <div class="lp-block">
+            <div class="lp-block-head">
+              <h4>
+                <span class="lp-section-label lp-expense-label">支　出</span>
+                <small>月額・万円</small>
+              </h4>
+            </div>
+            <div class="lp-rows" id="expenseRows"></div>
+            <div class="lp-add"><button class="lp-add-btn" id="addExpenseBtn">＋ 支出行を追加</button></div>
+          </div>
+        </div>
+
+        <!-- 右カラム：結果パネル（sticky） -->
+        <div class="lp-result">
+          <div class="lp-result-title">📊 収支結果</div>
+
+          <!-- 月間 -->
+          <div class="lp-result-block">
+            <span class="lp-result-period period-month">月　間</span>
+            <div class="lp-result-rows">
+              <div class="lp-result-row">
+                <span class="lp-result-label">収入合計</span>
+                <span class="lp-result-val" id="mIncome">¥0</span>
+              </div>
+              <div class="lp-result-row">
+                <span class="lp-result-label">支出合計</span>
+                <span class="lp-result-val" id="mExpense">¥0</span>
+              </div>
+              <div class="lp-result-row balance-row" id="mBalanceRow">
+                <span class="lp-result-label">月間収支</span>
+                <span class="lp-result-val" id="mBalance">¥0</span>
+              </div>
+            </div>
+          </div>
+
+          <hr class="kpi-divider">
+
+          <!-- 年間 -->
+          <div class="lp-result-block">
+            <span class="lp-result-period period-year">年　間</span>
+            <div class="lp-result-rows">
+              <div class="lp-result-row">
+                <span class="lp-result-label">収入合計</span>
+                <span class="lp-result-val" id="yIncome">¥0</span>
+              </div>
+              <div class="lp-result-row">
+                <span class="lp-result-label">支出合計</span>
+                <span class="lp-result-val" id="yExpense">¥0</span>
+              </div>
+              <div class="lp-result-row balance-row" id="yBalanceRow">
+                <span class="lp-result-label">年間収支</span>
+                <span class="lp-result-val" id="yBalance">¥0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lp-tools">
+            <label class="lp-check-label"><input type="checkbox" id="lpAutoSave" checked> 自動保存</label>
+            <button class="btn btn-ghost" id="lpResetBtn" style="font-size:12px;padding:6px 12px;">リセット</button>
+          </div>
+          <p style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.7;">※入力データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません。</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
+
+  <!-- ② 老後診断チェック -->
+  <section class="content-sec" id="sec-diag">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
       <div>
         <h2>老後対策チェック（10問）</h2>
         <span class="sec-badge">まずここから</span>
@@ -746,10 +842,10 @@ function setFsz(pct, btn){
   </section>
   <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
-  <!-- ② 収支見える化・年金 -->
+  <!-- ③ 収支見える化・年金 -->
   <section class="content-sec" id="sec-ab">
     <div class="sec-header">
-      <div class="sec-num">2</div>
+      <div class="sec-num">3</div>
       <h2>収入と支出の見える化 ／ 公的年金</h2>
     </div>
     <div class="ad-cards">
@@ -822,10 +918,10 @@ function setFsz(pct, btn){
   </section>
   <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
-  <!-- ③ iDeCo・節約 -->
+  <!-- ④ iDeCo・節約 -->
   <section class="content-sec" id="sec-cd">
     <div class="sec-header">
-      <div class="sec-num">3</div>
+      <div class="sec-num">4</div>
       <h2>iDeCo × NISA ／ 支出の最適化</h2>
     </div>
     <div class="ad-cards">
@@ -894,101 +990,6 @@ function setFsz(pct, btn){
   </section>
   <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
-  <!-- ④ ライフプラン計算 -->
-  <section class="content-sec" id="sec-lp">
-    <div class="sec-header">
-      <div class="sec-num">4</div>
-      <h2>収支計算ツール</h2>
-    </div>
-    <div class="lp-wrap">
-      <p class="diag-lead">収入と支出を万円単位で入力すると、月間・年間の収支を自動計算します。</p>
-      <div class="lp-layout">
-
-        <!-- 左カラム：収入＋仕切り＋支出 -->
-        <div class="lp-left">
-          <!-- 収入ブロック -->
-          <div class="lp-block">
-            <div class="lp-block-head">
-              <h4>
-                <span class="lp-section-label lp-income-label">収　入</span>
-                <small>月額・万円</small>
-              </h4>
-              <div class="bonus-ctrl">賞与: <input type="number" id="bonusMonths" step="0.5" min="0" value="0"> か月/年</div>
-            </div>
-            <div class="lp-rows" id="incomeRows"></div>
-          </div>
-
-          <!-- 仕切り線（支出ラベル付き） -->
-          <div class="lp-divider"></div>
-
-          <!-- 支出ブロック -->
-          <div class="lp-block">
-            <div class="lp-block-head">
-              <h4>
-                <span class="lp-section-label lp-expense-label">支　出</span>
-                <small>月額・万円</small>
-              </h4>
-            </div>
-            <div class="lp-rows" id="expenseRows"></div>
-            <div class="lp-add"><button class="lp-add-btn" id="addExpenseBtn">＋ 支出行を追加</button></div>
-          </div>
-        </div>
-
-        <!-- 右カラム：結果パネル（sticky） -->
-        <div class="lp-result">
-          <div class="lp-result-title">📊 収支結果</div>
-
-          <!-- 月間 -->
-          <div class="lp-result-block">
-            <span class="lp-result-period period-month">月　間</span>
-            <div class="lp-result-rows">
-              <div class="lp-result-row">
-                <span class="lp-result-label">収入合計</span>
-                <span class="lp-result-val" id="mIncome">¥0</span>
-              </div>
-              <div class="lp-result-row">
-                <span class="lp-result-label">支出合計</span>
-                <span class="lp-result-val" id="mExpense">¥0</span>
-              </div>
-              <div class="lp-result-row balance-row" id="mBalanceRow">
-                <span class="lp-result-label">月間収支</span>
-                <span class="lp-result-val" id="mBalance">¥0</span>
-              </div>
-            </div>
-          </div>
-
-          <hr class="kpi-divider">
-
-          <!-- 年間 -->
-          <div class="lp-result-block">
-            <span class="lp-result-period period-year">年　間</span>
-            <div class="lp-result-rows">
-              <div class="lp-result-row">
-                <span class="lp-result-label">収入合計</span>
-                <span class="lp-result-val" id="yIncome">¥0</span>
-              </div>
-              <div class="lp-result-row">
-                <span class="lp-result-label">支出合計</span>
-                <span class="lp-result-val" id="yExpense">¥0</span>
-              </div>
-              <div class="lp-result-row balance-row" id="yBalanceRow">
-                <span class="lp-result-label">年間収支</span>
-                <span class="lp-result-val" id="yBalance">¥0</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="lp-tools">
-            <label class="lp-check-label"><input type="checkbox" id="lpAutoSave" checked> 自動保存</label>
-            <button class="btn btn-ghost" id="lpResetBtn" style="font-size:12px;padding:6px 12px;">リセット</button>
-          </div>
-          <p style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.7;">※入力データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません。</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-  <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
   <!-- ⑤ 保険診断 -->
   <section class="content-sec" id="sec-ins">
