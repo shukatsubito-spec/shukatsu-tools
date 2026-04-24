@@ -418,6 +418,52 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
   line-height: 1.7;
 }
 
+/* ===== 戻るボタン ===== */
+.back-to-top {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+.back-to-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .2s;
+  text-decoration: none;
+}
+.back-to-top-btn:hover { background: #eff6ff; border-color: var(--accent); }
+
+/* ===== 判定バッジ（保険診断・老後診断） ===== */
+.judge-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  letter-spacing: .02em;
+}
+.judge-ok   { background: #dbeafe; color: #1e40af; border: 2px solid #93c5fd; }
+.judge-warn { background: #fef9c3; color: #854d0e; border: 2px solid #fde047; }
+.judge-ng   { background: #fee2e2; color: #991b1b; border: 2px solid #fca5a5; }
+
+/* 保険診断カード：判定ごとの左ボーダー色 */
+.ins-rec.rec-ok   { border-left: 5px solid #3b82f6; }
+.ins-rec.rec-warn { border-left: 5px solid #eab308; }
+.ins-rec.rec-ng   { border-left: 5px solid #ef4444; }
+
 /* ===== 共通ユーティリティ ===== */
 .note-box {
   background: #fffbeb;
@@ -579,6 +625,7 @@ function setFsz(pct, btn){
       </div>
     </div>
   </section>
+  <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
   <!-- ② 収支見える化・年金 -->
   <section class="content-sec" id="sec-ab">
@@ -654,6 +701,7 @@ function setFsz(pct, btn){
       </div>
     </div>
   </section>
+  <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
   <!-- ③ iDeCo・節約 -->
   <section class="content-sec" id="sec-cd">
@@ -725,6 +773,7 @@ function setFsz(pct, btn){
       </div>
     </div>
   </section>
+  <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
   <!-- ④ ライフプラン計算 -->
   <section class="content-sec" id="sec-lp">
@@ -774,6 +823,7 @@ function setFsz(pct, btn){
       </div>
     </div>
   </section>
+  <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
   <!-- ⑤ 保険診断 -->
   <section class="content-sec" id="sec-ins">
@@ -840,6 +890,7 @@ function setFsz(pct, btn){
       </div>
     </div>
   </section>
+  <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
 
 </main>
 
@@ -886,8 +937,16 @@ document.getElementById('diagCalcBtn').addEventListener('click', () => {
   const top = ordered.slice(0, 3);
   document.getElementById('kpis').innerHTML = top.map(cat => {
     const t = tipsMap[cat];
+    const s = scores[cat];
+    // スコアで判定バッジを決定（最大スコア4＝weight2×value2）
+    const badge = s >= 3
+      ? `<span class="judge-badge judge-ng">🔴 だいぶまずいかも</span>`
+      : s >= 1
+      ? `<span class="judge-badge judge-warn">⚠️ ちょっとまずいかも</span>`
+      : `<span class="judge-badge judge-ok">👍 イイね</span>`;
     return `<div class="kpi-card" style="border-left-color:${t.color}">
-      <h4>${t.name} <small style="font-weight:400;color:var(--muted)">スコア:${scores[cat]}</small></h4>
+      ${badge}
+      <h4 style="margin-top:6px;">${t.name} <small style="font-weight:400;color:var(--muted)">スコア:${s}</small></h4>
       <ul class="tips-list">${t.items.map(s=>`<li>${s}</li>`).join('')}</ul>
     </div>`;
   }).join('');
@@ -983,14 +1042,15 @@ document.getElementById('lpResetBtn').addEventListener('click', ()=>{
 restore();
 
 // ===== 保険診断 =====
+// 判定レベル: ok=イイね(青) / warn=ちょっとまずいかも(黄) / ng=だいぶまずいかも(赤)
 const insMap = {
-  injury: { title:'傷害・人身傷害補償', tags:['t-blue'], desc:'歩行中・自転車乗車中のケガに対応。自動車保険の車外補償や傷害保険を確認。', links:[{text:'比較サイトで確認',href:'https://www.hoken-mammoth.jp/',cls:'outline'}] },
-  liability: { title:'個人賠償責任保険', tags:['t-green'], desc:'自転車事故・日常の賠償事故に対応。火災保険や自動車保険の特約として付けられる場合も。', links:[{text:'特約を確認する',href:'https://www.hoken-mammoth.jp/',cls:'outline'}] },
-  critical: { title:'三大疾病・がん保険', tags:['t-amber'], desc:'がん・心疾患・脳卒中への備え。治療の長期化や収入減少に対応。', links:[{text:'がん保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] },
-  nursing: { title:'介護保険（民間）', tags:['t-blue'], desc:'公的介護保険の自己負担分や施設費用を補完。40代〜50代からの加入が有利。', links:[{text:'介護保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] },
-  fire: { title:'火災保険・地震保険', tags:['t-green'], desc:'持ち家は建物と家財、賃貸は家財を補償。地震保険は火災保険とセットで加入。', links:[{text:'火災保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] }
+  injury:   { title:'傷害・人身傷害補償',  level:'warn', badge:'⚠️ ちょっとまずいかも', desc:'歩行中・自転車乗車中のケガに対応する補償が確認できていません。自動車保険の車外補償や傷害保険を確認しましょう。', links:[{text:'比較サイトで確認',href:'https://www.hoken-mammoth.jp/',cls:'outline'}] },
+  liability:{ title:'個人賠償責任保険',    level:'warn', badge:'⚠️ ちょっとまずいかも', desc:'自転車事故で相手にケガをさせた場合の備えが確認できていません。火災保険や自動車保険の特約として付けられる場合もあります。', links:[{text:'特約を確認する',href:'https://www.hoken-mammoth.jp/',cls:'outline'}] },
+  critical: { title:'三大疾病・がん保険',  level:'ng',   badge:'🔴 だいぶまずいかも',   desc:'がん・心疾患・脳卒中への備えが確認できていません。治療の長期化や収入減少のリスクが高まります。早めの確認をおすすめします。', links:[{text:'がん保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] },
+  nursing:  { title:'介護保険（民間）',    level:'ng',   badge:'🔴 だいぶまずいかも',   desc:'介護が必要になった場合の費用リスクへの備えが確認できていません。公的介護保険だけでは自己負担が大きくなる場合があります。', links:[{text:'介護保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] },
+  fire:     { title:'火災保険・地震保険',  level:'ng',   badge:'🔴 だいぶまずいかも',   desc:'自宅への火災・地震リスクへの備えが確認できていません。特に地震保険は火災保険とセットでの加入が基本です。', links:[{text:'火災保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] }
 };
-const tagMap = { injury:['iq1'], liability:['iq2'], critical:['iq3'], nursing:['iq4'], fire:['iq5'] };
+const levelClass = { ok:'rec-ok judge-ok', warn:'rec-warn judge-warn', ng:'rec-ng judge-ng' };
 const insBar = document.getElementById('insBar');
 document.getElementById('insQs').addEventListener('change', ()=>{
   const count = [...document.getElementById('insQs').querySelectorAll('input:checked')].length;
@@ -1008,13 +1068,27 @@ document.getElementById('insCalcBtn').addEventListener('click', ()=>{
   });
   const grid = document.getElementById('insRecsGrid');
   if(needs.length === 0){
-    grid.innerHTML = '<p style="color:var(--ok);font-weight:700;">✅ 現在の備えは概ね整っています。定期的に見直しを続けましょう。</p>';
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:16px 0;">
+        <span class="judge-badge judge-ok" style="font-size:16px;padding:10px 24px;">👍 イイね！備えは概ね整っています</span>
+        <p style="font-size:13px;color:var(--muted);margin-top:10px;">定期的に内容の見直しを続けましょう。</p>
+      </div>`;
   } else {
-    grid.innerHTML = needs.map(tag => {
+    // ngを先に、次にwarnの順で並べる
+    const sorted = needs.sort((a,b)=>{
+      const order = {ng:0, warn:1, ok:2};
+      return order[insMap[a].level] - order[insMap[b].level];
+    });
+    grid.innerHTML = sorted.map(tag => {
       const r = insMap[tag];
-      const tags = r.tags.map(t => `<span class="ins-tag ${t}">${t.replace('t-','')}</span>`).join('');
+      const cls = levelClass[r.level];
       const links = r.links.map(l => `<a class="ins-cta-btn ${l.cls}" href="${l.href}" target="_blank" rel="noopener">${l.text}</a>`).join('');
-      return `<div class="ins-rec"><h5>${r.title} ${tags}</h5><p style="font-size:13px;color:var(--muted);margin:6px 0 8px;">${r.desc}</p><div class="ins-cta">${links}</div></div>`;
+      return `<div class="ins-rec ${r.level==='ng'?'rec-ng':r.level==='warn'?'rec-warn':'rec-ok'}">
+        <span class="judge-badge ${r.level==='ng'?'judge-ng':r.level==='warn'?'judge-warn':'judge-ok'}">${r.badge}</span>
+        <h5 style="margin:6px 0 4px;">${r.title}</h5>
+        <p style="font-size:13px;color:var(--muted);margin:0 0 8px;line-height:1.65;">${r.desc}</p>
+        <div class="ins-cta">${links}</div>
+      </div>`;
     }).join('');
   }
   document.getElementById('insResult').hidden = false;
