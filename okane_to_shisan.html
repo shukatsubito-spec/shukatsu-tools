@@ -7,6 +7,25 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@700&display=swap');
 
+/* ===== 文字拡大バー ===== */
+#font-size-bar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid #e2e8f0;
+  padding: 6px 14px;
+  display: flex; align-items: center; gap: 8px;
+  backdrop-filter: blur(4px);
+}
+#font-size-bar span { font-size: 12px; color: #64748b; margin-right: 2px; }
+.fsz-btn {
+  border: 1px solid #cbd5e1; background: #fff; color: #334155;
+  border-radius: 6px; padding: 4px 10px; font-size: 12px;
+  cursor: pointer; font-family: inherit; font-weight: 700;
+  transition: all .15s;
+}
+.fsz-btn:hover { background: #f1f5f9; }
+.fsz-btn.active { background: #1a4480; color: #fff; border-color: #1a4480; }
+
 :root {
   --ink: #1f2937;
   --muted: #6b7280;
@@ -32,12 +51,11 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.8;
 }
 
 /* ===== PAGE HEADER ===== */
-.page-header {
   background: linear-gradient(135deg, #0f3460 0%, #1a4480 60%, #1e5fa0 100%);
   color: #fff;
   padding: 44px 20px 36px;
@@ -418,6 +436,21 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
 </head>
 <body>
 
+<!-- 文字拡大バー -->
+<div id="font-size-bar">
+  <span>文字サイズ：</span>
+  <button class="fsz-btn active" onclick="setFsz(100, this)">100%</button>
+  <button class="fsz-btn" onclick="setFsz(120, this)">120%</button>
+  <button class="fsz-btn" onclick="setFsz(140, this)">140%</button>
+</div>
+<script>
+function setFsz(pct, btn){
+  document.documentElement.style.fontSize = (16 * pct / 100) + 'px';
+  document.querySelectorAll('.fsz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+
 <!-- ページヘッダー -->
 <header class="page-header">
   <div class="eyebrow">終活人.jp ｜ お金と資産</div>
@@ -734,6 +767,7 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
             <label class="lp-check-label"><input type="checkbox" id="lpAutoSave" checked> 自動保存</label>
             <button class="btn btn-ghost" id="lpResetBtn" style="font-size:13px;padding:7px 14px;">リセット</button>
           </div>
+          <p style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.7;">※入力データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません。</p>
         </div>
       </div>
     </div>
