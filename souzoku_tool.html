@@ -33,12 +33,12 @@
   .card{background:#FDFAF5;border:0.5px solid #ddd;border-radius:10px;padding:1em 1.1em;margin-bottom:1em;}
   .card-title{font-size:1em;font-weight:500;color:#0C447C;margin-bottom:0.75em;padding-bottom:0.4em;border-bottom:0.5px solid #E6F1FB;display:flex;align-items:center;gap:0.5em;}
   .card-title .icon{width:1em;height:1em;border-radius:50%;flex-shrink:0;display:inline-block;}
-  .section-note{font-size:12px;color:#185FA5;background:#E6F1FB;border-radius:6px;padding:0.4em 0.7em;margin-bottom:0.6em;line-height:1.6;}
-  .warn-note{font-size:12px;color:#633806;background:#FAEEDA;border-radius:6px;padding:0.4em 0.7em;margin-bottom:0.6em;line-height:1.6;}
+  .section-note{font-size:0.75em;color:#185FA5;background:#E6F1FB;border-radius:6px;padding:0.4em 0.7em;margin-bottom:0.6em;line-height:1.6;}
+  .warn-note{font-size:0.75em;color:#633806;background:#FAEEDA;border-radius:6px;padding:0.4em 0.7em;margin-bottom:0.6em;line-height:1.6;}
 
   .asset-row{display:flex;flex-wrap:wrap;gap:0.4em;align-items:center;margin-bottom:0.5em;}
   .asset-row label{font-size:0.82em;color:#555;white-space:nowrap;}
-  .asset-row input[type=text]{flex:1;min-width:120px;padding:0.4em 0.6em;border:0.5px solid #ccc;border-radius:6px;font-size:16px;font-family:inherit;}
+  .asset-row input[type=text]{flex:1;min-width:120px;padding:0.4em 0.6em;border:0.5px solid #ccc;border-radius:6px;font-size:1em;font-family:inherit;}
   .asset-row select{padding:0.4em 0.5em;border:0.5px solid #ccc;border-radius:6px;font-size:0.85em;font-family:inherit;background:#FDFAF5;}
   .asset-row .unit{font-size:0.82em;color:#555;white-space:nowrap;}
   .del-btn{padding:0.25em 0.6em;border-radius:6px;border:0.5px solid #F0997B;background:#FAECE7;color:#712B13;font-size:0.78em;cursor:pointer;white-space:nowrap;}
@@ -63,7 +63,7 @@
   .print-table th{background:#E6F1FB;color:#0C447C;padding:0.4em 0.6em;text-align:left;font-weight:500;border:0.5px solid #bbb;}
   .print-table td{padding:0.4em 0.6em;border:0.5px solid #bbb;vertical-align:middle;}
   .write-cell{min-width:130px;background:#fffdf5;}
-  .print-note{font-size:12px;color:#888;margin-top:0.4em;line-height:1.6;}
+  .print-note{font-size:0.75em;color:#888;margin-top:0.4em;line-height:1.6;}
   .konbini-note{font-size:0.78em;color:#712B13;background:#FAECE7;border:0.5px solid #993C1D;border-radius:6px;padding:0.5em 0.75em;margin-top:0.75em;line-height:1.7;}
 
   .trial-card{background:#E6F1FB;border:0.5px solid #185FA5;border-radius:10px;padding:1em 1.2em;margin-bottom:0.75em;}
@@ -112,8 +112,8 @@
   .footer{margin-top:2em;padding-top:1em;border-top:0.5px solid #ddd;text-align:center;}
   .footer a{color:#185FA5;text-decoration:none;font-size:1em;font-weight:500;border-bottom:1.5px solid #B5D4F4;}
   .footer a:hover{color:#0C447C;}
-  .footer-credit{font-size:12px;color:#aaa;margin-top:6px;line-height:1.8;}
-  .disclaimer{font-size:12px;color:#555;background:#F5F0E8;border:0.5px solid #ddd;border-radius:6px;padding:0.75em 1em;margin-top:0.75em;line-height:1.8;text-align:left;}
+  .footer-credit{font-size:0.75em;color:#aaa;margin-top:6px;line-height:1.8;}
+  .disclaimer{font-size:0.75em;color:#555;background:#F5F0E8;border:0.5px solid #ddd;border-radius:6px;padding:0.75em 1em;margin-top:0.75em;line-height:1.8;text-align:left;}
   .disclaimer strong{color:#1a1a18;}
 
 
@@ -147,9 +147,9 @@
 
   <div class="fs-bar">
     <span>文字サイズ</span>
-    <button class="fs-btn active" onclick="setFS(16,this)">標準</button>
-    <button class="fs-btn" onclick="setFS(19,this)">大きく</button>
-    <button class="fs-btn" onclick="setFS(22,this)">さらに大きく</button>
+    <button class="fs-btn active" onclick="setFS(16,this)">100%</button>
+    <button class="fs-btn" onclick="setFS(19,this)">120%</button>
+    <button class="fs-btn" onclick="setFS(22,this)">140%</button>
   </div>
 
   <div class="steps">
@@ -375,11 +375,7 @@ const LINKS={
 document.querySelectorAll('a[href="LINK_ZEIRISHI"]').forEach(a=>a.href=LINKS.zeirishi);
 document.querySelectorAll('a[href="LINK_BENGOSHI"]').forEach(a=>a.href=LINKS.bengoshi);
 
-function setFS(px,btn){
-  document.getElementById('app').style.fontSize=px+'px';
-  document.querySelectorAll('.fs-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
+function setFS(px,btn){document.documentElement.style.fontSize=px+'px';document.querySelectorAll('.fs-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
 
 function goStep(n){
   document.querySelectorAll('.step-body').forEach((s,i)=>s.classList.toggle('active',i===n));

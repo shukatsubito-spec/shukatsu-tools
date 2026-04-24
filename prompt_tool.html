@@ -7,10 +7,10 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#F5F0E8;color:#1a1a18;font-size:16px;}
+  body{font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#F5F0E8;color:#1a1a18;font-size:1em;}
   .wrap{padding:1rem;max-width:100%;}
   .header{text-align:center;margin-bottom:0.75rem;}
-  .header h1{font-size:1.1rem;font-weight:500;color:#0C447C;}
+  .header h1{font-size:1.1em;font-weight:500;color:#0C447C;}
 
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start;}
   @media(max-width:640px){.two-col{grid-template-columns:1fr;}}
@@ -18,7 +18,7 @@
   .left-col iframe{width:100%;min-height:900px;border:0.5px solid #ddd;border-radius:10px;background:#FDFAF5;display:block;}
 
   /* 右カラム：font-sizeをemで統一し、親要素のfont-size変更で全体が連動する */
-  .right-col{display:flex;flex-direction:column;gap:0.75em;font-size:16px;}
+  .right-col{display:flex;flex-direction:column;gap:0.75em;font-size:1em;}
 
   .fs-bar{display:flex;align-items:center;gap:0.5em;padding:0.5em 0.75em;background:#FDFAF5;border:0.5px solid #ddd;border-radius:8px;}
   .fs-bar span{font-size:0.8em;color:#888;white-space:nowrap;}
@@ -32,7 +32,7 @@
   .hint-box{background:#FAEEDA;border:0.5px solid #854F0B;border-radius:8px;padding:0.625em 0.75em;font-size:0.8em;color:#633806;line-height:1.7;}
 
   .radio-grid{display:flex;flex-direction:column;gap:0.375em;margin-top:0.625em;}
-  .radio-label{display:flex;align-items:flex-start;gap:0.5em;padding:0.5em 0.625em;border-radius:6px;cursor:pointer;font-size:16px;line-height:1.5;border:0.5px solid #eee;background:#F5F0E8;transition:background 0.15s;}
+  .radio-label{display:flex;align-items:flex-start;gap:0.5em;padding:0.5em 0.625em;border-radius:6px;cursor:pointer;font-size:1em;line-height:1.5;border:0.5px solid #eee;background:#F5F0E8;transition:background 0.15s;}
   .radio-label:hover{background:#E6F1FB;}
   .radio-label input{margin-top:3px;flex-shrink:0;accent-color:#185FA5;}
   .badge{font-size:0.75em;background:#FAECE7;color:#712B13;border-radius:3px;padding:1px 5px;margin-left:4px;white-space:nowrap;}
@@ -53,13 +53,13 @@
   .ai-btn:hover{background:#E6F1FB;border-color:#185FA5;}
   .ai-dot{width:0.75em;height:0.75em;border-radius:50%;flex-shrink:0;}
   .ai-name{font-weight:500;font-size:0.9375em;min-width:5em;}
-  .ai-desc{font-size:12px;color:#888;}
-  .ai-note{font-size:12px;color:#aaa;margin-top:0.625em;line-height:1.7;}
+  .ai-desc{font-size:0.75em;color:#888;}
+  .ai-note{font-size:0.75em;color:#aaa;margin-top:0.625em;line-height:1.7;}
 
   .footer{margin-top:1.5rem;padding-top:1rem;border-top:0.5px solid #ddd;text-align:center;}
-  .footer a{color:#185FA5;text-decoration:none;font-size:1rem;font-weight:500;border-bottom:1.5px solid #B5D4F4;padding-bottom:1px;}
+  .footer a{color:#185FA5;text-decoration:none;font-size:1em;font-weight:500;border-bottom:1.5px solid #B5D4F4;padding-bottom:1px;}
   .footer a:hover{color:#0C447C;}
-  .footer-credit{font-size:12px;color:#aaa;margin-top:6px;line-height:1.7;}
+  .footer-credit{font-size:0.75em;color:#aaa;margin-top:6px;line-height:1.7;}
 </style>
 </head>
 <body>
@@ -81,9 +81,9 @@
 
       <div class="fs-bar">
         <span>右側の文字サイズ</span>
-        <button class="fs-btn active" onclick="setFS(16,this)">標準</button>
-        <button class="fs-btn" onclick="setFS(20,this)">大きく</button>
-        <button class="fs-btn" onclick="setFS(23,this)">さらに大きく</button>
+        <button class="fs-btn active" onclick="setFS(16,this)">100%</button>
+    <button class="fs-btn" onclick="setFS(19,this)">120%</button>
+    <button class="fs-btn" onclick="setFS(22,this)">140%</button>
       </div>
 
       <div class="section-card">
@@ -146,7 +146,7 @@
 
 <script>
 function setFS(px, btn){
-  document.getElementById('right-col').style.fontSize = px + 'px';
+  document.documentElement.style.fontSize = px + 'px';
   document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
