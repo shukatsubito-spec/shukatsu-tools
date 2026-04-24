@@ -302,17 +302,79 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   padding: 20px;
   box-shadow: var(--shadow);
 }
-.lp-grid { display: grid; gap: 14px; }
-@media(min-width:720px){ .lp-grid { grid-template-columns: 1fr 1fr 1fr; } }
-.lp-panel { border: 1px solid var(--line); border-radius: 12px; background: #fafafa; padding: 14px; }
-.lp-panel h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
-.lp-panel h4 small { color: var(--muted); font-size: 12px; font-weight: 400; }
-.panel-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-.panel-head h4 { margin-bottom: 0; }
 
-.bonus-ctrl { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+/* 左右2列レイアウト */
+.lp-layout {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 16px;
+  align-items: start;
+}
+@media(max-width: 680px){
+  .lp-layout { grid-template-columns: 1fr; }
+}
+
+/* 左カラム：収入＋仕切り＋支出 */
+.lp-left {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fafafa;
+  overflow: hidden;
+}
+.lp-block { padding: 14px 16px; }
+.lp-block-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.lp-block-head h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lp-block-head h4 small { color: var(--muted); font-size: 12px; font-weight: 400; }
+.lp-section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.lp-income-label { background: #dbeafe; color: #1e40af; }
+.lp-expense-label { background: #fee2e2; color: #991b1b; }
+
+/* 仕切り線 */
+.lp-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
+  margin: 0 12px;
+  position: relative;
+}
+.lp-divider::before {
+  content: '支　出';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fafafa;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #991b1b;
+  letter-spacing: .1em;
+  white-space: nowrap;
+}
+
+.bonus-ctrl { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
 .bonus-ctrl input {
-  width: 48px;
+  width: 44px;
   text-align: center;
   padding: 4px 6px;
   border: 1px solid var(--line);
@@ -320,8 +382,8 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   font: inherit;
 }
 
-.lp-rows { display: flex; flex-direction: column; gap: 8px; }
-.lp-row { display: grid; grid-template-columns: 1fr 110px 32px; gap: 6px; align-items: center; }
+.lp-rows { display: flex; flex-direction: column; gap: 7px; }
+.lp-row { display: grid; grid-template-columns: 1fr 100px 32px; gap: 6px; align-items: center; }
 .lp-row input[type="text"],
 .lp-row input[type="number"] {
   padding: 7px 10px;
@@ -337,29 +399,86 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
 .lp-row .unit { font-size: 12px; color: var(--muted); white-space: nowrap; }
 .lp-del { border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; height: 32px; width: 32px; font-size: 14px; }
 .lp-del:hover { background: #fee2e2; }
-.lp-add { margin-top: 8px; }
-.lp-add-btn { border: 1px dashed var(--accent); background: #fff; color: var(--accent); border-radius: 8px; padding: 7px 12px; font-size: 13px; cursor: pointer; font-family: inherit; }
-.lp-add-btn:hover { background: #eff6ff; }
+.lp-add { margin-top: 10px; }
+.lp-add-btn { border: 1px dashed #dc2626; background: #fff; color: #dc2626; border-radius: 8px; padding: 7px 12px; font-size: 13px; cursor: pointer; font-family: inherit; }
+.lp-add-btn:hover { background: #fef2f2; }
 
-.lp-result { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+/* 右カラム：結果パネル */
+.lp-result {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  position: sticky;
+  top: 60px;
+}
+.lp-result-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 月間・年間ブロック */
+.lp-result-block { margin-bottom: 12px; }
+.lp-result-period {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.period-month { background: #e0f2fe; color: #0369a1; }
+.period-year  { background: #fce7f3; color: #9d174d; }
+
+.lp-result-rows { display: flex; flex-direction: column; gap: 8px; }
+.lp-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+}
+.lp-result-row.balance-row {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+.lp-result-row.balance-row.negative-row {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+.lp-result-label { font-size: 12px; color: var(--muted); font-weight: 700; }
+.lp-result-val {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: -.01em;
+}
+.lp-result-val.negative { color: #dc2626; }
+.lp-result-val.positive { color: var(--ok); }
+
+hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0; }
+.lp-tools { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.lp-check-label { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+/* 旧スタイル（後方互換） */
 .kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 .kpi-item .kpi-label { font-size: 11px; color: var(--muted); margin-bottom: 3px; }
 .kpi-item .kpi-val { font-size: 20px; font-weight: 900; }
 .kpi-item .kpi-val.negative { color: #dc2626; }
 .kpi-item .kpi-val.positive { color: var(--ok); }
 .kpi-period {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: #fce7f3;
-  color: #9d174d;
-  margin-bottom: 4px;
+  display: inline-block; font-size: 10px; font-weight: 700;
+  padding: 2px 6px; border-radius: 4px;
+  background: #fce7f3; color: #9d174d; margin-bottom: 4px;
 }
-hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0; }
-.lp-tools { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
-.lp-check-label { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; cursor: pointer; }
 
 /* ===== 保険診断 ===== */
 .ins-wrap {
@@ -783,43 +902,89 @@ function setFsz(pct, btn){
     </div>
     <div class="lp-wrap">
       <p class="diag-lead">収入と支出を万円単位で入力すると、月間・年間の収支を自動計算します。</p>
-      <div class="lp-grid">
-        <!-- 収入 -->
-        <div class="lp-panel">
-          <div class="panel-head">
-            <h4>収入 <small>月額入力</small></h4>
-            <div class="bonus-ctrl">賞与: <input type="number" id="bonusMonths" step="0.5" min="0" value="0" style="width:46px"> か月/年</div>
+      <div class="lp-layout">
+
+        <!-- 左カラム：収入＋仕切り＋支出 -->
+        <div class="lp-left">
+          <!-- 収入ブロック -->
+          <div class="lp-block">
+            <div class="lp-block-head">
+              <h4>
+                <span class="lp-section-label lp-income-label">収　入</span>
+                <small>月額・万円</small>
+              </h4>
+              <div class="bonus-ctrl">賞与: <input type="number" id="bonusMonths" step="0.5" min="0" value="0"> か月/年</div>
+            </div>
+            <div class="lp-rows" id="incomeRows"></div>
           </div>
-          <div class="lp-rows" id="incomeRows"></div>
+
+          <!-- 仕切り線（支出ラベル付き） -->
+          <div class="lp-divider"></div>
+
+          <!-- 支出ブロック -->
+          <div class="lp-block">
+            <div class="lp-block-head">
+              <h4>
+                <span class="lp-section-label lp-expense-label">支　出</span>
+                <small>月額・万円</small>
+              </h4>
+            </div>
+            <div class="lp-rows" id="expenseRows"></div>
+            <div class="lp-add"><button class="lp-add-btn" id="addExpenseBtn">＋ 支出行を追加</button></div>
+          </div>
         </div>
-        <!-- 支出 -->
-        <div class="lp-panel">
-          <h4>支出 <small>月額入力</small></h4>
-          <div class="lp-rows" id="expenseRows"></div>
-          <div class="lp-add"><button class="lp-add-btn" id="addExpenseBtn">＋ 行を追加</button></div>
-        </div>
-        <!-- 結果 -->
+
+        <!-- 右カラム：結果パネル（sticky） -->
         <div class="lp-result">
-          <h4 style="font-size:15px;font-weight:700;margin-bottom:12px;">結果（自動計算）</h4>
-          <div class="kpi-period">月間</div>
-          <div class="kpi-grid" style="margin-bottom:12px;">
-            <div class="kpi-item"><div class="kpi-label">収入合計</div><div class="kpi-val" id="mIncome">¥0</div></div>
-            <div class="kpi-item"><div class="kpi-label">支出合計</div><div class="kpi-val" id="mExpense">¥0</div></div>
-            <div class="kpi-item"><div class="kpi-label">収支</div><div class="kpi-val" id="mBalance">¥0</div></div>
+          <div class="lp-result-title">📊 収支結果</div>
+
+          <!-- 月間 -->
+          <div class="lp-result-block">
+            <span class="lp-result-period period-month">月　間</span>
+            <div class="lp-result-rows">
+              <div class="lp-result-row">
+                <span class="lp-result-label">収入合計</span>
+                <span class="lp-result-val" id="mIncome">¥0</span>
+              </div>
+              <div class="lp-result-row">
+                <span class="lp-result-label">支出合計</span>
+                <span class="lp-result-val" id="mExpense">¥0</span>
+              </div>
+              <div class="lp-result-row balance-row" id="mBalanceRow">
+                <span class="lp-result-label">月間収支</span>
+                <span class="lp-result-val" id="mBalance">¥0</span>
+              </div>
+            </div>
           </div>
+
           <hr class="kpi-divider">
-          <div class="kpi-period" style="background:#fce7f3">年間</div>
-          <div class="kpi-grid" style="margin-top:8px;">
-            <div class="kpi-item"><div class="kpi-label">収入合計</div><div class="kpi-val" id="yIncome">¥0</div></div>
-            <div class="kpi-item"><div class="kpi-label">支出合計</div><div class="kpi-val" id="yExpense">¥0</div></div>
-            <div class="kpi-item"><div class="kpi-label">収支</div><div class="kpi-val" id="yBalance">¥0</div></div>
+
+          <!-- 年間 -->
+          <div class="lp-result-block">
+            <span class="lp-result-period period-year">年　間</span>
+            <div class="lp-result-rows">
+              <div class="lp-result-row">
+                <span class="lp-result-label">収入合計</span>
+                <span class="lp-result-val" id="yIncome">¥0</span>
+              </div>
+              <div class="lp-result-row">
+                <span class="lp-result-label">支出合計</span>
+                <span class="lp-result-val" id="yExpense">¥0</span>
+              </div>
+              <div class="lp-result-row balance-row" id="yBalanceRow">
+                <span class="lp-result-label">年間収支</span>
+                <span class="lp-result-val" id="yBalance">¥0</span>
+              </div>
+            </div>
           </div>
+
           <div class="lp-tools">
             <label class="lp-check-label"><input type="checkbox" id="lpAutoSave" checked> 自動保存</label>
-            <button class="btn btn-ghost" id="lpResetBtn" style="font-size:13px;padding:7px 14px;">リセット</button>
+            <button class="btn btn-ghost" id="lpResetBtn" style="font-size:12px;padding:6px 12px;">リセット</button>
           </div>
           <p style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.7;">※入力データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません。</p>
         </div>
+
       </div>
     </div>
   </section>
@@ -1002,13 +1167,26 @@ function compute(){
   const firstNum = incomeRows.querySelector('.lp-row input[type=number]');
   const sal = firstNum ? (parseFloat(firstNum.value)||0)*MAN : 0;
   const yI = (mI-sal)*12 + sal*(12+bonus), yE = mE*12, yB = yI - yE;
-  ['mIncome','mExpense','mBalance','yIncome','yExpense','yBalance'].forEach((id,i)=>{
-    const vals = [mI,mE,mB,yI,yE,yB];
+
+  // 値をセット
+  const vals = { mIncome:mI, mExpense:mE, mBalance:mB, yIncome:yI, yExpense:yE, yBalance:yB };
+  Object.entries(vals).forEach(([id, v]) => {
     const el = document.getElementById(id);
-    el.textContent = fmt.format(vals[i]);
+    if(!el) return;
+    el.textContent = fmt.format(v);
     el.classList.remove('negative','positive');
-    if(id.includes('Balance')) el.classList.add(vals[i]<0?'negative':'positive');
+    if(id.includes('Balance')) el.classList.add(v < 0 ? 'negative' : 'positive');
   });
+
+  // 収支行のカード色切り替え
+  ['mBalanceRow','yBalanceRow'].forEach((rowId, i) => {
+    const row = document.getElementById(rowId);
+    if(!row) return;
+    const bal = i === 0 ? mB : yB;
+    row.classList.remove('negative-row');
+    if(bal < 0) row.classList.add('negative-row');
+  });
+
   maybeSave();
 }
 function maybeSave(){
