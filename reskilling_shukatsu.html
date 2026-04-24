@@ -16,10 +16,10 @@
   display: flex; align-items: center; gap: 8px;
   backdrop-filter: blur(4px);
 }
-#font-size-bar span { font-size: 12px; color: #64748b; margin-right: 2px; }
+#font-size-bar span { font-size: 0.75rem; color: #64748b; margin-right: 2px; }
 .fsz-btn {
   border: 1px solid #cbd5e1; background: #fff; color: #334155;
-  border-radius: 6px; padding: 4px 10px; font-size: 12px;
+  border-radius: 6px; padding: 4px 10px; font-size: 0.75rem;
   cursor: pointer; font-family: inherit; font-weight: 700;
   transition: all .15s;
 }
@@ -50,12 +50,12 @@
   --shadow: 0 2px 16px rgba(31,41,55,.07);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; overflow-x: hidden; font-size: 16px; }
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.85;
   overflow-x: hidden;
   word-break: break-word;
@@ -74,7 +74,7 @@ body {
   border: 1px solid rgba(255,255,255,.25);
   border-radius: 999px;
   padding: 4px 16px;
-  font-size: 12px;
+  font-size: 0.75rem;
   letter-spacing: .1em;
   margin-bottom: 14px;
 }
@@ -86,7 +86,7 @@ body {
   margin-bottom: 14px;
 }
 .hero-lead {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: rgba(255,255,255,.82);
   max-width: min(520px, 100%);
   margin: 0 auto 24px;
@@ -103,7 +103,7 @@ body {
   border: 1px solid rgba(255,255,255,.22);
   border-radius: 999px;
   padding: 5px 14px;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 /* ===== 代表メッセージ ===== */
@@ -119,22 +119,10 @@ body {
   padding: 24px 26px;
   box-shadow: var(--shadow);
   border-left: 6px solid var(--green);
-  position: relative;
 }
-.rep-msg-inner::before {
-  content: '「';
-  font-family: 'BIZ UDPMincho', serif;
-  font-size: 72px;
-  color: var(--green);
-  opacity: .12;
-  position: absolute;
-  top: -10px;
-  left: 14px;
-  line-height: 1;
-}
-.rep-msg h2 { font-size: 17px; font-weight: 700; margin-bottom: 10px; color: var(--green); }
-.rep-msg p { font-size: 14px; line-height: 1.9; color: var(--ink); margin-bottom: 10px; }
-.rep-msg p:last-child { margin-bottom: 0; color: var(--muted); font-size: 13px; }
+.rep-msg h2 { font-size: 1.063rem; font-weight: 700; margin-bottom: 10px; color: var(--green); }
+.rep-msg p { font-size: 0.875rem; line-height: 1.9; color: var(--ink); margin-bottom: 10px; }
+.rep-msg p:last-child { margin-bottom: 0; color: var(--muted); font-size: 0.813rem; }
 
 /* ===== NAV TABS ===== */
 .nav-tabs {
@@ -157,7 +145,7 @@ body {
   flex: 0 0 auto;
   padding: 13px 18px;
   border: none; background: transparent;
-  color: var(--muted); font-size: 13px; font-weight: 700;
+  color: var(--muted); font-size: 0.813rem; font-weight: 700;
   cursor: pointer;
   border-bottom: 3px solid transparent;
   font-family: inherit; white-space: nowrap;
@@ -184,12 +172,12 @@ body {
   background: var(--green); color: #fff;
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 900; font-size: 16px; flex-shrink: 0;
+  font-weight: 900; font-size: 1.0rem; flex-shrink: 0;
 }
-.sec-header h2 { font-size: 19px; font-weight: 700; }
+.sec-header h2 { font-size: 1.188rem; font-weight: 700; }
 .sec-badge {
   display: inline-block; background: var(--green-light); color: var(--green);
-  border-radius: 8px; padding: 3px 10px; font-size: 12px; font-weight: 700;
+  border-radius: 8px; padding: 3px 10px; font-size: 0.75rem; font-weight: 700;
 }
 
 section.cs { margin-bottom: 40px; scroll-margin-top: 56px; }
@@ -203,8 +191,8 @@ section.cs { margin-bottom: 40px; scroll-margin-top: 56px; }
   box-shadow: var(--shadow);
   margin-bottom: 14px;
 }
-.card-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
-.card-lead { color: var(--muted); font-size: 14px; margin-bottom: 12px; line-height: 1.75; }
+.card-title { font-size: 1.0rem; font-weight: 700; margin-bottom: 8px; }
+.card-lead { color: var(--muted); font-size: 0.875rem; margin-bottom: 12px; line-height: 1.75; }
 
 /* ===== STEPカード ===== */
 .step-cards { display: flex; flex-direction: column; gap: 12px; }
@@ -235,14 +223,14 @@ section.cs { margin-bottom: 40px; scroll-margin-top: 56px; }
 details[open] .step-chevron { transform: rotate(180deg); }
 .step-body { padding: 0 18px 16px; border-top: 1px solid var(--line); }
 .step-list { margin: 10px 0 0; padding-left: 1.2em; }
-.step-list li { margin: .35rem 0; font-size: 14px; }
+.step-list li { margin: .35rem 0; font-size: 0.875rem; }
 .callout {
   border-left: 5px solid var(--green);
   background: var(--green-light);
   border-radius: 10px;
   padding: 10px 14px;
   margin: 10px 0;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 .callout.warn { border-left-color: var(--amber); background: var(--amber-light); }
 .callout.info { border-left-color: var(--blue); background: var(--blue-light); }
@@ -255,23 +243,23 @@ details[open] .step-chevron { transform: rotate(180deg); }
   display: flex; align-items: flex-start; gap: 8px;
   padding: 9px 12px;
   border: 1px solid var(--line); border-radius: 10px;
-  margin: .4rem 0; cursor: pointer; font-size: 14px;
+  margin: .4rem 0; cursor: pointer; font-size: 0.875rem;
 }
 .cl-item:hover { background: #f3f4f6; }
 .cl-item.done { background: var(--green-light); border-color: #a7f3d0; }
 .cl-item input { margin-top: 2px; accent-color: var(--green); flex-shrink: 0; }
 
 /* ===== 年金テーブル ===== */
-.pension-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+.pension-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.813rem; }
 .pension-table th, .pension-table td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
 .pension-table th { background: #f9fafb; font-weight: 700; }
 .alert-box {
   border: 1px solid #fca5a5; background: var(--red-light);
   border-radius: 10px; padding: 10px 14px;
   display: flex; gap: 10px; align-items: flex-start;
-  margin: 10px 0; font-size: 13px;
+  margin: 10px 0; font-size: 0.813rem;
 }
-.alert-icon { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--red); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.alert-icon { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--red); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; }
 
 /* ===== AIプロンプト ===== */
 .prompt-row { display: flex; gap: 8px; align-items: flex-start; margin: .5rem 0; }
@@ -279,12 +267,12 @@ details[open] .step-chevron { transform: rotate(180deg); }
   background: #f9fafb; border: 1px solid var(--line);
   border-radius: 10px; padding: 8px 10px;
   display: block; flex: 1; white-space: pre-wrap;
-  font-family: inherit; font-size: 13px; line-height: 1.65;
+  font-family: inherit; font-size: 0.813rem; line-height: 1.65;
 }
 .copy-btn {
   white-space: nowrap; border: 1px solid var(--line);
   background: #f1f5f9; border-radius: 10px; padding: 8px 10px;
-  cursor: pointer; font-size: 13px; font-family: inherit;
+  cursor: pointer; font-size: 0.813rem; font-family: inherit;
 }
 .copy-btn:hover { background: #e2e8f0; }
 .copy-btn.ok { border-color: var(--green); color: var(--green); }
@@ -300,12 +288,12 @@ details[open] .step-chevron { transform: rotate(180deg); }
   box-shadow: var(--shadow);
 }
 .skill-badge {
-  display: inline-block; font-size: 11px; font-weight: 700;
+  display: inline-block; font-size: 0.688rem; font-weight: 700;
   background: #eef2ff; color: #3730a3;
   border-radius: 999px; padding: 3px 10px; margin-bottom: 8px;
 }
-.skill-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-.skill-card p { font-size: 13px; color: var(--muted); margin-bottom: 10px; line-height: 1.65; }
+.skill-card h4 { font-size: 0.938rem; font-weight: 700; margin-bottom: 6px; }
+.skill-card p { font-size: 0.813rem; color: var(--muted); margin-bottom: 10px; line-height: 1.65; }
 
 /* ===== ダブルホビー ===== */
 .hobby-intro {
@@ -315,25 +303,25 @@ details[open] .step-chevron { transform: rotate(180deg); }
   padding: 20px;
   margin-bottom: 14px;
 }
-.hobby-intro h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #92400e; }
+.hobby-intro h3 { font-size: 1.063rem; font-weight: 700; margin-bottom: 8px; color: #92400e; }
 .hobby-story { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin: 12px 0; }
-.hobby-story p { font-size: 14px; line-height: 1.85; color: var(--ink); margin-bottom: 8px; }
+.hobby-story p { font-size: 0.875rem; line-height: 1.85; color: var(--ink); margin-bottom: 8px; }
 .hobby-story p:last-child { margin-bottom: 0; }
-.hobby-point { border-left: 5px solid #f97316; background: #fff7ed; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-top: 10px; }
+.hobby-point { border-left: 5px solid #f97316; background: #fff7ed; border-radius: 10px; padding: 10px 14px; font-size: 0.813rem; margin-top: 10px; }
 .hobby-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
-.matrix-cell { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 13px; }
+.matrix-cell { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 0.813rem; }
 .matrix-cell strong { display: block; margin-bottom: 4px; }
-.matrix-note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.matrix-note { font-size: 0.75rem; color: var(--muted); margin-top: 8px; }
 
 /* ===== 相談先 ===== */
 .contact-grid { display: grid; gap: 10px; }
-.contact-item { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14px; }
+.contact-item { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 0.875rem; }
 .contact-item strong { color: var(--green); }
 
 /* ===== 共通ユーティリティ ===== */
-.note-box { background: var(--amber-light); border: 1px solid #fde68a; border-radius: 10px; padding: 10px 14px; font-size: 12px; color: #78350f; margin-bottom: 14px; }
-.muted-note { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
-.tag-pill { display: inline-block; background: #f1f5f9; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 700; }
+.note-box { background: var(--amber-light); border: 1px solid #fde68a; border-radius: 10px; padding: 10px 14px; font-size: 0.75rem; color: #78350f; margin-bottom: 14px; }
+.muted-note { font-size: 0.75rem; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+.tag-pill { display: inline-block; background: #f1f5f9; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 0.813rem; font-weight: 700; }
 
 /* ===== 戻るボタン ===== */
 .back-to-top {
@@ -349,7 +337,7 @@ details[open] .step-chevron { transform: rotate(180deg); }
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 7px 16px;
-  font-size: 13px;
+  font-size: 0.813rem;
   font-weight: 700;
   color: var(--green);
   cursor: pointer;
@@ -532,7 +520,7 @@ function setFsz(pct, btn){
                 <li>AI相談員・終活コンシェルジュとしての地域貢献活動</li>
                 <li>成果をポートフォリオにまとめて、次のステップへ</li>
               </ul>
-              <div class="callout info" style="margin-top:10px;font-size:13px;">
+              <div class="callout info" style="margin-top:10px;font-size: 0.813rem;">
                 学習は「毎日30分×継続」でも効果が出ます。<strong>小さく、長く。</strong>スキルより先に「何をしたいか」を言語化しましょう。
               </div>
             </div>
@@ -581,7 +569,7 @@ function setFsz(pct, btn){
             <svg class="step-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
           </summary>
           <div class="step-body">
-            <p style="font-size:14px;color:var(--muted);margin-bottom:10px;">「働きながら介護」を成立させるための現実解：</p>
+            <p style="font-size: 0.875rem;color:var(--muted);margin-bottom:10px;">「働きながら介護」を成立させるための現実解：</p>
             <ul class="step-list">
               <li>短時間勤務・在宅勤務の併用。家族・ヘルパーのシフト表を作る</li>
               <li>介護休業（通算93日）を段階取得。復職・再就職を前提に制度を使う</li>
@@ -604,20 +592,20 @@ function setFsz(pct, btn){
             <svg class="step-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
           </summary>
           <div class="step-body">
-            <p style="font-size:14px;color:var(--muted);margin-bottom:10px;">離職が不可避でも、復職・再就職のための「学びと実績作り」を同時進行に。</p>
-            <p style="font-weight:700;font-size:14px;margin-bottom:6px;">復職・再就職しやすい職種：</p>
+            <p style="font-size: 0.875rem;color:var(--muted);margin-bottom:10px;">離職が不可避でも、復職・再就職のための「学びと実績作り」を同時進行に。</p>
+            <p style="font-weight:700;font-size: 0.875rem;margin-bottom:6px;">復職・再就職しやすい職種：</p>
             <ul class="step-list">
               <li>事務・バックオフィス（在宅・時短と両立しやすい）</li>
               <li>医療・介護・福祉周辺（パート→常勤のルートが太い）</li>
               <li>地域連携・相談支援（包括・社協・NPO等での実務経験が武器）</li>
             </ul>
-            <p style="font-weight:700;font-size:14px;margin:12px 0 6px;">6〜12か月の学習目安：</p>
+            <p style="font-weight:700;font-size: 0.875rem;margin:12px 0 6px;">6〜12か月の学習目安：</p>
             <ul class="step-list">
               <li>PC基礎＋表計算・ドキュメント整備（Excel・Word・スプレッドシート）</li>
               <li>AI活用（議事録生成・文書要約・比較表作成・定型業務の自動化）</li>
               <li>介護基礎（認知症ケア・身体介護・福祉制度）＋初任者研修の受講検討</li>
             </ul>
-            <div class="callout" style="margin-top:10px;font-size:13px;">学習は「毎日30分×半年」でも効果が出ます。<strong>小さく、長く。</strong></div>
+            <div class="callout" style="margin-top:10px;font-size: 0.813rem;">学習は「毎日30分×半年」でも効果が出ます。<strong>小さく、長く。</strong></div>
           </div>
         </details>
       </div>
@@ -629,13 +617,13 @@ function setFsz(pct, btn){
             <svg class="step-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
           </summary>
           <div class="step-body">
-            <p style="font-weight:700;font-size:14px;margin-bottom:8px;">就業パターン（現実的な3択）：</p>
+            <p style="font-weight:700;font-size: 0.875rem;margin-bottom:8px;">就業パターン（現実的な3択）：</p>
             <ul class="step-list">
               <li>① <strong>短時間パート＋在宅</strong>：シフト弾力性が高く、介護対応と両立しやすい</li>
               <li>② <strong>フルタイム（時短制度）</strong>：社会保険を維持しつつ、収入とキャリアを回復</li>
               <li>③ <strong>自営・業務委託</strong>：スケジュール裁量があるが、収入安定化の仕組みが必要</li>
             </ul>
-            <p style="font-weight:700;font-size:14px;margin:12px 0 6px;">ブランクの説明（応募書類・面接）：</p>
+            <p style="font-weight:700;font-size: 0.875rem;margin:12px 0 6px;">ブランクの説明（応募書類・面接）：</p>
             <div class="prompt-row">
               <code>介護離職のため○年ブランクがありますが、在宅と通所サービスで日中××時間の就業が可能です。期間中は○○講座を修了し、△△の実務を行いました。突発時は家族と事業所の二重連絡体制があります。</code>
               <button class="copy-btn">コピー</button>
@@ -656,7 +644,7 @@ function setFsz(pct, btn){
         <label class="cl-item"><input type="checkbox" class="cl-cb"> 当面6〜12か月の生活費と非常時の連絡体制を用意</label>
         <label class="cl-item"><input type="checkbox" class="cl-cb"> 学習計画（6〜12か月）と希望職種の求人要件を確認</label>
       </div>
-      <p style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.7;">※このチェックリストはページを閉じるとリセットされます（データはブラウザ外に保存・送信されません）。</p>
+      <p style="font-size: 0.75rem;color:#64748b;margin-top:8px;line-height:1.7;">※このチェックリストはページを閉じるとリセットされます（データはブラウザ外に保存・送信されません）。</p>
     </div>
   </section>
   <div class="back-to-top"><a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a></div>
@@ -698,15 +686,15 @@ function setFsz(pct, btn){
         <div>上記は<strong>一般的なモデルケースのイメージ</strong>です。実際の受給額は「収入・加入年数・標準報酬月額」等で大きく変わります。必ず「ねんきんネット」で最新の見込額を確認してください。</div>
       </div>
 
-      <p style="font-weight:700;font-size:14px;margin:14px 0 8px;">ダメージを抑える手順：</p>
-      <ul class="step-list" style="padding-left:1.3em;font-size:14px;">
+      <p style="font-weight:700;font-size: 0.875rem;margin:14px 0 8px;">ダメージを抑える手順：</p>
+      <ul class="step-list" style="padding-left:1.3em;font-size: 0.875rem;">
         <li>地域包括支援センターへ相談 → 要介護認定 → ケアマネ決定（サービス導入で抱え込みを回避）</li>
         <li>職場の介護休業・時短・在宅の可否を確認（離職回避を最優先）</li>
         <li>やむを得ず離職する場合も、<strong>6〜12か月以内の復職</strong>を前提に計画</li>
         <li><strong>週20時間以上・一定賃金</strong>を満たす雇用で厚生年金に再加入</li>
       </ul>
 
-      <p style="font-weight:700;font-size:14px;margin:14px 0 8px;">すぐ使えるAIプロンプト：</p>
+      <p style="font-weight:700;font-size: 0.875rem;margin:14px 0 8px;">すぐ使えるAIプロンプト：</p>
       <div class="prompt-row">
         <code>ねんきんネットで確認すべき項目を、見出し＋チェックリスト形式で。重複納付・未納・標準報酬の確認ポイントも入れて。</code>
         <button class="copy-btn">コピー</button>
@@ -731,7 +719,7 @@ function setFsz(pct, btn){
 
     <div class="hobby-intro">
       <h3>🎯 趣味の「もう一本の軸」を持つ</h3>
-      <p style="font-size:14px;line-height:1.85;color:#92400e;">一つの趣味ができなくなっても、もう一つの趣味が人生を支える備え。高齢期には体力・病気・経済的負担などで今の趣味を続けられない"揺れ"が起こりがちです。そこで活きるのが、<strong>動と静 ／ 費用あり・なし</strong>を組み合わせてリスク分散する「ダブルホビー」戦略です。</p>
+      <p style="font-size: 0.875rem;line-height:1.85;color:#92400e;">一つの趣味ができなくなっても、もう一つの趣味が人生を支える備え。高齢期には体力・病気・経済的負担などで今の趣味を続けられない"揺れ"が起こりがちです。そこで活きるのが、<strong>動と静 ／ 費用あり・なし</strong>を組み合わせてリスク分散する「ダブルホビー」戦略です。</p>
     </div>
 
     <div class="hobby-story">
@@ -755,7 +743,7 @@ function setFsz(pct, btn){
     <div class="card">
       <div class="card-title">🤖 ChatGPTを"趣味の相棒"にする</div>
       <div class="card-lead">「何から始めればいい？」「道具は最低限で？」そんな時こそAI。始め方から練習メニュー、代替プラン、仲間づくりまでサポートします。</div>
-      <div style="margin-bottom:8px;font-weight:700;font-size:14px;">すぐ使えるプロンプト（クリックでコピー）</div>
+      <div style="margin-bottom:8px;font-weight:700;font-size: 0.875rem;">すぐ使えるプロンプト（クリックでコピー）</div>
       <div class="prompt-row">
         <code>俳句をゼロから始めたい60代向けに、8週間の練習計画を作って。毎日10分でできる課題、季語の調べ方、推敲の観点、月1句会のやり方も入れて。</code>
         <button class="copy-btn">コピー</button>
@@ -793,7 +781,7 @@ function setFsz(pct, btn){
 
       <div class="contact-item">
         <strong>🏢 地域包括支援センター</strong>
-        <div style="margin-top:6px;font-size:13px;color:var(--muted);line-height:1.75;">
+        <div style="margin-top:6px;font-size: 0.813rem;color:var(--muted);line-height:1.75;">
           <b>こんな時に：</b>親や自分の介護が心配になった・要介護認定を受けたい・どこに相談すればいいか分からない<br>
           <b>できること：</b>総合相談・要介護認定申請の案内・ケアマネジャーの紹介・地域サービスの情報提供<br>
           <b>費用：</b>相談無料。市区町村に必ず設置（全国約5,400か所）
@@ -802,7 +790,7 @@ function setFsz(pct, btn){
 
       <div class="contact-item">
         <strong>👤 ケアマネジャー（介護支援専門員）</strong>
-        <div style="margin-top:6px;font-size:13px;color:var(--muted);line-height:1.75;">
+        <div style="margin-top:6px;font-size: 0.813rem;color:var(--muted);line-height:1.75;">
           <b>こんな時に：</b>要介護認定が下りた・在宅サービスを組み合わせたい・施設入所を検討したい<br>
           <b>できること：</b>個別のケアプラン作成・訪問介護/通所/福祉用具など各サービスの手配と調整<br>
           <b>費用：</b>ケアプラン作成は介護保険で全額給付（自己負担なし）。地域包括支援センター経由で紹介可
@@ -811,7 +799,7 @@ function setFsz(pct, btn){
 
       <div class="contact-item">
         <strong>🏛️ ハローワーク・自治体就労支援</strong>
-        <div style="margin-top:6px;font-size:13px;color:var(--muted);line-height:1.75;">
+        <div style="margin-top:6px;font-size: 0.813rem;color:var(--muted);line-height:1.75;">
           <b>こんな時に：</b>介護離職後に復職したい・在宅ワークや短時間勤務の求人を探したい・職業訓練を受けたい<br>
           <b>できること：</b>求職登録・求人紹介・雇用保険（失業給付）の手続き・職業訓練（ハロートレーニング）の案内<br>
           <b>費用：</b>相談・紹介無料。職業訓練は一部有料コースあり（テキスト代等）
@@ -820,7 +808,7 @@ function setFsz(pct, btn){
 
       <div class="contact-item">
         <strong>⚖️ 社会保険労務士（社労士）</strong>
-        <div style="margin-top:6px;font-size:13px;color:var(--muted);line-height:1.75;">
+        <div style="margin-top:6px;font-size: 0.813rem;color:var(--muted);line-height:1.75;">
           <b>こんな時に：</b>介護休業・休暇の取り方が分からない・雇用保険の受給要件を確認したい・職場との交渉が必要<br>
           <b>できること：</b>労働法・社会保険制度の解説・介護と仕事の両立策の提案・給付申請書類のサポート<br>
           <b>費用：</b>初回相談30分無料の事務所多数。各都道府県の社労士会HPから検索可
@@ -829,7 +817,7 @@ function setFsz(pct, btn){
 
       <div class="contact-item">
         <strong>🏠 UR賃貸住宅</strong>
-        <div style="margin-top:6px;font-size:13px;color:var(--muted);line-height:1.75;">
+        <div style="margin-top:6px;font-size: 0.813rem;color:var(--muted);line-height:1.75;">
           <b>こんな時に：</b>高齢になって賃貸が借りづらい・保証人がいない・バリアフリーの住まいに引っ越したい<br>
           <b>できること：</b>礼金・保証人不要で入居可能・見守りサービスや生活支援員が常駐する物件も・バリアフリー設計多数<br>
           <b>費用：</b>仲介手数料なし。家賃は地域・間取りによる。UR都市機構のHPで空室検索可
@@ -838,7 +826,7 @@ function setFsz(pct, btn){
 
       <div class="contact-item">
         <strong>🤝 居住支援法人・住宅セーフティネット</strong>
-        <div style="margin-top:6px;font-size:13px;color:var(--muted);line-height:1.75;">
+        <div style="margin-top:6px;font-size: 0.813rem;color:var(--muted);line-height:1.75;">
           <b>こんな時に：</b>民間賃貸で高齢を理由に断られた・低所得で家賃補助を受けたい・介護サービス利用可能な賃貸を探したい<br>
           <b>できること：</b>入居相談・家主との調整・住宅確保給付金の案内・見守り・生活支援との連携<br>
           <b>相談先：</b>都道府県の居住支援協議会・住宅政策課 ／ 市区町村の福祉課・包括支援センター・社会福祉協議会
@@ -848,7 +836,7 @@ function setFsz(pct, btn){
     </div>
 
     <div style="margin-top:16px;">
-      <p style="font-weight:700;font-size:14px;margin-bottom:8px;">すぐ使えるAIプロンプト</p>
+      <p style="font-weight:700;font-size: 0.875rem;margin-bottom:8px;">すぐ使えるAIプロンプト</p>
       <div class="prompt-row">
         <code>要介護申請からケアマネ決定までの手順と必要書類を、見出し＋チェックリストで。</code>
         <button class="copy-btn">コピー</button>
@@ -923,10 +911,10 @@ updateClBar();
   margin-top:0;
 ">
   <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener"
-     style="display:inline-block;font-weight:700;font-size:15px;color:#1f2937;text-decoration:none;margin-bottom:8px;letter-spacing:.04em;">
+     style="display:inline-block;font-weight:700;font-size: 0.938rem;color:#1f2937;text-decoration:none;margin-bottom:8px;letter-spacing:.04em;">
     終活人.jp
   </a>
-  <p style="font-size:12px;color:#64748b;line-height:1.8;margin:0;">
+  <p style="font-size: 0.75rem;color:#64748b;line-height:1.8;margin:0;">
     © 終活人.jp ／ 無断転載・商用利用禁止 ／ 本ツールの著作権は終活人.jpに帰属します。
   </p>
 </footer>
