@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お金の終活ガイド｜終活人.jp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+  :root {
+    --navy: #3a6090;
+    --navy-light: #edf3fa;
+    --blue-accent: #4a78b0;
+    --bg-page: #f6f8fb;
+    --bg-white: #ffffff;
+    --bg-light: #f9fafd;
+    --red-soft: #c05040;
+    --red-bg: #fef7f6;
+    --red-border: #f0d0c8;
+    --green-main: #2e7a52;
+    --green-bg: #f4fbf7;
+    --green-border: #b8e0c8;
+    --text-main: #2c2c34;
+    --text-mid: #5c5c6a;
+    --text-light: #9898a8;
+    --border: #dde4ee;
+    --font-scale: 1;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    font-size: calc(16px * var(--font-scale));
+    /* スクロールバーを常時確保してレイアウトシフトを防ぐ */
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.75;
+    /* 幅をスクロールバー込みで固定し横スクロールを防ぐ */
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  /* キャプション */
+  .caption, p.sub, .card-head-left p, .card-head-right p,
+  .col-head p, .prompt-head span, .prompt-ai-links .link-label,
+  .sign-title, .ab-title, .copy-ok, footer .copy,
+  .reminder-strip .hotlines {
+    font-size: 0.75rem;   /* キャプション=12px(75%of16px) */
+    line-height: 1.55;
+  }
+
+  /* ===== TOP BAR ===== */
+  .size-bar {
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border);
+    padding: 7px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .size-bar .site-link {
+    color: var(--blue-accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-right: auto;
+  }
+  .size-bar .site-link:hover { color: var(--navy); }
+  .size-bar span { font-size: 0.75rem; color: var(--text-mid); font-weight: 500; white-space: nowrap; }
+  .size-btn {
+    background: var(--bg-light);
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    padding: 3px 12px;
+    font-size: 0.75rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .size-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .size-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+
+  /* ===== TWO COLUMN ===== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    width: 100%;
+  }
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .col-left {
+    background: var(--bg-white);
+    border-right: 1px solid var(--border);
+    padding: 14px 13px 22px;
+  }
+  .col-right {
+    background: var(--bg-light);
+    padding: 14px 13px 22px;
+  }
+
+  /* ===== COLUMN HEADER ===== */
+  .col-head {
+    border-radius: 7px;
+    padding: 9px 11px 8px;
+    margin-bottom: 11px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .col-head-left  { background: #fef5f3; border: 1px solid #f2d4cc; }
+  .col-head-right { background: #f3fbf6; border: 1px solid #c4e8d0; }
+  .col-head .head-icon { font-size: 1.3rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+  .col-head h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+    line-height: 1.4;
+  }
+  .col-head-left  h2 { color: #8a2820; }
+  .col-head-right h2 { color: #1e6038; }
+  .col-head p { font-size: 0.75rem; color: var(--text-mid); line-height: 1.5; }
+
+  /* ===== TABS ===== */
+  .tab-btns {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: 66px;
+    background: var(--bg-white);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 4px;
+    font-size: 0.75rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 500;
+    color: var(--text-mid);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.18s;
+    line-height: 1.4;
+  }
+  .tab-btn:hover { border-color: #a8b8cc; color: var(--navy); background: #f0f4f9; }
+  .col-left  .tab-btn.active { background: #c05040; border-color: #c05040; color: white; }
+  .col-right .tab-btn.active { background: #2e7a52; border-color: #2e7a52; color: white; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ===== CONTENT CARD ===== */
+  .content-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .card-head-left {
+    background: #c05040;
+    padding: 8px 13px;
+    color: white;
+  }
+  .card-head-left h3 { font-size: 0.9rem; font-weight: 700; }
+  .card-head-left p  { font-size: 0.75rem; color: #ffe8e4; margin-top: 1px; }
+
+  .card-head-right {
+    background: #3a8860;
+    padding: 8px 13px;
+    color: white;
+  }
+  .card-head-right h3 { font-size: 0.9rem; font-weight: 700; }
+  .card-head-right p  { font-size: 0.75rem; color: #c4f0d8; margin-top: 1px; }
+
+  .card-body { padding: 11px 13px; }
+
+  /* ===== WARM NOTE ===== */
+  .warm-note {
+    background: #fefaf0;
+    border: 1px solid #ece8c0;
+    border-radius: 7px;
+    padding: 9px 11px;
+    margin-bottom: 11px;
+    font-size: 0.875rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+  .warm-note strong { color: #907010; font-weight: 700; }
+
+  /* ===== SIGN LIST ===== */
+  .sign-list { margin-bottom: 11px; }
+  .sign-list .sign-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .sign-title-red   { color: var(--red-soft); }
+  .sign-title-green { color: var(--green-main); }
+  .sign-list ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .sign-list ul li {
+    font-size: 0.875rem;
+    color: var(--text-main);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .sign-list ul li.red::before   { content: '💬'; position: absolute; left: 0; font-size: 0.8rem; top: 2px; }
+  .sign-list ul li.grn::before   { content: '💡'; position: absolute; left: 0; font-size: 0.8rem; top: 2px; }
+  .sign-list ul li.check::before { content: '✓';  position: absolute; left: 0; color: var(--green-main); font-weight: 700; }
+
+  /* ===== ACTION BOX ===== */
+  .action-box {
+    border-radius: 7px;
+    padding: 9px 11px;
+    margin-bottom: 11px;
+  }
+  .action-box-red   { background: var(--red-bg);   border: 1px solid var(--red-border); }
+  .action-box-green { background: var(--green-bg);  border: 1px solid var(--green-border); }
+  .action-box .ab-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .ab-title-red   { color: var(--red-soft); }
+  .ab-title-green { color: var(--green-main); }
+  .action-box ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .action-box ul li {
+    font-size: 0.875rem;
+    padding-left: 15px;
+    position: relative;
+    line-height: 1.6;
+    color: var(--text-main);
+  }
+  .action-box-red   li::before { content: '→'; position: absolute; left: 0; color: var(--red-soft);   font-weight: 700; }
+  .action-box-green li::before { content: '→'; position: absolute; left: 0; color: var(--green-main); font-weight: 700; }
+
+  /* ===== PROMPT BOX ===== */
+  .prompt-box {
+    border: 1px solid #ccdded;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 2px;
+  }
+  .prompt-head {
+    background: #3a6080;
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .prompt-head span { font-size: 0.75rem; color: #c0d8f0; font-weight: 500; }
+  .prompt-head button {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: background 0.18s;
+    white-space: nowrap;
+  }
+  .prompt-head button:hover { background: rgba(255,255,255,0.28); }
+  .copy-ok { font-size: 0.75rem; color: #80e0a0; margin-left: 4px; display: none; }
+  .prompt-text-area {
+    background: #f5f9fc;
+    padding: 9px 12px;
+    font-size: 0.875rem;
+    color: #284060;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .prompt-ai-links {
+    background: #ecf4fa;
+    padding: 7px 12px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .prompt-ai-links .link-label { font-size: 0.75rem; color: #607080; }
+  .ai-btn {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #c0d4e8;
+    border-radius: 5px;
+    padding: 2px 9px;
+    font-size: 0.75rem;
+    color: #3060a0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.18s;
+  }
+  .ai-btn:hover { background: #3a6080; color: white; border-color: #3a6080; }
+
+  /* ===== REMINDER STRIP ===== */
+  .reminder-strip {
+    background: #4a6888;
+    border-top: 1px solid #6080a0;
+    color: white;
+    text-align: center;
+    padding: 13px 20px;
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+  .reminder-strip strong { color: #f8e898; font-size: 1rem; }
+  .reminder-strip .hotlines { margin-top: 4px; font-size: 0.75rem; color: #b8cce0; }
+  .reminder-strip .hotlines b { color: #c8e0f8; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 13px 20px 18px;
+    background: var(--bg-white);
+    border-top: 1px solid var(--border);
+  }
+  footer a {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--blue-accent);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--blue-accent);
+    padding-bottom: 1px;
+  }
+  footer a:hover { color: var(--navy); border-color: var(--navy); }
+  footer .copy { font-size: 0.75rem; color: var(--text-light); margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR：終活人.jp + 文字サイズ切替 -->
+<div class="size-bar">
+  <a class="site-link" href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a>
+  <span>文字サイズ：</span>
+  <button class="size-btn active" onclick="setSize(1, this)">標準</button>
+  <button class="size-btn" onclick="setSize(1.2, this)">大きく</button>
+  <button class="size-btn" onclick="setSize(1.4, this)">さらに大きく</button>
+</div>
+
+<!-- MAIN 2 COLS -->
+<div class="two-col">
+
+  <!-- ===== LEFT: 失わない ===== -->
+  <div class="col-left">
+    <div class="col-head col-head-left">
+      <div class="head-icon">🛡️</div>
+      <div class="head-texts">
+        <h2>お金を「失わない」ために</h2>
+        <p>50代以降に失ったお金を取り戻すのは難しいもの。<br>知識が最大の防御になります。</p>
+      </div>
+    </div>
+
+    <div class="tab-btns" id="left-tabs">
+      <button class="tab-btn active" onclick="switchLeft('toshi')">💹<br>投資勧誘</button>
+      <button class="tab-btn" onclick="switchLeft('ore')">📞<br>なりすまし</button>
+      <button class="tab-btn" onclick="switchLeft('kanfu')">🏛️<br>還付金・給付</button>
+      <button class="tab-btn" onclick="switchLeft('sns')">💌<br>SNS・恋愛</button>
+    </div>
+
+    <!-- 投資勧誘 -->
+    <div class="tab-panel active" id="left-toshi">
+      <div class="content-card">
+        <div class="card-head-left">
+          <h3>💹 「確実に儲かる」という投資の話</h3>
+          <p>焦らず、急がず、まず立ち止まって考えましょう</p>
+        </div>
+        <div class="card-body">
+          <div class="warm-note">
+            「老後のお金が心配で、少し増やせないかな」と思っているときに、<strong>タイミングよく良い話が来たら</strong>——そこが一番危ないタイミングです。詐欺師は、こういう気持ちを狙っています。
+          </div>
+          <div class="sign-list">
+            <div class="sign-title sign-title-red">こんな言葉が出たら、一度立ち止まりましょう</div>
+            <ul>
+              <li class="red">「元本保証で年利10%」——運用にリスクゼロはありません</li>
+              <li class="red">「今だけの特別案内」——焦らせる話には要注意</li>
+              <li class="red">「他の人には内緒で」——誰にも言えない話は怪しい</li>
+              <li class="red">「知人から紹介された」——善意の紹介でも詐欺はあります</li>
+            </ul>
+          </div>
+          <div class="action-box action-box-red">
+            <div class="ab-title ab-title-red">📋 そのときにできること</div>
+            <ul>
+              <li>その場で決めず「家族に相談してから」と伝える</li>
+              <li>金融庁の相談窓口（0570-016-811）に確認する</li>
+              <li>会社名で検索し「詐欺」「評判」も確認する</li>
+            </ul>
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <span>💬 AIに相談するプロンプト例</span>
+              <button onclick="copyP('p-toshi','ok-toshi')">コピー <span class="copy-ok" id="ok-toshi">✓ 完了</span></button>
+            </div>
+            <div class="prompt-text-area" id="p-toshi">「元本保証で年間10%の利回り」という投資の電話がありました。知人の紹介とのことですが、本当にそんな運用が可能なのか、詐欺の可能性があるかどうか教えてください。確認すべきポイントと、断るときの言い方も教えてもらえると助かります。</div>
+            <div class="prompt-ai-links">
+              <span class="link-label">コピーしてここで相談：</span>
+              <a class="ai-btn" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="ai-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+              <a class="ai-btn" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- なりすまし -->
+    <div class="tab-panel" id="left-ore">
+      <div class="content-card">
+        <div class="card-head-left">
+          <h3>📞 家族や身内を名乗る電話</h3>
+          <p>親心・家族愛を狙ってきます。焦りが判断を狂わせます</p>
+        </div>
+        <div class="card-body">
+          <div class="warm-note">
+            子どもや孫が困っていると聞けば、すぐにでも助けたい——<strong>その当たり前の親心・祖父母心が狙われています</strong>。「急いで」と言われるほど、一呼吸おくことが大切です。
+          </div>
+          <div class="sign-list">
+            <div class="sign-title sign-title-red">こんな展開になったら、一旦電話を切りましょう</div>
+            <ul>
+              <li class="red">「声がおかしい気がする……」→風邪・マスクと説明される</li>
+              <li class="red">「今日中に現金が必要」→急かしてくる</li>
+              <li class="red">「お母さんには内緒で」→他の家族に連絡させない</li>
+              <li class="red">「代わりの人が取りに来る」→知らない人が訪ねてくる</li>
+            </ul>
+          </div>
+          <div class="action-box action-box-red">
+            <div class="ab-title ab-title-red">📋 そのときにできること</div>
+            <ul>
+              <li>電話を切り、自分の知っている番号で本人に直接かける</li>
+              <li>家族で「合言葉」をあらかじめ決めておく</li>
+              <li>現金・カードを知らない人に渡さない</li>
+            </ul>
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <span>💬 AIに相談するプロンプト例</span>
+              <button onclick="copyP('p-ore','ok-ore')">コピー <span class="copy-ok" id="ok-ore">✓ 完了</span></button>
+            </div>
+            <div class="prompt-text-area" id="p-ore">息子を名乗る人から「仕事のお金を使ってしまった、今日中に100万円が必要」と電話がありました。声が少し違う気がします。これは詐欺の可能性がありますか？本人かどうか確かめる方法と、もし詐欺だった場合の対応を教えてください。</div>
+            <div class="prompt-ai-links">
+              <span class="link-label">コピーしてここで相談：</span>
+              <a class="ai-btn" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="ai-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+              <a class="ai-btn" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 還付金 -->
+    <div class="tab-panel" id="left-kanfu">
+      <div class="content-card">
+        <div class="card-head-left">
+          <h3>🏛️ 役所・年金からの「還付金」電話</h3>
+          <p>「お金が戻ってくる」という話にも要注意</p>
+        </div>
+        <div class="card-body">
+          <div class="warm-note">
+            医療費の払い戻しや年金の過払い返金——実際にあるので、つい信じてしまいます。ただ、<strong>本物の役所はATMへの誘導や暗証番号を電話で聞くことはありません</strong>。
+          </div>
+          <div class="sign-list">
+            <div class="sign-title sign-title-red">ここが本物と偽物の分かれ目</div>
+            <ul>
+              <li class="red">「ATMに行って操作してください」→ 本物の役所はしません</li>
+              <li class="red">「携帯を持ってATMへ」→ 誘導されている証拠</li>
+              <li class="red">「今日の営業時間内に」→ 期限で焦らせています</li>
+              <li class="red">「カード番号・暗証番号を教えて」→ 絶対に偽物</li>
+            </ul>
+          </div>
+          <div class="action-box action-box-red">
+            <div class="ab-title ab-title-red">📋 そのときにできること</div>
+            <ul>
+              <li>電話を切り、市区町村の代表番号に確認する</li>
+              <li>ATMの前で電話しながら操作しない</li>
+              <li>消費者ホットライン「188」に相談する</li>
+            </ul>
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <span>💬 AIに相談するプロンプト例</span>
+              <button onclick="copyP('p-kanfu','ok-kanfu')">コピー <span class="copy-ok" id="ok-kanfu">✓ 完了</span></button>
+            </div>
+            <div class="prompt-text-area" id="p-kanfu">市役所を名乗る人から「医療費の還付金3万円があるのでATMで手続きできます」と電話がありました。本当に市役所がATMでの手続きを案内することはありますか？これは詐欺でしょうか、確認方法を教えてください。</div>
+            <div class="prompt-ai-links">
+              <span class="link-label">コピーしてここで相談：</span>
+              <a class="ai-btn" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="ai-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+              <a class="ai-btn" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SNS -->
+    <div class="tab-panel" id="left-sns">
+      <div class="content-card">
+        <div class="card-head-left">
+          <h3>💌 SNSで知り合った人からのお願い</h3>
+          <p>好意や信頼関係を時間をかけて築いてから要求してきます</p>
+        </div>
+        <div class="card-body">
+          <div class="warm-note">
+            長い時間をかけて仲良くなり、「この人なら信頼できる」と思ったときに初めてお金の話が出てきます。<strong>「会ったことがない人への送金」は、どんな理由があっても立ち止まりましょう</strong>。
+          </div>
+          <div class="sign-list">
+            <div class="sign-title sign-title-red">じわじわと近づいてくるパターン</div>
+            <ul>
+              <li class="red">SNSで突然「間違えてメッセージを送った」と連絡が来る</li>
+              <li class="red">毎日連絡が来て、急速に親密になる</li>
+              <li class="red">「一緒にできる投資がある」と話が変わる</li>
+              <li class="red">「緊急でお金が必要」と送金を求めてくる</li>
+            </ul>
+          </div>
+          <div class="action-box action-box-red">
+            <div class="ab-title ab-title-red">📋 そのときにできること</div>
+            <ul>
+              <li>会ったことのない相手には送金しない（理由を問わず）</li>
+              <li>家族や友人に相談し、第三者の目で確認してもらう</li>
+              <li>消費生活センター（188）か警察（#9110）に相談</li>
+            </ul>
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <span>💬 AIに相談するプロンプト例</span>
+              <button onclick="copyP('p-sns','ok-sns')">コピー <span class="copy-ok" id="ok-sns">✓ 完了</span></button>
+            </div>
+            <div class="prompt-text-area" id="p-sns">SNSで2ヶ月前に知り合った外国人の方と仲良くなりました。最近「海外の資産が凍結されて困っている」とお金を貸してほしいと言われています。これはロマンス詐欺でしょうか？どうすれば確かめられるか教えてください。</div>
+            <div class="prompt-ai-links">
+              <span class="link-label">コピーしてここで相談：</span>
+              <a class="ai-btn" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="ai-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+              <a class="ai-btn" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /col-left -->
+
+  <!-- ===== RIGHT: 増やす ===== -->
+  <div class="col-right">
+    <div class="col-head col-head-right">
+      <div class="head-icon">🌱</div>
+      <div class="head-texts">
+        <h2>お金を「賢く増やす」ために</h2>
+        <p>守りを固めたうえで、無理なく長く育てる方法を知りましょう。</p>
+      </div>
+    </div>
+
+    <div class="tab-btns" id="right-tabs">
+      <button class="tab-btn active" onclick="switchRight('shisan')">📊<br>資産運用</button>
+      <button class="tab-btn" onclick="switchRight('kakei')">🏠<br>家計見直し</button>
+      <button class="tab-btn" onclick="switchRight('nenkin')">📅<br>年金・給付</button>
+      <button class="tab-btn" onclick="switchRight('zeikin')">📝<br>税と節税</button>
+    </div>
+
+    <!-- 資産運用 -->
+    <div class="tab-panel active" id="right-shisan">
+      <div class="content-card">
+        <div class="card-head-right">
+          <h3>📊 50代からの資産運用の考え方</h3>
+          <p>「増やす」より「減らさない・長持ちさせる」が基本です</p>
+        </div>
+        <div class="card-body">
+          <div class="warm-note">
+            50代からの運用は「大きく増やす」ことより、<strong>「インフレに負けず、長く安定して持続させる」</strong>ことが目標になります。焦らず、分散して、長く続けることが一番の近道です。
+          </div>
+          <div class="sign-list">
+            <div class="sign-title sign-title-green">50代以降に向いている運用の考え方</div>
+            <ul>
+              <li class="grn">新NISA（つみたて投資枠）——少額から・非課税・いつでも引き出せる</li>
+              <li class="grn">定期預金の分散配置——金利を比較しながら複数行に分ける</li>
+              <li class="grn">債券・バランス型投資信託——株式100%よりリスクを抑えた運用</li>
+              <li class="grn">iDeCo（個人型確定拠出年金）——60歳まで節税しながら積み立てられる</li>
+            </ul>
+          </div>
+          <div class="action-box action-box-green">
+            <div class="ab-title ab-title-green">🌿 始めるときのポイント</div>
+            <ul>
+              <li>生活費の6ヶ月分は手をつけない「守りの現金」として確保</li>
+              <li>余裕資金の範囲で始め、生活を圧迫しない額に留める</li>
+              <li>証券会社・銀行の無料相談窓口を活用する</li>
+            </ul>
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <span>💬 AIに相談するプロンプト例</span>
+              <button onclick="copyP('p-shisan','ok-shisan')">コピー <span class="copy-ok" id="ok-shisan">✓ 完了</span></button>
+            </div>
+            <div class="prompt-text-area" id="p-shisan">58歳です。老後の資金として預貯金が約500万円あります。インフレに負けないよう少しずつ運用したいのですが、この年齢から始めるのに適した方法を教えてください。リスクを抑えながら長期的に安定させる方法が知りたいです。</div>
+            <div class="prompt-ai-links">
+              <span class="link-label">コピーしてここで相談：</span>
+              <a class="ai-btn" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="ai-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+              <a class="ai-btn" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 家計見直し -->
+    <div class="tab-panel" id="right-kakei">
+      <div class="content-card">
+        <div class="card-head-right">
+          <h3>🏠 家計を見直して可処分所得を増やす</h3>
+          <p>「稼ぐ」より「使わない」方が確実にお金が手元に残ります</p>
+        </div>
+        <div class="card-body">
+          <div class="warm-note">
+            収入を増やすことは簡単ではありませんが、<strong>支出を見直すと確実にお金が残ります</strong>。50代以降は固定費の見直しが大きな効果を生みやすい時期です。
+          </div>
+          <div class="sign-list">
+            <div class="sign-title sign-title-green">見直すと効果が大きい固定費</div>
+            <ul>
+              <li class="grn">生命保険の見直し——子どもが独立した後は保障額を減らせることが多い</li>
+              <li class="grn">スマートフォン料金——格安SIMへの切り替えで月5,000〜10,000円削減も</li>
+              <li class="grn">サブスクリプション——使っていないサービスが眠っていないか確認</li>
+              <li class="grn">電気・ガスの契約見直し——新電力・都市ガス自由化で選べる時代</li>
+            </ul>
+          </div>
+          <div class="action-box action-box-green">
+            <div class="ab-title ab-title-green">🌿 取り組みやすい順番</div>
+            <ul>
+              <li>まず通帳・クレジット明細を1ヶ月分確認する</li>
+              <li>毎月同じ金額が引き落とされているものをリストアップ</li>
+              <li>「使っていないもの」から解約・プラン変更を進める</li>
+            </ul>
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <span>💬 AIに相談するプロンプト例</span>
+              <button onclick="copyP('p-kakei','ok-kakei')">コピー <span class="copy-ok" id="ok-kakei">✓ 完了</span></button>
+            </div>
+            <div class="prompt-text-area" id="p-kakei">60歳、夫婦2人暮らしです。老後に向けて固定費を見直したいと思っています。生命保険、スマホ料金、電気・ガスなど、どこから見直すのが効果的ですか？特に生命保険は子どもが独立した後も同じ内容で加入しています。アドバイスをください。</div>
+            <div class="prompt-ai-links">
+              <span class="link-label">コピーしてここで相談：</span>
+              <a class="ai-btn" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="ai-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+              <a class="ai-btn" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 年金・給付 -->
+    <div class="tab-panel" id="right-nenkin">
+      <div class="content-card">
+        <div class="card-head-right">
+          <h3>📅 年金と公的給付を正しく受け取る</h3>
+          <p>知らないと損をする制度が意外とたくさんあります</p>
+        </div>
+        <div class="card-body">
+          <div class="warm-note">
+            年金や各種給付金は、<strong>申請しなければ受け取れないものが多くあります</strong>。「申請しないともらえない」制度を知っておくだけで、手元のお金が変わります。
+          </div>
+          <div class="sign-list">
+            <div class="sign-title sign-title-green">知っておきたい制度・選択肢</div>
+            <ul>
+              <li class="grn">年金の繰り下げ受給——1ヶ月繰り下げるごとに0.7%増額（最大84%増）</li>
+              <li class="grn">高額療養費制度——医療費が一定額を超えると払い戻しが受けられる</li>
+              <li class="grn">介護保険サービス——要支援・要介護の認定で費用の1〜3割負担に</li>
+              <li class="grn">住民税非課税世帯の給付——収入によっては各種給付対象になる場合も</li>
+            </ul>
+          </div>
+          <div class="action-box action-box-green">
+            <div class="ab-title ab-title-green">🌿 まず確認できること</div>
+            <ul>
+              <li>「ねんきんネット」で自分の年金見込み額を確認する</li>
+              <li>市区町村の窓口で受けられる給付・減免制度を聞いてみる</li>
+              <li>かかりつけ医・薬剤師に高額療養費の相談をしてみる</li>
+            </ul>
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <span>💬 AIに相談するプロンプト例</span>
+              <button onclick="copyP('p-nenkin','ok-nenkin')">コピー <span class="copy-ok" id="ok-nenkin">✓ 完了</span></button>
+            </div>
+            <div class="prompt-text-area" id="p-nenkin">現在62歳で、65歳から年金を受け取る予定です。繰り下げ受給という方法があると聞きましたが、メリット・デメリットを教えてください。また、他に知っておくべき公的給付制度や、申請しないともらえない制度があれば合わせて教えてください。</div>
+            <div class="prompt-ai-links">
+              <span class="link-label">コピーしてここで相談：</span>
+              <a class="ai-btn" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="ai-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+              <a class="ai-btn" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 税と節税 -->
+    <div class="tab-panel" id="right-zeikin">
+      <div class="content-card">
+        <div class="card-head-right">
+          <h3>📝 税金を正しく理解して節税する</h3>
+          <p>合法的な節税は「賢い家計管理」の一部です</p>
+        </div>
+        <div class="card-body">
+          <div class="warm-note">
+            「節税」というと難しく感じますが、<strong>知っているかどうかで数万〜数十万円変わることもあります</strong>。難しいことは税理士や専門家に相談するのが一番です。
+          </div>
+          <div class="sign-list">
+            <div class="sign-title sign-title-green">50代以降で知っておきたい節税ポイント</div>
+            <ul>
+              <li class="grn">ふるさと納税——実質2,000円の自己負担で返礼品+節税</li>
+              <li class="grn">医療費控除——1年間の医療費が10万円超えたら確定申告で戻る</li>
+              <li class="grn">生命保険料控除——毎年の年末調整・確定申告で控除を忘れずに</li>
+              <li class="grn">相続税の基礎控除——3,000万円＋600万円×法定相続人数は非課税</li>
+            </ul>
+          </div>
+          <div class="action-box action-box-green">
+            <div class="ab-title ab-title-green">🌿 まず取り組みやすいもの</div>
+            <ul>
+              <li>ふるさと納税は「さとふる」「ふるなび」などで手軽に始められる</li>
+              <li>医療費の領収書は必ず1年間保管しておく</li>
+              <li>複雑な相続・贈与の節税は税理士への相談が安心</li>
+            </ul>
+          </div>
+          <div class="prompt-box">
+            <div class="prompt-head">
+              <span>💬 AIに相談するプロンプト例</span>
+              <button onclick="copyP('p-zeikin','ok-zeikin')">コピー <span class="copy-ok" id="ok-zeikin">✓ 完了</span></button>
+            </div>
+            <div class="prompt-text-area" id="p-zeikin">55歳の会社員です。老後に向けて少しでも手元にお金を残したいと思っています。ふるさと納税や医療費控除など、会社員でも使える節税方法を分かりやすく教えてください。特に手続きが難しくないものから教えてもらえると助かります。</div>
+            <div class="prompt-ai-links">
+              <span class="link-label">コピーしてここで相談：</span>
+              <a class="ai-btn" href="https://chat.openai.com/" target="_blank" rel="noopener">ChatGPT</a>
+              <a class="ai-btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Gemini</a>
+              <a class="ai-btn" href="https://claude.ai/" target="_blank" rel="noopener">Claude</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /col-right -->
+</div><!-- /two-col -->
+
+<!-- REMINDER STRIP -->
+<div class="reminder-strip">
+  <strong>「お金を払う前に、必ず誰かに相談」——これだけ守ればほとんどの詐欺は防げます</strong>
+  <div class="hotlines">
+    消費者ホットライン <b>188</b>　／　警察相談 <b>#9110</b>　／　緊急時 <b>110番</b>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a>
+  <div class="copy">© 終活人.jp ／ 無断転載・商用利用禁止</div>
+</footer>
+
+<script>
+  function setSize(scale, btn) {
+    document.documentElement.style.setProperty('--font-scale', scale);
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function switchLeft(id) {
+    document.querySelectorAll('#left-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.col-left .tab-panel').forEach(p => p.classList.remove('active'));
+    const ids = ['toshi','ore','kanfu','sns'];
+    document.querySelectorAll('#left-tabs .tab-btn')[ids.indexOf(id)].classList.add('active');
+    document.getElementById('left-' + id).classList.add('active');
+  }
+
+  function switchRight(id) {
+    document.querySelectorAll('#right-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.col-right .tab-panel').forEach(p => p.classList.remove('active'));
+    const ids = ['shisan','kakei','nenkin','zeikin'];
+    document.querySelectorAll('#right-tabs .tab-btn')[ids.indexOf(id)].classList.add('active');
+    document.getElementById('right-' + id).classList.add('active');
+  }
+
+  function copyP(textId, okId) {
+    const text = document.getElementById(textId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const el = document.getElementById(okId);
+      el.style.display = 'inline';
+      setTimeout(() => { el.style.display = 'none'; }, 2500);
+    });
+  }
+</script>
+</body>
+</html>
