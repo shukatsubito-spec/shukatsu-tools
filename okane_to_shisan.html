@@ -603,12 +603,20 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
 </head>
 <body>
 
+<!-- ページヘッダー -->
+<header class="page-header">
+  <div class="eyebrow"></div>
+  <h1><center>お金と資産(試算＆確認ツール)</center></h1>
+  <p>老後の収支を「見える化」し、年金・資産・保険を整理する。<br>5〜10年先の安心を今から設計しましょう。</p>
+</header>
 <!-- 文字拡大バー -->
 <div id="font-size-bar">
+<center>
   <span>文字サイズ：</span>
   <button class="fsz-btn active" onclick="setFsz(100, this)">100%</button>
   <button class="fsz-btn" onclick="setFsz(120, this)">120%</button>
   <button class="fsz-btn" onclick="setFsz(140, this)">140%</button>
+</center>
 </div>
 <script>
 function setFsz(pct, btn){
@@ -617,14 +625,6 @@ function setFsz(pct, btn){
   btn.classList.add('active');
 }
 </script>
-
-<!-- ページヘッダー -->
-<header class="page-header">
-  <div class="eyebrow"></div>
-  <h1><center>お金と資産(試算＆確認ツール)</center></h1>
-  <p>老後の収支を「見える化」し、年金・資産・保険を整理する。<br>5〜10年先の安心を今から設計しましょう。</p>
-</header>
-
 <!-- ナビタブ -->
 <nav class="nav-tabs" aria-label="ページ内ナビ">
   <div class="nav-tabs-inner">
