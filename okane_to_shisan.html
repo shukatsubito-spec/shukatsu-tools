@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>お金と資産｜終活人.jp</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@700&display=swap');
+
+:root {
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --bg: #f8f9fa;
+  --white: #ffffff;
+  --accent: #1a56db;
+  --ok: #059669;
+  --warn: #d97706;
+
+  --a: #cfe7ff; --a-ink: #0b4a8b; --a-deep: #1a4480;
+  --b: #fde2e4; --b-ink: #8b2c3b; --b-deep: #9b2335;
+  --c: #e6f4ea; --c-ink: #246a3a; --c-deep: #1a5e34;
+  --d: #fff3c4; --d-ink: #7a5a00; --d-deep: #8b6800;
+
+  --radius: 16px;
+  --shadow: 0 2px 16px rgba(31,41,55,.07);
+  --shadow-md: 0 6px 24px rgba(31,41,55,.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  background: linear-gradient(135deg, #0f3460 0%, #1a4480 60%, #1e5fa0 100%);
+  color: #fff;
+  padding: 44px 20px 36px;
+  text-align: center;
+}
+.page-header .eyebrow {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 999px;
+  padding: 4px 16px;
+  font-size: 12px;
+  letter-spacing: .1em;
+  margin-bottom: 14px;
+}
+.page-header h1 {
+  font-family: 'Zen Kaku Gothic New', 'Yu Gothic', sans-serif;
+  font-size: clamp(24px, 4vw, 38px);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.page-header p { font-size: 14px; color: rgba(255,255,255,.8); max-width: 480px; margin: 0 auto; }
+
+/* ===== NAV TABS ===== */
+.nav-tabs {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(31,41,55,.06);
+}
+.nav-tabs-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-tabs-inner::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 0 0 auto;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all .2s;
+}
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ===== MAIN LAYOUT ===== */
+.main-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+/* ===== SECTION HEADER ===== */
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--line);
+}
+.sec-header .sec-num {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.sec-header h2 { font-size: 20px; font-weight: 700; }
+.sec-header .sec-badge {
+  display: inline-block;
+  background: #eff6ff;
+  color: var(--accent);
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+section.content-sec { margin-bottom: 40px; scroll-margin-top: 56px; }
+
+/* ===== A〜D CARDS ===== */
+.ad-cards { display: flex; flex-direction: column; gap: 14px; }
+.ad-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.ad-card details { border: none; }
+.ad-card details > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--white);
+  user-select: none;
+}
+.ad-card details > summary::-webkit-details-marker { display: none; }
+.ad-badge {
+  font-weight: 900;
+  font-size: .95rem;
+  padding: 6px 12px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.card-a .ad-badge { background: var(--a); color: var(--a-ink); }
+.card-b .ad-badge { background: var(--b); color: var(--b-ink); }
+.card-c .ad-badge { background: var(--c); color: var(--c-ink); }
+.card-d .ad-badge { background: var(--d); color: var(--d-ink); }
+
+.ad-card-title { font-size: 1.05rem; }
+.ad-chevron {
+  margin-left: auto;
+  width: 20px; height: 20px;
+  transition: transform .25s;
+  color: #9ca3af;
+}
+details[open] .ad-chevron { transform: rotate(180deg); }
+
+.ad-body { padding: 0 20px 18px; border-top: 1px solid var(--line); }
+.ad-text { color: var(--muted); font-size: .94rem; line-height: 1.75; margin: 14px 0 10px; }
+.ad-viz {
+  background: #fafafa;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  margin: 6px 0 10px;
+}
+.ad-list { margin: 6px 0 0; padding-left: 1.1em; color: var(--ink); font-size: .94rem; }
+.ad-list li { margin: .3rem 0; }
+.ad-hint { font-size: .8rem; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+.card-a { border-left: 5px solid var(--a-deep); }
+.card-b { border-left: 5px solid var(--b-deep); }
+.card-c { border-left: 5px solid var(--c-deep); }
+.card-d { border-left: 5px solid var(--d-deep); }
+
+/* ===== 診断フォーム ===== */
+.diag-wrap {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.diag-lead { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
+
+.progress-bar-wrap {
+  height: 8px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0 0 16px;
+}
+.progress-bar-inner {
+  height: 8px;
+  background: linear-gradient(90deg, #93c5fd, #6ee7b7);
+  border-radius: 999px;
+  width: 0%;
+  transition: width .3s ease;
+}
+
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 0 0 12px;
+  background: var(--white);
+}
+legend { font-weight: 700; font-size: 14px; color: var(--ink); padding: 0 4px; }
+label.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 8px 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.5;
+}
+label.opt:hover { background: #f1f5f9; }
+label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; }
+
+.diag-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.btn {
+  appearance: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  border: 1px solid var(--line);
+  transition: all .2s;
+}
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover { background: #1648c5; }
+.btn-ghost { background: var(--white); color: var(--ink); }
+.btn-ghost:hover { background: #f3f4f6; }
+
+.diag-result { margin-top: 16px; }
+#kpis .kpi-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-left: 6px solid var(--accent);
+}
+#kpis .kpi-card h4 { font-size: 15px; margin-bottom: 6px; }
+.tips-list { padding-left: 1.2em; margin-top: 8px; }
+.tips-list li { margin: .4rem 0; font-size: 14px; }
+
+/* ===== ライフプラン計算 ===== */
+.lp-wrap {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.lp-grid { display: grid; gap: 14px; }
+@media(min-width:720px){ .lp-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.lp-panel { border: 1px solid var(--line); border-radius: 12px; background: #fafafa; padding: 14px; }
+.lp-panel h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+.lp-panel h4 small { color: var(--muted); font-size: 12px; font-weight: 400; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.panel-head h4 { margin-bottom: 0; }
+
+.bonus-ctrl { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.bonus-ctrl input {
+  width: 48px;
+  text-align: center;
+  padding: 4px 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+}
+
+.lp-rows { display: flex; flex-direction: column; gap: 8px; }
+.lp-row { display: grid; grid-template-columns: 1fr 110px 32px; gap: 6px; align-items: center; }
+.lp-row input[type="text"],
+.lp-row input[type="number"] {
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  width: 100%;
+  background: #fff;
+}
+.lp-row .amount-wrap { display: flex; align-items: center; gap: 4px; }
+.lp-row .amount-wrap input { flex: 1; }
+.lp-row .unit { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.lp-del { border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; height: 32px; width: 32px; font-size: 14px; }
+.lp-del:hover { background: #fee2e2; }
+.lp-add { margin-top: 8px; }
+.lp-add-btn { border: 1px dashed var(--accent); background: #fff; color: var(--accent); border-radius: 8px; padding: 7px 12px; font-size: 13px; cursor: pointer; font-family: inherit; }
+.lp-add-btn:hover { background: #eff6ff; }
+
+.lp-result { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.kpi-item .kpi-label { font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+.kpi-item .kpi-val { font-size: 20px; font-weight: 900; }
+.kpi-item .kpi-val.negative { color: #dc2626; }
+.kpi-item .kpi-val.positive { color: var(--ok); }
+.kpi-period {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #fce7f3;
+  color: #9d174d;
+  margin-bottom: 4px;
+}
+hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0; }
+.lp-tools { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.lp-check-label { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+/* ===== 保険診断 ===== */
+.ins-wrap {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.ins-q-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.ins-q-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.ins-q-help { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.ins-opts { display: flex; gap: 10px; flex-wrap: wrap; }
+.ins-radio {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px;
+  cursor: pointer; font-size: 13px;
+}
+.ins-radio input { accent-color: var(--accent); }
+.ins-result-grid { display: grid; gap: 10px; }
+@media(min-width:600px){ .ins-result-grid { grid-template-columns: 1fr 1fr; } }
+.ins-rec {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  background: #fafafa;
+}
+.ins-rec h5 { font-size: 14px; margin-bottom: 6px; }
+.ins-tag {
+  display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; margin: 2px;
+}
+.t-blue { background: #e0f2fe; color: #0c4a6e; }
+.t-green { background: #dcfce7; color: #065f46; }
+.t-amber { background: #fef3c7; color: #7a5a00; }
+.t-gray { background: #f3f4f6; color: #111827; }
+.ins-cta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.ins-cta-btn {
+  display: inline-block; border-radius: 8px; padding: 7px 12px; font-size: 13px;
+  text-decoration: none; border: 1px solid var(--line); color: var(--ink); font-weight: 700;
+}
+.ins-cta-btn.primary { background: var(--ok); color: #fff; border-color: var(--ok); }
+.ins-cta-btn.outline { color: var(--accent); border-color: var(--accent); }
+.ins-disclaimer {
+  border-left: 5px solid #94a3b8;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 14px;
+  line-height: 1.7;
+}
+
+/* ===== 共通ユーティリティ ===== */
+.note-box {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #78350f;
+  margin-bottom: 16px;
+}
+.note-row { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+@media(max-width:480px){
+  .tab-btn { padding: 12px 14px; font-size: 12px; }
+  .main-wrap { padding: 16px 12px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ページヘッダー -->
+<header class="page-header">
+  <div class="eyebrow">終活人.jp ｜ お金と資産</div>
+  <h1>💰 お金と資産</h1>
+  <p>老後の収支を「見える化」し、年金・資産・保険を整理する。<br>5〜10年先の安心を今から設計しましょう。</p>
+</header>
+
+<!-- ナビタブ -->
+<nav class="nav-tabs" aria-label="ページ内ナビ">
+  <div class="nav-tabs-inner">
+    <button class="tab-btn active" onclick="scrollToSection('sec-diag', this)">老後診断</button>
+    <button class="tab-btn" onclick="scrollToSection('sec-ab', this)">収支・年金</button>
+    <button class="tab-btn" onclick="scrollToSection('sec-cd', this)">iDeCo・節約</button>
+    <button class="tab-btn" onclick="scrollToSection('sec-lp', this)">収支計算</button>
+    <button class="tab-btn" onclick="scrollToSection('sec-ins', this)">保険診断</button>
+  </div>
+</nav>
+
+<main class="main-wrap">
+
+  <!-- ① 老後診断チェック -->
+  <section class="content-sec" id="sec-diag">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <div>
+        <h2>老後対策チェック（10問）</h2>
+        <span class="sec-badge">まずここから</span>
+      </div>
+    </div>
+    <div class="note-box">📌 10問に答えると、あなたの優先テーマが3つ表示されます。所要時間：約3分</div>
+    <div class="diag-wrap">
+      <p class="diag-lead">5〜10年先を見据えた準備の優先順位を、10問に答えるだけで提示します。医療・法務等の助言ではなく、一般的な行動の目安です。</p>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-inner" id="diagBar"></div>
+      </div>
+      <form id="diagForm" aria-label="老後対策チェック">
+
+        <fieldset data-cat="money" data-weight="2">
+          <legend>Q1. 65歳以降の収支見通しは？</legend>
+          <label class="opt"><input type="radio" name="q1" value="0"> 黒字見通し</label>
+          <label class="opt"><input type="radio" name="q1" value="1"> ほぼ均衡</label>
+          <label class="opt"><input type="radio" name="q1" value="2"> 月数万円不足の見通し</label>
+        </fieldset>
+
+        <fieldset data-cat="housing" data-weight="2">
+          <legend>Q2. 住まいの見通しは？</legend>
+          <label class="opt"><input type="radio" name="q2" value="0"> 持ち家・完済・維持計画も整理済み</label>
+          <label class="opt"><input type="radio" name="q2" value="1"> 持ち家・返済中だが見通しは概ね良好</label>
+          <label class="opt"><input type="radio" name="q2" value="2"> 持ち家・高負担で長期化が不安</label>
+          <label class="opt"><input type="radio" name="q2" value="0"> 賃貸・入居継続の備えが整っている</label>
+          <label class="opt"><input type="radio" name="q2" value="1"> 賃貸・一部は備えあり</label>
+          <label class="opt"><input type="radio" name="q2" value="2"> 賃貸・備えがほとんど無い</label>
+        </fieldset>
+
+        <fieldset data-cat="pension" data-weight="2">
+          <legend>Q3. 公的年金の把握度は？</legend>
+          <label class="opt"><input type="radio" name="q3" value="0"> ねんきんネットで把握済み</label>
+          <label class="opt"><input type="radio" name="q3" value="1"> 一部は把握・更新は未実施</label>
+          <label class="opt"><input type="radio" name="q3" value="2"> ほぼ把握していない</label>
+        </fieldset>
+
+        <fieldset data-cat="invest" data-weight="1">
+          <legend>Q4. 積立（iDeCo／NISA等）の状況は？</legend>
+          <label class="opt"><input type="radio" name="q4" value="0"> 継続運用中・方針も明確</label>
+          <label class="opt"><input type="radio" name="q4" value="1"> 少額・断続的</label>
+          <label class="opt"><input type="radio" name="q4" value="2"> まだ始めていない</label>
+        </fieldset>
+
+        <fieldset data-cat="care" data-weight="2">
+          <legend>Q5. 親の介護・見守りの見通しは？</legend>
+          <label class="opt"><input type="radio" name="q5" value="0"> 体制・費用感を把握済み</label>
+          <label class="opt"><input type="radio" name="q5" value="1"> 方向性はあるが計画未整理</label>
+          <label class="opt"><input type="radio" name="q5" value="2"> ほぼ未検討で不安が大きい</label>
+        </fieldset>
+
+        <fieldset data-cat="work" data-weight="1">
+          <legend>Q6. 60〜70歳の働き方プランは？</legend>
+          <label class="opt"><input type="radio" name="q6" value="0"> 継続就労・再雇用など方針確定</label>
+          <label class="opt"><input type="radio" name="q6" value="1"> なんとなくの想定</label>
+          <label class="opt"><input type="radio" name="q6" value="2"> まだ白紙</label>
+        </fieldset>
+
+        <fieldset data-cat="ins" data-weight="1">
+          <legend>Q7. 保険の見直し状況は？</legend>
+          <label class="opt"><input type="radio" name="q7" value="0"> 重複・過不足を点検済み</label>
+          <label class="opt"><input type="radio" name="q7" value="1"> なんとなく加入のまま</label>
+          <label class="opt"><input type="radio" name="q7" value="2"> 把握できていない</label>
+        </fieldset>
+
+        <fieldset data-cat="health" data-weight="1">
+          <legend>Q8. 健康チェックの実施度は？</legend>
+          <label class="opt"><input type="radio" name="q8" value="0"> 定期実施・習慣あり</label>
+          <label class="opt"><input type="radio" name="q8" value="1"> ときどき実施</label>
+          <label class="opt"><input type="radio" name="q8" value="2"> ほぼ未実施</label>
+        </fieldset>
+
+        <fieldset data-cat="legal" data-weight="2">
+          <legend>Q9. 終活書類・相続の準備状況は？</legend>
+          <label class="opt"><input type="radio" name="q9" value="0"> エンディングノート・遺言・保管先を整理済み</label>
+          <label class="opt"><input type="radio" name="q9" value="1"> 一部だけ作成</label>
+          <label class="opt"><input type="radio" name="q9" value="2"> 手つかず</label>
+        </fieldset>
+
+        <fieldset data-cat="opt" data-weight="1">
+          <legend>Q10. 家計の最適化にAIを使えている？</legend>
+          <label class="opt"><input type="radio" name="q10" value="0"> 具体的に活用している</label>
+          <label class="opt"><input type="radio" name="q10" value="1"> 試したことはある</label>
+          <label class="opt"><input type="radio" name="q10" value="2"> まだ使っていない</label>
+        </fieldset>
+
+        <div class="diag-actions">
+          <button type="button" class="btn btn-ghost" id="diagClearBtn">やり直す</button>
+          <button type="button" class="btn btn-primary" id="diagCalcBtn">診断結果を表示</button>
+        </div>
+      </form>
+
+      <div class="diag-result" id="diagResult" hidden>
+        <h3 style="font-size:16px;margin-bottom:12px;">🎯 あなたの優先テーマ（上位3つ）</h3>
+        <div id="kpis"></div>
+        <details style="margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px;">
+          <summary style="cursor:pointer;font-weight:700;font-size:13px;">全テーマのスコア一覧</summary>
+          <ul id="allTips" style="padding-left:1.2em;margin-top:8px;font-size:13px;"></ul>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② 収支見える化・年金 -->
+  <section class="content-sec" id="sec-ab">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <h2>収入と支出の見える化 ／ 公的年金</h2>
+    </div>
+    <div class="ad-cards">
+      <!-- A カード -->
+      <div class="ad-card card-a">
+        <details open>
+          <summary>
+            <span class="ad-badge">A</span>
+            <span class="ad-card-title">収入と支出の見える化</span>
+            <svg class="ad-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </summary>
+          <div class="ad-body">
+            <p class="ad-text">老後の安心は"いまの収支"が基準点。下の計算ツールで<strong>月・年の数字を整理</strong>しておくと、備える順番が明確になります。数字は不安を準備に変える道具です。</p>
+            <div class="ad-viz">
+              <svg viewBox="0 0 360 110" width="100%" height="110">
+                <rect x="0" y="0" width="360" height="110" fill="#fff"/>
+                <text x="10" y="18" font-size="12" fill="#6b7280">年合計イメージ</text>
+                <rect x="20" y="30" width="140" height="22" rx="6" fill="#9ec7ff"/>
+                <text x="28" y="45" font-size="12" fill="#0b4a8b" font-weight="700">収入</text>
+                <rect x="20" y="68" width="105" height="22" rx="6" fill="#ffd7d9"/>
+                <text x="28" y="83" font-size="12" fill="#8b2c3b" font-weight="700">支出</text>
+                <text x="170" y="45" font-size="12" fill="#0b4a8b">→ 収支を確認</text>
+                <text x="170" y="83" font-size="12" fill="#8b2c3b">→ 見直しポイントを特定</text>
+              </svg>
+            </div>
+            <ul class="ad-list">
+              <li>「収支計算ツール」（下のセクション）で月・年の数字を入力</li>
+              <li>赤字の場合は固定費の見直しから</li>
+              <li>余剰分をiDeCo・NISAへ回す目安を設定する</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- B カード -->
+      <div class="ad-card card-b">
+        <details open>
+          <summary>
+            <span class="ad-badge">B</span>
+            <span class="ad-card-title">公的年金を"知って育てる"</span>
+            <svg class="ad-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </summary>
+          <div class="ad-body">
+            <p class="ad-text">公的年金は一生の土台。<strong>ねんきんネット</strong>で将来受給額と加入記録を確認。働き続けると加入期間が増え、<strong>受給開始の繰下げ</strong>で増額も可能です。</p>
+            <div class="ad-viz">
+              <svg viewBox="0 0 360 120" width="100%" height="120">
+                <rect x="0" y="0" width="360" height="120" fill="#fff"/>
+                <text x="10" y="18" font-size="12" fill="#6b7280">受給開始年齢と増額イメージ</text>
+                <rect x="30" y="75" width="60" height="25" rx="6" fill="#ddd6fe"/>
+                <text x="40" y="92" font-size="12" fill="#4c1d95">65歳</text>
+                <text x="42" y="70" font-size="11" fill="#4c1d95">基準</text>
+                <rect x="140" y="50" width="60" height="50" rx="6" fill="#bfe6ca"/>
+                <text x="150" y="80" font-size="12" fill="#166534">70歳</text>
+                <text x="145" y="45" font-size="11" fill="#166534">+42%</text>
+                <rect x="250" y="20" width="60" height="80" rx="6" fill="#ffe79a"/>
+                <text x="260" y="65" font-size="12" fill="#7a5a00">75歳</text>
+                <text x="254" y="15" font-size="11" fill="#7a5a00">+84%</text>
+              </svg>
+              <p class="ad-hint">数値は制度上の上限イメージ。実際は加入歴等で変わります。</p>
+            </div>
+            <ul class="ad-list">
+              <li>「ねんきんネット」を定期確認（見込額・加入記録）</li>
+              <li>就労継続で加入期間アップ → 受給額の底上げ</li>
+              <li>繰下げは健康・就労・家計のバランスで判断</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ iDeCo・節約 -->
+  <section class="content-sec" id="sec-cd">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <h2>iDeCo × NISA ／ 支出の最適化</h2>
+    </div>
+    <div class="ad-cards">
+      <!-- C カード -->
+      <div class="ad-card card-c">
+        <details open>
+          <summary>
+            <span class="ad-badge">C</span>
+            <span class="ad-card-title">iDeCo × NISAの二刀流</span>
+            <svg class="ad-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </summary>
+          <div class="ad-body">
+            <p class="ad-text"><strong>iDeCo</strong>は掛金が所得控除、運用益も非課税（途中引出し不可）。<strong>NISA</strong>は運用益・配当が非課税で柔軟に売買可（中長期が原則）。税制優遇を味方に、目的別に使い分けましょう。</p>
+            <div class="ad-viz">
+              <svg viewBox="0 0 360 130" width="100%" height="130">
+                <rect x="0" y="0" width="360" height="130" fill="#fff"/>
+                <rect x="14" y="30" width="155" height="80" rx="12" fill="#bfe6ca"/>
+                <text x="26" y="58" font-size="16" fill="#246a3a" font-weight="700">iDeCo</text>
+                <text x="26" y="78" font-size="12" fill="#246a3a">所得控除＋非課税</text>
+                <text x="26" y="98" font-size="12" fill="#246a3a">60歳まで引出し不可</text>
+                <rect x="186" y="14" width="155" height="100" rx="12" fill="#9ec7ff"/>
+                <text x="198" y="46" font-size="16" fill="#0b4a8b" font-weight="700">NISA</text>
+                <text x="198" y="66" font-size="12" fill="#0b4a8b">運用益・配当が非課税</text>
+                <text x="198" y="86" font-size="12" fill="#0b4a8b">売買は柔軟（長期推奨）</text>
+              </svg>
+              <p class="ad-hint">老後専用の堅い資金＝iDeCo ／ 可動性ある成長資金＝NISA</p>
+            </div>
+            <ul class="ad-list">
+              <li>先に家計の余力を確保（収支計算ツールで確認）</li>
+              <li>つみたては「額より継続」。騰落局面でも続ける</li>
+              <li>商品は広く分散・低コストを軸にシンプル運用</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- D カード -->
+      <div class="ad-card card-d">
+        <details open>
+          <summary>
+            <span class="ad-badge">D</span>
+            <span class="ad-card-title">支出の最適化 × AI活用</span>
+            <svg class="ad-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </summary>
+          <div class="ad-body">
+            <p class="ad-text">小さな節約でも積み重ねは大きな安心。AIで<strong>固定費の見直し</strong>や<strong>プラン比較</strong>、<strong>節約レシピ</strong>まで一緒に探せます。「我慢」より「最適化」で無理なく続けましょう。</p>
+            <div class="ad-viz">
+              <svg viewBox="0 0 360 110" width="100%" height="110">
+                <rect x="0" y="0" width="360" height="110" fill="#fff"/>
+                <text x="10" y="16" font-size="12" fill="#6b7280">月5千円の最適化 → 積み上げイメージ</text>
+                <polyline points="20,90 80,76 140,64 200,54 260,44 320,34" fill="none" stroke="#8b6800" stroke-width="2.5"/>
+                <circle cx="320" cy="34" r="4" fill="#8b6800"/>
+                <text x="230" y="42" font-size="12" fill="#7a5a00" font-weight="700">10年で約60万円</text>
+              </svg>
+            </div>
+            <ul class="ad-list">
+              <li>電気・通信・保険の現契約→代替案をAIで比較</li>
+              <li>買い物は「条件つき指示」（上限価格・口コミ閾値）</li>
+              <li>カード明細のカテゴリ自動仕分けプロンプトを作成</li>
+            </ul>
+            <p class="ad-hint">例：「電気代を月1,000円下げたい。世帯1人、在宅短め。最適プラン候補と切替手順を教えて」</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ ライフプラン計算 -->
+  <section class="content-sec" id="sec-lp">
+    <div class="sec-header">
+      <div class="sec-num">4</div>
+      <h2>収支計算ツール</h2>
+    </div>
+    <div class="lp-wrap">
+      <p class="diag-lead">収入と支出を万円単位で入力すると、月間・年間の収支を自動計算します。</p>
+      <div class="lp-grid">
+        <!-- 収入 -->
+        <div class="lp-panel">
+          <div class="panel-head">
+            <h4>収入 <small>月額入力</small></h4>
+            <div class="bonus-ctrl">賞与: <input type="number" id="bonusMonths" step="0.5" min="0" value="0" style="width:46px"> か月/年</div>
+          </div>
+          <div class="lp-rows" id="incomeRows"></div>
+        </div>
+        <!-- 支出 -->
+        <div class="lp-panel">
+          <h4>支出 <small>月額入力</small></h4>
+          <div class="lp-rows" id="expenseRows"></div>
+          <div class="lp-add"><button class="lp-add-btn" id="addExpenseBtn">＋ 行を追加</button></div>
+        </div>
+        <!-- 結果 -->
+        <div class="lp-result">
+          <h4 style="font-size:15px;font-weight:700;margin-bottom:12px;">結果（自動計算）</h4>
+          <div class="kpi-period">月間</div>
+          <div class="kpi-grid" style="margin-bottom:12px;">
+            <div class="kpi-item"><div class="kpi-label">収入合計</div><div class="kpi-val" id="mIncome">¥0</div></div>
+            <div class="kpi-item"><div class="kpi-label">支出合計</div><div class="kpi-val" id="mExpense">¥0</div></div>
+            <div class="kpi-item"><div class="kpi-label">収支</div><div class="kpi-val" id="mBalance">¥0</div></div>
+          </div>
+          <hr class="kpi-divider">
+          <div class="kpi-period" style="background:#fce7f3">年間</div>
+          <div class="kpi-grid" style="margin-top:8px;">
+            <div class="kpi-item"><div class="kpi-label">収入合計</div><div class="kpi-val" id="yIncome">¥0</div></div>
+            <div class="kpi-item"><div class="kpi-label">支出合計</div><div class="kpi-val" id="yExpense">¥0</div></div>
+            <div class="kpi-item"><div class="kpi-label">収支</div><div class="kpi-val" id="yBalance">¥0</div></div>
+          </div>
+          <div class="lp-tools">
+            <label class="lp-check-label"><input type="checkbox" id="lpAutoSave" checked> 自動保存</label>
+            <button class="btn btn-ghost" id="lpResetBtn" style="font-size:13px;padding:7px 14px;">リセット</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ 保険診断 -->
+  <section class="content-sec" id="sec-ins">
+    <div class="sec-header">
+      <div class="sec-num">5</div>
+      <h2>保険・共済ニーズ診断</h2>
+    </div>
+    <div class="ins-wrap">
+      <p class="diag-lead">日常の「ありそうな場面」から、必要な保険・共済の候補を整理します。所要2〜3分。</p>
+      <div class="progress-bar-wrap"><div class="progress-bar-inner" id="insBar"></div></div>
+      <div id="insQs">
+        <div class="ins-q-item" data-tags="injury,auto_pip">
+          <h4>① 歩行中や自転車で車・バイクと衝突してケガをした場合、自分の保険でカバーできるか把握していますか？</h4>
+          <p class="ins-q-help">例：自動車保険の人身傷害補償（車外）、傷害保険、生命保険の災害特約など</p>
+          <div class="ins-opts">
+            <label class="ins-radio"><input type="radio" name="iq1" value="yes"> はい</label>
+            <label class="ins-radio"><input type="radio" name="iq1" value="no"> いいえ/不明</label>
+          </div>
+        </div>
+        <div class="ins-q-item" data-tags="liability,bicycle">
+          <h4>② 自転車事故で相手にケガをさせた場合に備えた賠償保険はありますか？</h4>
+          <p class="ins-q-help">例：自転車保険、個人賠償責任特約など</p>
+          <div class="ins-opts">
+            <label class="ins-radio"><input type="radio" name="iq2" value="yes"> はい</label>
+            <label class="ins-radio"><input type="radio" name="iq2" value="no"> いいえ/不明</label>
+          </div>
+        </div>
+        <div class="ins-q-item" data-tags="critical,cancer">
+          <h4>③ がんや脳卒中などの重篤疾患への備えはできていますか？</h4>
+          <p class="ins-q-help">例：がん保険、三大疾病保険、医療保険の特約など</p>
+          <div class="ins-opts">
+            <label class="ins-radio"><input type="radio" name="iq3" value="yes"> はい</label>
+            <label class="ins-radio"><input type="radio" name="iq3" value="no"> いいえ/不明</label>
+          </div>
+        </div>
+        <div class="ins-q-item" data-tags="nursing">
+          <h4>④ 介護が必要になった場合の費用リスクへの備えはありますか？</h4>
+          <p class="ins-q-help">例：介護保険（民間）、公的介護保険の自己負担分の備えなど</p>
+          <div class="ins-opts">
+            <label class="ins-radio"><input type="radio" name="iq4" value="yes"> はい</label>
+            <label class="ins-radio"><input type="radio" name="iq4" value="no"> いいえ/不明</label>
+          </div>
+        </div>
+        <div class="ins-q-item" data-tags="fire,earthquake">
+          <h4>⑤ 自宅（持ち家・賃貸どちらでも）の火災・地震への備えはできていますか？</h4>
+          <p class="ins-q-help">例：火災保険、地震保険など</p>
+          <div class="ins-opts">
+            <label class="ins-radio"><input type="radio" name="iq5" value="yes"> はい</label>
+            <label class="ins-radio"><input type="radio" name="iq5" value="no"> いいえ/不明</label>
+          </div>
+        </div>
+      </div>
+      <div class="diag-actions">
+        <button class="btn btn-ghost" id="insClearBtn">やり直す</button>
+        <button class="btn btn-primary" id="insCalcBtn">診断結果を表示</button>
+      </div>
+      <div id="insResult" hidden style="margin-top:16px;">
+        <h3 style="font-size:16px;margin-bottom:12px;">📋 ニーズが確認された保険・共済</h3>
+        <div class="ins-result-grid" id="insRecsGrid"></div>
+        <div class="ins-disclaimer">
+          本診断は一般的な情報提供を目的としており、特定の保険商品の推薦・販売行為ではありません。
+          具体的な商品選択・契約については、FP・保険代理店等の専門家にご相談ください。
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+'use strict';
+
+// ===== タブスクロール =====
+window.scrollToSection = function(id, btn){
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+};
+
+// ===== 診断ロジック =====
+const tipsMap = {
+  money: { name:'収支・お金の不足リスク', color:'#cfe7ff', items:['65歳以降の月次ギャップを把握。不足なら就労延長＋つみたて＋固定費見直しで三点攻め','iDeCo/NISAで長期の積立を継続','繰下げ受給の検討：健康・就労・家計の3条件でシミュレーション'] },
+  housing: { name:'住まいの見直し', color:'#fde2e4', items:['返済計画の再設計（繰上げ・借換え・住み替えの比較）','賃貸の方は家賃保証・緊急連絡先・見守り契約を整備','UR賃貸住宅や居住支援法人も確認'] },
+  pension: { name:'年金の把握', color:'#e6f4ea', items:['ねんきんネットで見込額と加入記録を確認。年1回点検','加給年金・振替加算の該当可否確認','受給開始年齢の最適化を収支表で検証'] },
+  invest: { name:'資産形成・積立', color:'#cfe7ff', items:['積立は額より継続。インデックス中心で低コスト・分散','取り崩し期のルールを事前に決める','高コスト商品は棚卸し'] },
+  care: { name:'介護・見守りの準備', color:'#fff3c4', items:['家族内の役割・緊急連絡・資金フローを決定','地域包括支援センターに事前相談','自宅か施設かの費用レンジを試算'] },
+  work: { name:'就労・収入維持', color:'#fde2e4', items:['再雇用・副業・短時間就労などを洗い出し','60〜70歳の働き方年表を作る','スキル棚卸しと学び直し'] },
+  ins: { name:'保険の最適化', color:'#e6f4ea', items:['重複と過不足を棚卸し。医療・がん・火災・地震など見直し','高額療養費制度など公的制度を前提に設計','更新・満期を一覧化'] },
+  health: { name:'健康・予防', color:'#fff3c4', items:['定期検診・歯科・運動習慣を月次管理','睡眠・食事・体組成をゆるく記録','フレイル予防の筋トレとタンパク質摂取'] },
+  legal: { name:'法務・書類整理', color:'#fde2e4', items:['エンディングノート・遺言・口座一覧を整理','遺言は形式と保管場所を明確に','相続・贈与の基礎を家族で共有'] },
+  opt: { name:'家計の最適化×AI', color:'#cfe7ff', items:['電気・通信・保険契約→代替案を比較','カード明細の自動仕分けプロンプトを作成','月5千円の固定費削減で10年約60万円のゆとり'] }
+};
+
+const diagForm = document.getElementById('diagForm');
+const diagBar = document.getElementById('diagBar');
+document.getElementById('diagCalcBtn').addEventListener('click', () => {
+  const fields = [...diagForm.querySelectorAll('fieldset')];
+  const allAnswered = fields.every((_, i) => diagForm.querySelector(`input[name=q${i+1}]:checked`));
+  if(!allAnswered){ alert('全ての質問にお答えください'); return; }
+  const scores = {};
+  fields.forEach((fs, i) => {
+    const cat = fs.dataset.cat;
+    const w = Number(fs.dataset.weight || 1);
+    const chosen = diagForm.querySelector(`input[name=q${i+1}]:checked`);
+    const val = Number((chosen || {}).value || 0);
+    scores[cat] = (scores[cat] || 0) + val * w;
+  });
+  const ordered = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+  const top = ordered.slice(0, 3);
+  document.getElementById('kpis').innerHTML = top.map(cat => {
+    const t = tipsMap[cat];
+    return `<div class="kpi-card" style="border-left-color:${t.color}">
+      <h4>${t.name} <small style="font-weight:400;color:var(--muted)">スコア:${scores[cat]}</small></h4>
+      <ul class="tips-list">${t.items.map(s=>`<li>${s}</li>`).join('')}</ul>
+    </div>`;
+  }).join('');
+  document.getElementById('allTips').innerHTML = ordered.map((cat, i) =>
+    `<li>${i+1}. <b>${tipsMap[cat].name}</b>… ${tipsMap[cat].items[0]}</li>`).join('');
+  document.getElementById('diagResult').hidden = false;
+});
+document.getElementById('diagClearBtn').addEventListener('click', () => {
+  diagForm.reset(); diagBar.style.width = '0%';
+  document.getElementById('diagResult').hidden = true;
+});
+diagForm.addEventListener('change', () => {
+  const count = [...diagForm.querySelectorAll('input[type=radio]:checked')].length;
+  diagBar.style.width = (count / 10 * 100) + '%';
+});
+
+// ===== ライフプラン計算 =====
+const MAN = 10000;
+const fmt = new Intl.NumberFormat('ja-JP', { style:'currency', currency:'JPY', maximumFractionDigits:0 });
+const LP_KEY = 'lp2-money-v1';
+
+function makeRow(section, name='', man=''){
+  const row = document.createElement('div');
+  row.className = 'lp-row';
+  row.dataset.section = section;
+  row.innerHTML = `
+    <input type="text" placeholder="項目名" value="${escHTML(name)}">
+    <div class="amount-wrap">
+      <input type="number" inputmode="decimal" step="0.1" min="0" value="${man}" placeholder="0.0">
+      <span class="unit">万円</span>
+    </div>
+    <button class="lp-del" title="削除">×</button>
+  `;
+  row.querySelector('.lp-del').addEventListener('click', () => { row.remove(); compute(); });
+  row.querySelectorAll('input').forEach(i => i.addEventListener('input', compute));
+  return row;
+}
+function escHTML(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+const incomeRows = document.getElementById('incomeRows');
+const expenseRows = document.getElementById('expenseRows');
+const incomeInit = [['給与','0.0'],['公的年金','0.0'],['配当・その他','0.0'],['その他','0.0'],['その他','0.0']];
+const expenseInit = new Array(7).fill(null).map(() => ['項目名','0.0']);
+
+function mountInitial(){
+  incomeInit.forEach(([n,v]) => incomeRows.appendChild(makeRow('income',n,v)));
+  expenseInit.forEach(([n,v]) => expenseRows.appendChild(makeRow('expense',n,v)));
+}
+function sum(container){ return [...container.querySelectorAll('.lp-row input[type=number]')].reduce((a,i)=>a+(parseFloat(i.value)||0)*MAN,0); }
+function compute(){
+  const mI = sum(incomeRows), mE = sum(expenseRows), mB = mI - mE;
+  const bonus = Math.max(0, parseFloat(document.getElementById('bonusMonths').value)||0);
+  const firstNum = incomeRows.querySelector('.lp-row input[type=number]');
+  const sal = firstNum ? (parseFloat(firstNum.value)||0)*MAN : 0;
+  const yI = (mI-sal)*12 + sal*(12+bonus), yE = mE*12, yB = yI - yE;
+  ['mIncome','mExpense','mBalance','yIncome','yExpense','yBalance'].forEach((id,i)=>{
+    const vals = [mI,mE,mB,yI,yE,yB];
+    const el = document.getElementById(id);
+    el.textContent = fmt.format(vals[i]);
+    el.classList.remove('negative','positive');
+    if(id.includes('Balance')) el.classList.add(vals[i]<0?'negative':'positive');
+  });
+  maybeSave();
+}
+function maybeSave(){
+  if(!document.getElementById('lpAutoSave').checked) return;
+  const data = { bonus:document.getElementById('bonusMonths').value, income:collect(incomeRows), expense:collect(expenseRows) };
+  try{ localStorage.setItem(LP_KEY, JSON.stringify(data)); }catch(_){}
+}
+function collect(c){ return [...c.querySelectorAll('.lp-row')].map(r=>({name:r.querySelector('input[type=text]').value,man:r.querySelector('input[type=number]').value})); }
+function restore(){
+  try{
+    const raw = localStorage.getItem(LP_KEY);
+    if(!raw){ mountInitial(); compute(); return; }
+    const data = JSON.parse(raw);
+    document.getElementById('bonusMonths').value = data.bonus ?? '0';
+    incomeRows.innerHTML=''; expenseRows.innerHTML='';
+    (data.income?.length ? data.income : incomeInit.map(([n,v])=>({name:n,man:v}))).forEach(o=>incomeRows.appendChild(makeRow('income',o.name,o.man)));
+    (data.expense?.length ? data.expense : expenseInit.map(([n,v])=>({name:n,man:v}))).forEach(o=>expenseRows.appendChild(makeRow('expense',o.name,o.man)));
+    compute();
+  }catch(_){ incomeRows.innerHTML=''; expenseRows.innerHTML=''; mountInitial(); compute(); }
+}
+document.getElementById('addExpenseBtn').addEventListener('click', ()=>{ expenseRows.appendChild(makeRow('expense','','')); compute(); });
+document.getElementById('bonusMonths').addEventListener('input', compute);
+document.getElementById('lpAutoSave').addEventListener('change', ()=>{ if(!document.getElementById('lpAutoSave').checked){try{localStorage.removeItem(LP_KEY);}catch(_){}} else maybeSave(); });
+document.getElementById('lpResetBtn').addEventListener('click', ()=>{
+  if(!confirm('リセットしますか？')) return;
+  incomeRows.innerHTML=''; expenseRows.innerHTML=''; mountInitial();
+  document.getElementById('bonusMonths').value='0';
+  try{localStorage.removeItem(LP_KEY);}catch(_){}
+  compute();
+});
+restore();
+
+// ===== 保険診断 =====
+const insMap = {
+  injury: { title:'傷害・人身傷害補償', tags:['t-blue'], desc:'歩行中・自転車乗車中のケガに対応。自動車保険の車外補償や傷害保険を確認。', links:[{text:'比較サイトで確認',href:'https://www.hoken-mammoth.jp/',cls:'outline'}] },
+  liability: { title:'個人賠償責任保険', tags:['t-green'], desc:'自転車事故・日常の賠償事故に対応。火災保険や自動車保険の特約として付けられる場合も。', links:[{text:'特約を確認する',href:'https://www.hoken-mammoth.jp/',cls:'outline'}] },
+  critical: { title:'三大疾病・がん保険', tags:['t-amber'], desc:'がん・心疾患・脳卒中への備え。治療の長期化や収入減少に対応。', links:[{text:'がん保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] },
+  nursing: { title:'介護保険（民間）', tags:['t-blue'], desc:'公的介護保険の自己負担分や施設費用を補完。40代〜50代からの加入が有利。', links:[{text:'介護保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] },
+  fire: { title:'火災保険・地震保険', tags:['t-green'], desc:'持ち家は建物と家財、賃貸は家財を補償。地震保険は火災保険とセットで加入。', links:[{text:'火災保険を比較',href:'https://hoken.kakaku.com/',cls:'outline'}] }
+};
+const tagMap = { injury:['iq1'], liability:['iq2'], critical:['iq3'], nursing:['iq4'], fire:['iq5'] };
+const insBar = document.getElementById('insBar');
+document.getElementById('insQs').addEventListener('change', ()=>{
+  const count = [...document.getElementById('insQs').querySelectorAll('input:checked')].length;
+  insBar.style.width = (count/5*100)+'%';
+});
+document.getElementById('insCalcBtn').addEventListener('click', ()=>{
+  const qs = document.getElementById('insQs');
+  const allAns = ['iq1','iq2','iq3','iq4','iq5'].every(n => qs.querySelector(`input[name=${n}]:checked`));
+  if(!allAns){ alert('全ての質問にお答えください'); return; }
+  const needs = [];
+  const qTagMap = { iq1:'injury', iq2:'liability', iq3:'critical', iq4:'nursing', iq5:'fire' };
+  Object.entries(qTagMap).forEach(([qn, tag]) => {
+    const val = qs.querySelector(`input[name=${qn}]:checked`)?.value;
+    if(val === 'no') needs.push(tag);
+  });
+  const grid = document.getElementById('insRecsGrid');
+  if(needs.length === 0){
+    grid.innerHTML = '<p style="color:var(--ok);font-weight:700;">✅ 現在の備えは概ね整っています。定期的に見直しを続けましょう。</p>';
+  } else {
+    grid.innerHTML = needs.map(tag => {
+      const r = insMap[tag];
+      const tags = r.tags.map(t => `<span class="ins-tag ${t}">${t.replace('t-','')}</span>`).join('');
+      const links = r.links.map(l => `<a class="ins-cta-btn ${l.cls}" href="${l.href}" target="_blank" rel="noopener">${l.text}</a>`).join('');
+      return `<div class="ins-rec"><h5>${r.title} ${tags}</h5><p style="font-size:13px;color:var(--muted);margin:6px 0 8px;">${r.desc}</p><div class="ins-cta">${links}</div></div>`;
+    }).join('');
+  }
+  document.getElementById('insResult').hidden = false;
+});
+document.getElementById('insClearBtn').addEventListener('click', ()=>{
+  document.getElementById('insQs').querySelectorAll('input').forEach(i => i.checked = false);
+  insBar.style.width='0%';
+  document.getElementById('insResult').hidden = true;
+});
+
+})();
+</script>
+</body>
+</html>
