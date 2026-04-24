@@ -16,10 +16,10 @@
   display: flex; align-items: center; gap: 8px;
   backdrop-filter: blur(4px);
 }
-#font-size-bar span { font-size: 12px; color: #64748b; margin-right: 2px; }
+#font-size-bar span { font-size: 0.75rem; color: #64748b; margin-right: 2px; }
 .fsz-btn {
   border: 1px solid #cbd5e1; background: #fff; color: #334155;
-  border-radius: 6px; padding: 4px 10px; font-size: 12px;
+  border-radius: 6px; padding: 4px 10px; font-size: 0.75rem;
   cursor: pointer; font-family: inherit; font-weight: 700;
   transition: all .15s;
 }
@@ -51,13 +51,13 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; overflow-x: hidden; font-size: 16px; }
 
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.8;
   overflow-x: hidden;
   word-break: break-word;
@@ -83,7 +83,7 @@ body {
   border: 1px solid rgba(255,255,255,.2);
   border-radius: 999px;
   padding: 4px 16px;
-  font-size: 12px;
+  font-size: 0.75rem;
   letter-spacing: .12em;
   margin-bottom: 16px;
 }
@@ -96,7 +96,7 @@ body {
 }
 .hero h1 span { color: #fbbf24; }
 .hero-lead {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: rgba(255,255,255,.75);
   max-width: min(500px, 100%);
   margin: 0 auto 28px;
@@ -111,7 +111,7 @@ body {
 .op-label {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: rgba(255,255,255,.7);
   margin-bottom: 8px;
 }
@@ -130,7 +130,7 @@ body {
   transition: width .6s ease;
 }
 .op-checkpoints {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: rgba(255,255,255,.6);
   text-align: center;
   margin-top: 6px;
@@ -150,7 +150,7 @@ body {
   box-shadow: var(--shadow);
 }
 .intro-card h2 {
-  font-size: 17px;
+  font-size: 1.063rem;
   font-weight: 700;
   margin-bottom: 10px;
   color: var(--ink);
@@ -175,10 +175,10 @@ body {
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-weight: 900;
-  font-size: 14px;
+  font-size: 0.875rem;
   margin: 0 auto 8px;
 }
-.intro-step p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.intro-step p { font-size: 0.813rem; color: var(--muted); line-height: 1.6; }
 
 /* ===== STAGES WRAPPER ===== */
 .stages-wrap {
@@ -223,7 +223,7 @@ body {
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-weight: 900;
-  font-size: 16px;
+  font-size: 1.0rem;
   background: var(--bg);
   color: var(--ink);
   border: 2px solid var(--line);
@@ -237,17 +237,17 @@ body {
 
 .stage-header-text { flex: 1; }
 .stage-header-text h3 {
-  font-size: 16px;
+  font-size: 1.0rem;
   font-weight: 700;
   margin-bottom: 2px;
 }
 .stage-header-text .stage-sub {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
 }
 
 .stage-check-icon {
-  font-size: 22px;
+  font-size: 1.375rem;
   opacity: 0;
   transition: opacity .3s ease;
 }
@@ -277,7 +277,7 @@ body {
 
 /* 理解チェックリスト */
 .understand-title {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--muted);
   margin-bottom: 8px;
@@ -308,7 +308,7 @@ body {
   accent-color: var(--ok);
   flex-shrink: 0;
 }
-.check-item-text { font-size: 13px; line-height: 1.6; }
+.check-item-text { font-size: 0.813rem; line-height: 1.6; }
 .check-item.is-checked .check-item-text { color: #065f46; }
 
 /* ミニ進捗 */
@@ -316,7 +316,7 @@ body {
 .mini-progress-label {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 0.688rem;
   color: var(--muted);
   margin-bottom: 4px;
 }
@@ -351,7 +351,7 @@ body {
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 0.813rem;
   font-weight: 700;
   color: #374151;
   text-align: left;
@@ -361,20 +361,20 @@ body {
   color: #1d4ed8;
   border-radius: 6px;
   padding: 2px 8px;
-  font-size: 11px;
+  font-size: 0.688rem;
 }
 .prompt-items { display: none; padding: 0 14px 14px; }
 .prompt-area[data-open="true"] .prompt-items { display: block; }
 
 .prompt-item { margin-bottom: 10px; }
 .prompt-item:last-child { margin-bottom: 0; }
-.prompt-q-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.prompt-q-label { font-size: 0.688rem; color: var(--muted); margin-bottom: 4px; }
 .prompt-text {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 8px 10px;
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1.7;
   color: #1f2937;
 }
@@ -390,7 +390,7 @@ body {
   color: #374151;
   border-radius: 8px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: 0.75rem;
   cursor: pointer;
   font-family: inherit;
 }
@@ -405,7 +405,7 @@ body {
   color: #10a37f;
   border-radius: 8px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: 0.75rem;
   text-decoration: none;
   font-weight: 700;
   font-family: inherit;
@@ -420,7 +420,7 @@ body {
   color: #fff;
   border-radius: 999px;
   padding: 10px 28px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
@@ -448,13 +448,13 @@ body {
   text-align: center;
   color: #fff;
 }
-.goal-emoji { font-size: 56px; margin-bottom: 12px; line-height: 1; }
+.goal-emoji { font-size: 3.5rem; margin-bottom: 12px; line-height: 1; }
 .goal-inner h2 {
   font-family: 'Shippori Mincho', serif;
-  font-size: 26px;
+  font-size: 1.625rem;
   margin-bottom: 8px;
 }
-.goal-inner p { color: rgba(255,255,255,.8); font-size: 14px; line-height: 1.8; }
+.goal-inner p { color: rgba(255,255,255,.8); font-size: 0.875rem; line-height: 1.8; }
 .goal-tags {
   display: flex;
   gap: 8px;
@@ -467,7 +467,7 @@ body {
   border: 1px solid rgba(255,255,255,.25);
   border-radius: 999px;
   padding: 6px 14px;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 .btn-reset-all {
   display: inline-block;
@@ -477,7 +477,7 @@ body {
   color: #fff;
   border-radius: 999px;
   padding: 10px 24px;
-  font-size: 13px;
+  font-size: 0.813rem;
   cursor: pointer;
   font-family: inherit;
 }
@@ -494,7 +494,7 @@ body {
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 14px 18px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
   line-height: 1.7;
 }
@@ -503,8 +503,8 @@ body {
 @media(max-width:480px) {
   .stage-header { padding: 14px 14px; gap: 10px; }
   .stage-body { padding: 0 14px 14px; }
-  .stage-num-badge { width: 38px; height: 38px; font-size: 14px; flex: 0 0 38px; }
-  .stage-header-text h3 { font-size: 14px; }
+  .stage-num-badge { width: 38px; height: 38px; font-size: 0.875rem; flex: 0 0 38px; }
+  .stage-header-text h3 { font-size: 0.875rem; }
 }
 </style>
 </head>
@@ -564,7 +564,7 @@ function setFsz(pct, btn){
         <p>「理解した・確認済み」にチェックを入れてクリア</p>
       </div>
     </div>
-    <p style="font-size:12px;color:var(--muted);margin-top:8px;">※一度に全部やる必要はありません。途中で閉じても進捗は保存されます。<br>（進捗データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません）</p>
+    <p style="font-size: 0.75rem;color:var(--muted);margin-top:8px;">※一度に全部やる必要はありません。途中で閉じても進捗は保存されます。<br>（進捗データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません）</p>
   </div>
 </div>
 
@@ -1013,10 +1013,10 @@ window.addEventListener('DOMContentLoaded', () => {
   margin-top:0;
 ">
   <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener"
-     style="display:inline-block;font-weight:700;font-size:15px;color:#1a1a2e;text-decoration:none;margin-bottom:8px;letter-spacing:.04em;">
+     style="display:inline-block;font-weight:700;font-size: 0.938rem;color:#1a1a2e;text-decoration:none;margin-bottom:8px;letter-spacing:.04em;">
     終活人.jp
   </a>
-  <p style="font-size:12px;color:#64748b;line-height:1.8;margin:0;">
+  <p style="font-size: 0.75rem;color:#64748b;line-height:1.8;margin:0;">
     © 終活人.jp ／ 無断転載・商用利用禁止 ／ 本ツールの著作権は終活人.jpに帰属します。
   </p>
 </footer>
