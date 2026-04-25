@@ -149,19 +149,6 @@ body {
 }
 .card-body { padding: 1em; }
 
-/* 2カラムレイアウト */
-.layout-2col {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1em;
-  align-items: start;
-}
-@media (min-width: 900px) {
-  .layout-2col.log-layout  { grid-template-columns: 1.5fr 1fr; }
-  .layout-2col.kiyo-layout { grid-template-columns: 1.1fr 1fr; }
-  .layout-2col.rep-layout  { grid-template-columns: 1.4fr 1fr; }
-}
-
 /* フォーム */
 .form-row {
   display: flex;
@@ -288,6 +275,16 @@ td input, td select {
   grid-template-columns: 1fr 1fr;
   gap: .625em;
   margin-bottom: .875em;
+}
+/* ①パネル用：4タイル横並び */
+.kpi-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .625em;
+  margin-bottom: .875em;
+}
+@media (max-width: 680px) {
+  .kpi-grid-4 { grid-template-columns: 1fr 1fr; }
 }
 .kpi-tile {
   background: var(--sub);
@@ -474,88 +471,78 @@ footer p { margin-top: .4em; }
       </div>
     </div>
 
-    <!-- 2カラム：ログ入力 + 集計結果 -->
-    <div class="layout-2col log-layout">
-
-      <!-- 左：ログ入力 -->
-      <div>
-        <div class="card">
-          <div class="card-head">
-            <h2>支援記録ログ</h2>
-            <div class="btn-row no-print">
-              <button class="btn primary" id="addRow">＋ 行を追加</button>
-              <button class="btn" id="loadSample">サンプル入力</button>
-              <button class="btn danger" id="clearAll">全消去</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="tbl-wrap">
-              <table id="tbl">
-                <thead>
-                  <tr>
-                    <th style="min-width:108px;">日付</th>
-                    <th style="min-width:140px;">カテゴリ</th>
-                    <th style="min-width:180px;">詳細</th>
-                    <th class="right" style="min-width:80px;">時間(h)</th>
-                    <th class="right" style="min-width:100px;">直接費用(円)</th>
-                    <th style="min-width:110px;">支払手段</th>
-                    <th style="min-width:180px;">証拠メモ</th>
-                    <th style="min-width:52px;"></th>
-                  </tr>
-                </thead>
-                <tbody id="tblBody"></tbody>
-              </table>
-            </div>
-            <div class="btn-row no-print" style="margin-top:.5em;">
-              <button class="btn primary" id="recalc">再計算</button>
-              <button class="btn" id="exportCsv">CSV出力</button>
-            </div>
-            <p class="hint" style="margin-top:.5em;">
-              コツ：「証拠メモ」に保管場所・キーワード（例：PayPay履歴 2026-02 食材）を残すと証拠として有効です。
-            </p>
-          </div>
+    <!-- 支援記録ログ（全幅） -->
+    <div class="card">
+      <div class="card-head">
+        <h2>支援記録ログ</h2>
+        <div class="btn-row no-print">
+          <button class="btn primary" id="addRow">＋ 行を追加</button>
+          <button class="btn" id="loadSample">サンプル入力</button>
+          <button class="btn danger" id="clearAll">全消去</button>
         </div>
       </div>
+      <div class="card-body">
+        <div class="tbl-wrap">
+          <table id="tbl">
+            <thead>
+              <tr>
+                <th style="min-width:108px;">日付</th>
+                <th style="min-width:130px;">カテゴリ</th>
+                <th style="min-width:160px;">詳細</th>
+                <th class="right" style="min-width:76px;">時間(h)</th>
+                <th class="right" style="min-width:96px;">直接費用(円)</th>
+                <th style="min-width:100px;">支払手段</th>
+                <th style="min-width:160px;">証拠メモ</th>
+                <th style="min-width:50px;"></th>
+              </tr>
+            </thead>
+            <tbody id="tblBody"></tbody>
+          </table>
+        </div>
+        <div class="btn-row no-print" style="margin-top:.5em;">
+          <button class="btn primary" id="recalc">再計算</button>
+          <button class="btn" id="exportCsv">CSV出力</button>
+        </div>
+        <p class="hint" style="margin-top:.5em;">
+          コツ：「証拠メモ」に保管場所・キーワード（例：PayPay履歴 2026-02 食材）を残すと証拠として有効です。
+        </p>
+      </div>
+    </div>
 
-      <!-- 右：集計結果 -->
-      <div>
-        <div class="card">
-          <div class="card-head">
-            <h2>集計結果</h2>
-            <span class="badge" id="logStatus">入力待ち</span>
+    <!-- 集計結果（全幅・4タイル横並び） -->
+    <div class="card">
+      <div class="card-head">
+        <h2>集計結果</h2>
+        <span class="badge" id="logStatus">入力待ち</span>
+      </div>
+      <div class="card-body">
+        <div class="kpi-grid-4">
+          <div class="kpi-tile">
+            <div class="kt-label">直接費用 合計</div>
+            <div class="kt-val" id="kpiDirect">¥0</div>
           </div>
-          <div class="card-body">
-            <div class="kpi-grid">
-              <div class="kpi-tile">
-                <div class="kt-label">直接費用 合計</div>
-                <div class="kt-val" id="kpiDirect">¥0</div>
-              </div>
-              <div class="kpi-tile">
-                <div class="kt-label">支援時間 合計</div>
-                <div class="kt-val" id="kpiHours">0.0h</div>
-              </div>
-              <div class="kpi-tile">
-                <div class="kt-label">みなし時間コスト</div>
-                <div class="kt-val" id="kpiTimeCost">¥0</div>
-              </div>
-              <div class="kpi-tile">
-                <div class="kt-label">総コスト（参考）</div>
-                <div class="kt-val" id="kpiTotal">¥0</div>
-              </div>
-            </div>
-            <div id="catTable"></div>
-            <p class="hint">みなし時間コスト＝支援時間×時間単価。実務では費用・継続性・必要性・代替可能性等で評価が変動します。</p>
+          <div class="kpi-tile">
+            <div class="kt-label">支援時間 合計</div>
+            <div class="kt-val" id="kpiHours">0.0h</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kt-label">みなし時間コスト</div>
+            <div class="kt-val" id="kpiTimeCost">¥0</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kt-label">総コスト（参考）</div>
+            <div class="kt-val" id="kpiTotal">¥0</div>
           </div>
         </div>
+        <div id="catTable"></div>
+        <p class="hint" style="margin-top:.5em;">みなし時間コスト＝支援時間×時間単価。実務では費用・継続性・必要性・代替可能性等で評価が変動します。</p>
       </div>
-
-    </div><!-- /.layout-2col -->
+    </div>
   </div><!-- /#pane-log -->
 
 
   <!-- ② 寄与分・遺留分試算 -->
   <div class="pane" id="pane-kiyo">
-    <div class="layout-2col kiyo-layout">
 
       <!-- 左：入力パラメータ -->
       <div class="card">
@@ -633,7 +620,7 @@ footer p { margin-top: .4em; }
           <span class="badge" id="kiyoStatus">未計算</span>
         </div>
         <div class="card-body">
-          <div class="kpi-grid">
+          <div class="kpi-grid-4">
             <div class="kpi-tile">
               <div class="kt-label">年間 直接費用</div>
               <div class="kt-val" id="k_yDirect">¥0</div>
@@ -665,7 +652,6 @@ footer p { margin-top: .4em; }
         </div>
       </div>
 
-    </div>
   </div><!-- /#pane-kiyo -->
 
 
@@ -710,7 +696,6 @@ footer p { margin-top: .4em; }
 
   <!-- ④ レポート生成 -->
   <div class="pane" id="pane-report">
-    <div class="layout-2col rep-layout">
 
       <div class="card">
         <div class="card-head">
@@ -753,7 +738,6 @@ footer p { margin-top: .4em; }
         </div>
       </div>
 
-    </div>
   </div><!-- /#pane-report -->
 
 </div><!-- /.wrap -->
@@ -1289,6 +1273,16 @@ footer p { margin-top: .4em; }
   buildEvidenceUI();
   if (!restore()) { addRow({}); }
   recalc();
+
+  /* ── iframeの高さを親に通知（Googleサイト対応） ── */
+  function notifyHeight() {
+    var h = document.body.scrollHeight;
+    try { window.parent.postMessage({ type: 'resize', height: h }, '*'); } catch(e) {}
+  }
+  var _resizeObs = new MutationObserver(notifyHeight);
+  _resizeObs.observe(document.body, { childList: true, subtree: true, attributes: true });
+  window.addEventListener('resize', notifyHeight);
+  notifyHeight();
 
 })();
 </script>
