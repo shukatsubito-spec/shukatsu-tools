@@ -12,7 +12,7 @@ html { font-size: 16px; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 button, input, select, textarea {
-  font-family: inherit;
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
   font-size: inherit;
 }
 
@@ -37,14 +37,15 @@ body {
   color: var(--text);
   font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
   line-height: 1.6;
+  min-height: 100vh;
 }
 
-/* ── 文字サイズバー ── */
+/* 文字サイズバー */
 .fs-bar {
   display: flex;
   align-items: center;
   gap: 0.5em;
-  padding: 0.5em 1em;
+  padding: 0.4em 1em;
   background: var(--main-dark);
   color: #fff;
   font-size: 0.75em;
@@ -54,81 +55,85 @@ body {
   background: transparent;
   border: 1px solid rgba(255,255,255,.45);
   color: #fff;
-  padding: 0.2em 0.7em;
+  padding: 0.2em 0.75em;
   border-radius: 999px;
   cursor: pointer;
   transition: background .15s;
 }
-.fs-btn.active,
-.fs-btn:hover {
+.fs-btn.active, .fs-btn:hover {
   background: rgba(255,255,255,.22);
   border-color: #fff;
 }
 
-/* ── ヘッダー ── */
+/* ヘッダー */
 .site-header {
   background: var(--main);
   color: #fff;
-  padding: 1em 1.5em;
+  padding: 0.875em 1.5em;
 }
 .site-header h1 {
   font-size: 1.25em;
   font-weight: 700;
-  letter-spacing: .03em;
+  letter-spacing: .02em;
 }
 .site-header .lead {
   font-size: 0.75em;
-  margin-top: .3em;
-  opacity: .85;
+  margin-top: .25em;
+  opacity: .88;
+  line-height: 1.6;
 }
 
-/* ── タブナビ ── */
+/* タブナビ */
 .tab-nav {
   display: flex;
-  gap: 0;
   background: var(--main-dark);
   flex-wrap: wrap;
+  overflow: hidden;
 }
 .tab-nav button {
   background: transparent;
   border: none;
+  border-bottom: 3px solid transparent;
   color: rgba(255,255,255,.65);
-  padding: .75em 1.25em;
+  padding: .7em 1.1em;
   cursor: pointer;
   font-size: 0.875em;
   font-weight: 500;
-  border-bottom: 3px solid transparent;
   transition: color .15s, border-color .15s, background .15s;
   white-space: nowrap;
 }
-.tab-nav button.active,
-.tab-nav button:hover {
+.tab-nav button.active {
   color: #fff;
   border-bottom-color: #ffd166;
-  background: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.1);
+}
+.tab-nav button:hover:not(.active) {
+  color: #fff;
+  background: rgba(255,255,255,.06);
 }
 
-/* ── ラッパー ── */
+/* メインラッパー */
 .wrap {
-  max-width: 1120px;
+  max-width: 1160px;
   margin: 0 auto;
-  padding: 1em;
+  padding: 1em 1em 2em;
 }
 
-/* ── パネル（タブコンテンツ） ── */
+/* タブパネル */
 .pane { display: none; }
 .pane.active { display: block; }
 
-/* ── カード ── */
+/* カード */
 .card {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   margin-bottom: 1em;
+  overflow: hidden;
 }
 .card-head {
-  padding: .875em 1em;
+  padding: .75em 1em;
   border-bottom: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
@@ -136,7 +141,6 @@ body {
   flex-wrap: wrap;
   gap: .5em;
   background: var(--sub);
-  border-radius: var(--radius) var(--radius) 0 0;
 }
 .card-head h2 {
   font-size: 1em;
@@ -145,17 +149,20 @@ body {
 }
 .card-body { padding: 1em; }
 
-/* ── 2カラムグリッド ── */
+/* 2カラムレイアウト */
 .layout-2col {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1em;
+  align-items: start;
 }
-@media (min-width: 960px) {
-  .layout-2col { grid-template-columns: 1.3fr 1fr; }
+@media (min-width: 900px) {
+  .layout-2col.log-layout  { grid-template-columns: 1.5fr 1fr; }
+  .layout-2col.kiyo-layout { grid-template-columns: 1.1fr 1fr; }
+  .layout-2col.rep-layout  { grid-template-columns: 1.4fr 1fr; }
 }
 
-/* ── フォーム行 ── */
+/* フォーム */
 .form-row {
   display: flex;
   flex-wrap: wrap;
@@ -168,9 +175,10 @@ body {
   flex-direction: column;
   gap: .3em;
   flex: 1;
-  min-width: 150px;
+  min-width: 140px;
 }
 .form-group.shrink { flex: 0 0 auto; min-width: 130px; }
+.form-group.full   { flex: 1 1 100%; }
 label {
   font-size: 0.75em;
   color: var(--muted);
@@ -186,18 +194,20 @@ textarea {
   border: 1px solid var(--line);
   color: var(--text);
   border-radius: 8px;
-  padding: .5em .75em;
+  padding: .45em .75em;
   font-size: 0.875em;
   outline: none;
   transition: border-color .15s, box-shadow .15s;
 }
 input:focus, select:focus, textarea:focus {
   border-color: var(--main);
-  box-shadow: 0 0 0 3px rgba(24,95,165,.13);
+  box-shadow: 0 0 0 3px rgba(24,95,165,.12);
 }
-input[type="number"] { appearance: textfield; }
+input[type="number"] { -moz-appearance: textfield; }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-/* ── ボタン ── */
+/* ボタン */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -205,16 +215,15 @@ input[type="number"] { appearance: textfield; }
   border: 1px solid var(--line);
   background: #fff;
   color: var(--text);
-  padding: .5em 1em;
+  padding: .45em .9em;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.875em;
   font-weight: 500;
-  transition: background .15s, border-color .15s, transform .1s;
+  transition: background .15s, border-color .15s;
   white-space: nowrap;
 }
 .btn:hover { background: var(--hover); border-color: var(--main); }
-.btn:active { transform: scale(.97); }
 .btn.primary {
   background: var(--main);
   color: #fff;
@@ -226,7 +235,7 @@ input[type="number"] { appearance: textfield; }
   color: var(--danger);
   border-color: #f5c6c6;
   font-size: 0.75em;
-  padding: .3em .7em;
+  padding: .3em .6em;
 }
 .btn.danger:hover { background: #ffe0e0; }
 .btn-row {
@@ -236,17 +245,19 @@ input[type="number"] { appearance: textfield; }
   align-items: center;
 }
 
-/* ── テーブル ── */
+/* テーブル */
 .tbl-wrap {
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: 10px;
   margin-bottom: .75em;
+  -webkit-overflow-scrolling: touch;
 }
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.8125em;
+  min-width: 700px;
 }
 th, td {
   border-bottom: 1px solid var(--line);
@@ -261,50 +272,55 @@ th {
   white-space: nowrap;
 }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: #f7f4ef; }
+tr:hover td { background: #f5f2ec; }
 .right { text-align: right; }
-td input[type="date"],
-td input[type="number"],
-td input[type="text"],
-td select {
-  padding: .35em .5em;
+td input, td select {
+  padding: .3em .5em;
   font-size: 0.875em;
 }
 
-/* ── KPI タイル ── */
+/* 証拠テーブルはmin-widthを緩める */
+.ev-table { min-width: 400px; }
+
+/* KPIタイル */
 .kpi-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: .625em;
-  margin-bottom: 1em;
+  margin-bottom: .875em;
 }
 .kpi-tile {
   background: var(--sub);
-  border: 1px solid #c9ddf0;
+  border: 1px solid #c5daf0;
   border-radius: 10px;
   padding: .75em;
 }
-.kpi-tile .kt-label { font-size: 0.75em; color: var(--muted); }
-.kpi-tile .kt-val { font-size: 1.25em; font-weight: 700; color: var(--main-dark); margin-top: .2em; }
+.kpi-tile .kt-label { font-size: 0.75em; color: var(--muted); line-height: 1.3; }
+.kpi-tile .kt-val {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: var(--main-dark);
+  margin-top: .2em;
+  word-break: break-all;
+}
 
-/* ── レンジ表示 ── */
+/* レンジ表示 */
 .range-box {
   background: var(--sub);
-  border: 1px solid #c9ddf0;
+  border: 1px solid #c5daf0;
   border-radius: 10px;
   padding: .75em 1em;
   font-size: 0.875em;
-  line-height: 1.9;
+  line-height: 2;
 }
 .range-box b { color: var(--main-dark); }
 
-/* ── 証拠チェックリスト ── */
-.evidence-progress {
+/* 証拠進捗 */
+.ev-progress-row {
   display: flex;
   align-items: center;
   gap: .75em;
-  font-size: 0.875em;
-  margin-bottom: .75em;
+  margin-bottom: .875em;
   flex-wrap: wrap;
 }
 .progress-bar-wrap {
@@ -320,15 +336,16 @@ td select {
   background: var(--main);
   border-radius: 999px;
   transition: width .3s;
+  width: 0%;
 }
 
-/* ── レポートテキスト ── */
+/* レポートエリア */
 .report-area {
   width: 100%;
-  min-height: 12em;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  min-height: 14em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 0.8125em;
-  line-height: 1.7;
+  line-height: 1.75;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: .75em;
@@ -337,7 +354,7 @@ td select {
   resize: vertical;
 }
 
-/* ── バッジ・ステータス ── */
+/* バッジ */
 .badge {
   display: inline-block;
   font-size: 0.75em;
@@ -347,39 +364,53 @@ td select {
   color: var(--muted);
   background: #fff;
 }
-.badge.ok { border-color: #a8d5b5; color: var(--ok); background: #edfaf2; }
+.badge.ok  { border-color: #a8d5b5; color: var(--ok); background: #edfaf2; }
 
-/* ── 区切り・注記 ── */
+/* 区切り・注記 */
 .hr { height: 1px; background: var(--line); margin: .875em 0; }
 .note {
   font-size: 0.75em;
   color: var(--muted);
   line-height: 1.65;
-  background: #f3efe8;
+  background: #f0eee9;
   border-left: 3px solid var(--main);
   padding: .5em .75em;
   border-radius: 0 6px 6px 0;
   margin: .5em 0;
 }
-.hint { font-size: 0.75em; color: var(--muted); line-height: 1.65; margin-top: .4em; }
-
-/* ── フッター ── */
-footer {
-  text-align: center;
-  padding: 1.5em 1em;
+.hint {
   font-size: 0.75em;
   color: var(--muted);
-  border-top: 1px solid var(--line);
-  margin-top: 1.5em;
+  line-height: 1.65;
+  margin-top: .4em;
 }
-footer a { color: var(--main); text-decoration: none; }
-footer a:hover { text-decoration: underline; }
+.section-label {
+  font-size: 0.8125em;
+  font-weight: 700;
+  color: var(--main-dark);
+  margin-bottom: .4em;
+}
 
-/* ── 印刷 ── */
+/* フッター */
+footer {
+  text-align: center;
+  padding: 1.5em 1em 2em;
+  font-size: 0.75em;
+  color: var(--muted);
+  border-top: 2px solid var(--line);
+  margin-top: 2em;
+  background: var(--card);
+}
+footer a { color: var(--main); text-decoration: none; font-weight: 700; }
+footer a:hover { text-decoration: underline; }
+footer p { margin-top: .4em; }
+
+/* 印刷 */
 @media print {
   .fs-bar, .tab-nav, .btn-row, .no-print { display: none !important; }
+  .pane { display: block !important; }
   body { background: #fff; color: #000; }
-  .card { box-shadow: none; border: 1px solid #ccc; }
+  .card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
 }
 </style>
 </head>
@@ -393,7 +424,7 @@ footer a:hover { text-decoration: underline; }
   <button class="fs-btn" onclick="setFS(22,this)">140%</button>
 </div>
 
-<!-- サイトヘッダー -->
+<!-- ヘッダー -->
 <header class="site-header">
   <h1>生活支援・寄与分 試算ツール</h1>
   <div class="lead">
@@ -403,52 +434,51 @@ footer a:hover { text-decoration: underline; }
 </header>
 
 <!-- タブナビ -->
-<nav class="tab-nav" role="tablist">
-  <button class="active" data-tab="log" role="tab">① 支援ログ入力</button>
-  <button data-tab="kiyo" role="tab">② 寄与分・遺留分 試算</button>
-  <button data-tab="evidence" role="tab">③ 証拠パック</button>
-  <button data-tab="report" role="tab">④ レポート生成</button>
+<nav class="tab-nav" id="tabNav">
+  <button class="active" data-tab="log">① 支援ログ入力</button>
+  <button data-tab="kiyo">② 寄与分・遺留分 試算</button>
+  <button data-tab="evidence">③ 証拠パック</button>
+  <button data-tab="report">④ レポート生成</button>
 </nav>
 
 <div class="wrap">
 
-  <!-- ======================================================
-       タブ①：支援ログ入力
-  ====================================================== -->
+  <!-- ① 支援ログ入力 -->
   <div class="pane active" id="pane-log">
-    <div class="layout-2col">
+
+    <!-- 基本設定 -->
+    <div class="card">
+      <div class="card-head">
+        <h2>基本設定</h2>
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group shrink">
+            <label>時間単価（円/時間）</label>
+            <input type="number" id="rate" value="2000" min="0" step="100"/>
+          </div>
+          <div class="form-group shrink">
+            <label>支援開始日</label>
+            <input type="date" id="start"/>
+          </div>
+          <div class="form-group shrink">
+            <label>支援終了日（または現在）</label>
+            <input type="date" id="end"/>
+          </div>
+          <div class="form-group">
+            <label>メモ（任意）</label>
+            <input type="text" id="memo" placeholder="例：父の生活支援（食費・通院送迎・服薬管理）"/>
+          </div>
+        </div>
+        <p class="hint">※時間単価は家政婦・ヘルパーの市場相場（1,500〜3,000円/時間）を参考に設定してください。</p>
+      </div>
+    </div>
+
+    <!-- 2カラム：ログ入力 + 集計結果 -->
+    <div class="layout-2col log-layout">
 
       <!-- 左：ログ入力 -->
       <div>
-        <div class="card">
-          <div class="card-head">
-            <h2>基本設定</h2>
-          </div>
-          <div class="card-body">
-            <div class="form-row">
-              <div class="form-group shrink">
-                <label>時間単価（円/時間）</label>
-                <input type="number" id="rate" value="2000" min="0" step="100"/>
-              </div>
-              <div class="form-group shrink">
-                <label>支援開始日</label>
-                <input type="date" id="start"/>
-              </div>
-              <div class="form-group shrink">
-                <label>支援終了日（または現在）</label>
-                <input type="date" id="end"/>
-              </div>
-              <div class="form-group">
-                <label>メモ（任意）</label>
-                <input type="text" id="memo" placeholder="例：父の生活支援（食費・通院送迎・服薬管理）"/>
-              </div>
-            </div>
-            <div class="hint">
-              ※時間単価は家政婦・ヘルパーの市場相場（1,500〜3,000円/時間）を参考に設定してください。
-            </div>
-          </div>
-        </div>
-
         <div class="card">
           <div class="card-head">
             <h2>支援記録ログ</h2>
@@ -463,26 +493,26 @@ footer a:hover { text-decoration: underline; }
               <table id="tbl">
                 <thead>
                   <tr>
-                    <th style="min-width:110px;">日付</th>
-                    <th style="min-width:150px;">カテゴリ</th>
-                    <th style="min-width:200px;">詳細</th>
-                    <th class="right" style="min-width:90px;">時間(h)</th>
-                    <th class="right" style="min-width:110px;">直接費用(円)</th>
-                    <th style="min-width:120px;">支払手段</th>
-                    <th style="min-width:200px;">証拠メモ</th>
-                    <th style="min-width:60px;"></th>
+                    <th style="min-width:108px;">日付</th>
+                    <th style="min-width:140px;">カテゴリ</th>
+                    <th style="min-width:180px;">詳細</th>
+                    <th class="right" style="min-width:80px;">時間(h)</th>
+                    <th class="right" style="min-width:100px;">直接費用(円)</th>
+                    <th style="min-width:110px;">支払手段</th>
+                    <th style="min-width:180px;">証拠メモ</th>
+                    <th style="min-width:52px;"></th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody id="tblBody"></tbody>
               </table>
             </div>
             <div class="btn-row no-print" style="margin-top:.5em;">
               <button class="btn primary" id="recalc">再計算</button>
               <button class="btn" id="exportCsv">CSV出力</button>
             </div>
-            <div class="hint" style="margin-top:.5em;">
-              コツ：支払いは「証拠メモ」に保管場所やキーワード（例：PayPay履歴 2026-02 食材）を残すと証拠として有効です。
-            </div>
+            <p class="hint" style="margin-top:.5em;">
+              コツ：「証拠メモ」に保管場所・キーワード（例：PayPay履歴 2026-02 食材）を残すと証拠として有効です。
+            </p>
           </div>
         </div>
       </div>
@@ -492,7 +522,7 @@ footer a:hover { text-decoration: underline; }
         <div class="card">
           <div class="card-head">
             <h2>集計結果</h2>
-            <span class="badge" id="status">入力待ち</span>
+            <span class="badge" id="logStatus">入力待ち</span>
           </div>
           <div class="card-body">
             <div class="kpi-grid">
@@ -514,23 +544,20 @@ footer a:hover { text-decoration: underline; }
               </div>
             </div>
             <div id="catTable"></div>
-            <div class="hint">
-              みなし時間コスト＝支援時間×時間単価。実務では費用・継続性・必要性・代替可能性等で評価が変動します。
-            </div>
+            <p class="hint">みなし時間コスト＝支援時間×時間単価。実務では費用・継続性・必要性・代替可能性等で評価が変動します。</p>
           </div>
         </div>
       </div>
 
-    </div>
-  </div>
+    </div><!-- /.layout-2col -->
+  </div><!-- /#pane-log -->
 
-  <!-- ======================================================
-       タブ②：寄与分・遺留分試算
-  ====================================================== -->
+
+  <!-- ② 寄与分・遺留分試算 -->
   <div class="pane" id="pane-kiyo">
-    <div class="layout-2col">
+    <div class="layout-2col kiyo-layout">
 
-      <!-- 左：入力 -->
+      <!-- 左：入力パラメータ -->
       <div class="card">
         <div class="card-head">
           <h2>試算パラメータ</h2>
@@ -540,8 +567,7 @@ footer a:hover { text-decoration: underline; }
           <div class="note">
             ※支援ログ（①）の集計値を自動的に取り込みます。ログ未入力の場合は下記の手動入力値を使います。
           </div>
-          <div class="hr"/>
-
+          <div class="hr"></div>
           <div class="form-row">
             <div class="form-group shrink">
               <label>時間単価（円/時間）</label>
@@ -564,38 +590,35 @@ footer a:hover { text-decoration: underline; }
               </select>
             </div>
           </div>
-
           <div class="form-row">
-            <div class="form-group shrink">
-              <label>月あたり直接費用（円）※手動</label>
+            <div class="form-group">
+              <label>月あたり直接費用（円）※ログ未入力時に使用</label>
               <input type="number" id="k_monthlyCost" value="0" min="0" step="100"/>
             </div>
-            <div class="form-group shrink">
-              <label>週あたり支援時間（時間）※手動</label>
+            <div class="form-group">
+              <label>週あたり支援時間（時間）※ログ未入力時に使用</label>
               <input type="number" id="k_weeklyHours" value="0" min="0" step="0.5"/>
             </div>
           </div>
-
-          <div class="hr"/>
+          <div class="hr"></div>
           <div class="form-row">
             <div class="form-group">
               <label>遺産総額（任意：円）</label>
-              <input type="number" id="k_estate" value="" placeholder="例：50000000"/>
+              <input type="number" id="k_estate" placeholder="例：50000000"/>
             </div>
             <div class="form-group shrink">
               <label>遺留分割合（子2人想定）</label>
               <input type="number" id="k_reserveRate" value="0.25" step="0.01" min="0" max="1"/>
             </div>
           </div>
-
           <div class="form-row">
-            <div class="form-group">
+            <div class="form-group full">
               <label>支援内容（箇条書き）</label>
               <textarea id="k_details" rows="4" placeholder="例：食事準備、服薬管理、通院送迎、買い物同行、清掃、洗濯 など"></textarea>
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group">
+            <div class="form-group full">
               <label>支援の必要性・背景（備考）</label>
               <textarea id="k_notes" rows="3" placeholder="例：料理・服薬管理が困難、金銭管理補助あり など"></textarea>
             </div>
@@ -628,86 +651,79 @@ footer a:hover { text-decoration: underline; }
               <div class="kt-val" id="k_yTotal">¥0</div>
             </div>
           </div>
-
-          <div class="hr"/>
-          <div style="font-size:.8125em; font-weight:700; margin-bottom:.4em; color:var(--main-dark);">寄与分 参考レンジ（期間合算）</div>
+          <div class="hr"></div>
+          <div class="section-label">寄与分 参考レンジ（期間合算）</div>
           <div class="range-box">
-            保守（直接費用×1.0＋時間コスト×0.5）：<b id="k_rCon">¥0</b><br/>
-            標準（直接費用×1.0＋時間コスト×1.0）：<b id="k_rStd">¥0</b><br/>
+            保守（直接費用×1.0＋時間コスト×0.5）：<b id="k_rCon">¥0</b><br>
+            標準（直接費用×1.0＋時間コスト×1.0）：<b id="k_rStd">¥0</b><br>
             強気（直接費用×1.2＋時間コスト×1.5）：<b id="k_rAgg">¥0</b>
           </div>
-
           <div id="reserveBlock" style="margin-top:.75em;"></div>
-
-          <div class="note" style="margin-top:.75em;">
+          <div class="note" style="margin-top:.875em;">
             ※係数は交渉用の「叩き台」です。寄与分の法的認定は事案により大きく異なります。弁護士の見解に従ってください。
           </div>
         </div>
       </div>
 
     </div>
-  </div>
+  </div><!-- /#pane-kiyo -->
 
-  <!-- ======================================================
-       タブ③：証拠パック
-  ====================================================== -->
+
+  <!-- ③ 証拠パック -->
   <div class="pane" id="pane-evidence">
     <div class="card">
       <div class="card-head">
         <h2>証拠チェックリスト</h2>
         <div class="btn-row no-print">
-          <div class="form-group shrink" style="margin:0;">
-            <input type="text" id="storage" placeholder="保存先（例：Google Drive/相続/証拠/2026）" style="min-width:260px;"/>
-          </div>
-          <button class="btn" id="printEvidence">この画面を印刷</button>
+          <input type="text" id="storage" placeholder="保存先（例：Google Drive/相続/証拠/2026）"
+            style="min-width:240px;"/>
+          <button class="btn" onclick="window.print()">印刷</button>
         </div>
       </div>
       <div class="card-body">
-        <div class="evidence-progress">
-          <span id="evCount" style="font-weight:700; color:var(--main-dark);">0 / 11 件</span>
+        <div class="ev-progress-row">
+          <strong id="evCount" style="color:var(--main-dark);">0 / 11 件</strong>
           <div class="progress-bar-wrap">
-            <div class="progress-bar" id="evBar" style="width:0%"></div>
+            <div class="progress-bar" id="evBar"></div>
           </div>
-          <span id="evPct" style="font-size:.75em; color:var(--muted);">0%</span>
+          <span id="evPct" style="font-size:0.75em; color:var(--muted);">0%</span>
         </div>
-
         <div class="tbl-wrap">
-          <table>
+          <table class="ev-table">
             <thead>
               <tr>
-                <th style="width:2em;">✓</th>
-                <th>証拠項目</th>
-                <th style="min-width:300px;">保管場所・リンク・メモ</th>
+                <th style="width:2.5em; text-align:center;">✓</th>
+                <th style="min-width:200px;">証拠項目</th>
+                <th style="min-width:280px;">保管場所・リンク・メモ</th>
               </tr>
             </thead>
             <tbody id="evTbody"></tbody>
           </table>
         </div>
-
         <div class="note">
           チェック状態はブラウザに自動保存されます（ローカルストレージ）。端末を変える場合はCSV出力でバックアップしてください。
         </div>
       </div>
     </div>
-  </div>
+  </div><!-- /#pane-evidence -->
 
-  <!-- ======================================================
-       タブ④：レポート生成
-  ====================================================== -->
+
+  <!-- ④ レポート生成 -->
   <div class="pane" id="pane-report">
-    <div class="layout-2col">
+    <div class="layout-2col rep-layout">
 
       <div class="card">
         <div class="card-head">
           <h2>レポート出力（弁護士提出用）</h2>
           <div class="btn-row no-print">
             <button class="btn primary" id="genReport">レポートを生成</button>
-            <button class="btn" id="printReport">印刷/PDF</button>
+            <button class="btn" onclick="window.print()">印刷/PDF</button>
           </div>
         </div>
         <div class="card-body">
-          <textarea class="report-area" id="reportArea" readonly placeholder="「レポートを生成」ボタンを押すと弁護士提出用テキストが表示されます。"></textarea>
-          <div class="btn-row" style="margin-top:.625em;" id="reportBtns">
+          <textarea class="report-area" id="reportArea" readonly
+            placeholder="「レポートを生成」ボタンを押すと弁護士提出用テキストが表示されます。"></textarea>
+          <div class="btn-row" style="margin-top:.625em;">
             <button class="btn primary" id="copyReport">レポートをコピー</button>
             <span class="badge" id="reportStatus">未生成</span>
           </div>
@@ -722,23 +738,23 @@ footer a:hover { text-decoration: underline; }
           <h2>添付予定の証拠一覧</h2>
         </div>
         <div class="card-body">
-          <div id="evSummaryReport" style="font-size:.875em; line-height:1.9; color:var(--muted);">
-            （③証拠パックにチェックを入れると、ここに反映されます）
+          <div id="evSummaryReport">
+            <p style="font-size:0.875em; color:var(--muted);">（③証拠パックにチェックを入れると、ここに反映されます）</p>
           </div>
-          <div class="hr"/>
+          <div class="hr"></div>
           <div class="note">
-            <b>提出書類の目安</b><br/>
-            ・支払い履歴（PayPay/カード/通帳）<br/>
-            ・通院記録（診療明細・予約票等）<br/>
-            ・服薬管理メモ/写真<br/>
-            ・扶養控除申告書控え<br/>
+            <strong>提出書類の目安</strong><br>
+            ・支払い履歴（PayPay/カード/通帳）<br>
+            ・通院記録（診療明細・予約票等）<br>
+            ・服薬管理メモ/写真<br>
+            ・扶養控除申告書控え<br>
             ・任意説明書（弁護士作成）
           </div>
         </div>
       </div>
 
     </div>
-  </div>
+  </div><!-- /#pane-report -->
 
 </div><!-- /.wrap -->
 
@@ -750,82 +766,93 @@ footer a:hover { text-decoration: underline; }
 
 <script>
 (function () {
-  /* ─── ユーティリティ ─── */
-  const qs  = s => document.querySelector(s);
-  const qsa = s => Array.from(document.querySelectorAll(s));
-  const fmtYen   = n => '¥' + (Math.round(n) || 0).toLocaleString('ja-JP');
-  const fmtHours = n => (Math.round((n || 0) * 10) / 10).toFixed(1) + 'h';
+  'use strict';
 
-  /* ─── 文字サイズ ─── */
-  function setFS(px, btn) {
-    document.documentElement.style.fontSize = px + 'px';
-    qsa('.fs-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  /* ── ユーティリティ ── */
+  function qs(s)  { return document.querySelector(s); }
+  function qsa(s) { return Array.from(document.querySelectorAll(s)); }
+  function fmtYen(n)   { return '¥' + (Math.round(n) || 0).toLocaleString('ja-JP'); }
+  function fmtHours(n) { return (Math.round((n || 0) * 10) / 10).toFixed(1) + 'h'; }
+  function esc(s) {
+    return (s || '').replace(/[&<>"']/g, function(m) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m];
+    });
   }
-  window.setFS = setFS;
 
-  /* ─── タブ ─── */
-  const tabs  = qsa('.tab-nav button');
-  const panes = { log: qs('#pane-log'), kiyo: qs('#pane-kiyo'), evidence: qs('#pane-evidence'), report: qs('#pane-report') };
-  tabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabs.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      Object.values(panes).forEach(p => p.classList.remove('active'));
-      panes[btn.dataset.tab].classList.add('active');
-      if (btn.dataset.tab === 'evidence') updateEvProgress();
-      if (btn.dataset.tab === 'report') updateEvSummary();
+  /* ── 文字サイズ ── */
+  window.setFS = function(px, btn) {
+    document.documentElement.style.fontSize = px + 'px';
+    qsa('.fs-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  };
+
+  /* ── タブ切り替え ── */
+  var PANE_IDS = ['log','kiyo','evidence','report'];
+
+  function activateTab(targetTab) {
+    qsa('#tabNav button').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-tab') === targetTab);
+    });
+    PANE_IDS.forEach(function(id) {
+      var el = qs('#pane-' + id);
+      if (el) el.classList.toggle('active', id === targetTab);
+    });
+    if (targetTab === 'evidence') updateEvProgress();
+    if (targetTab === 'report')   updateEvSummary();
+  }
+
+  qsa('#tabNav button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activateTab(btn.getAttribute('data-tab'));
     });
   });
 
-  /* ─── カテゴリ・支払 ─── */
-  const CATS = ['食費支援','光熱費支援','通院送迎','服薬管理','家事支援','入浴準備',
-                '洗濯','清掃','買い物同行/代行','金銭管理補助','医療費補助','住居費補助','その他'];
-  const PAYS = ['現金','銀行振込','口座引落','クレジットカード','PayPay','その他'];
+  /* ── 支援カテゴリ・支払手段 ── */
+  var CATS = ['食費支援','光熱費支援','通院送迎','服薬管理','家事支援','入浴準備',
+              '洗濯','清掃','買い物同行/代行','金銭管理補助','医療費補助','住居費補助','その他'];
+  var PAYS = ['現金','銀行振込','口座引落','クレジットカード','PayPay','その他'];
 
-  function escapeHtml(s) {
-    return (s || '').replace(/[&<>"']/g, m =>
-      ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
-  }
+  /* ── 行テンプレート ── */
+  var tbody = qs('#tblBody');
 
-  /* ─── ログテーブル ─── */
-  const tbody = qs('#tbl tbody');
+  function makeRow(data) {
+    data = data || {};
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><input type="date" value="' + esc(data.date || '') + '"/></td>' +
+      '<td><select>' +
+        '<option value=""></option>' +
+        CATS.map(function(c) {
+          return '<option value="' + c + '"' + (data.cat === c ? ' selected' : '') + '>' + c + '</option>';
+        }).join('') +
+      '</select></td>' +
+      '<td><input type="text" placeholder="例：夕食・朝食、買い物" value="' + esc(data.detail || '') + '"/></td>' +
+      '<td class="right"><input type="number" min="0" step="0.1" style="width:5em;" value="' + (data.hours != null ? data.hours : '') + '"/></td>' +
+      '<td class="right"><input type="number" min="0" step="1" style="width:7em;" value="' + (data.cost != null ? data.cost : '') + '"/></td>' +
+      '<td><select>' +
+        '<option value=""></option>' +
+        PAYS.map(function(p) {
+          return '<option value="' + p + '"' + (data.pay === p ? ' selected' : '') + '>' + p + '</option>';
+        }).join('') +
+      '</select></td>' +
+      '<td><input type="text" placeholder="例：PayPay履歴 2026-02 食材" value="' + esc(data.evidence || '') + '"/></td>' +
+      '<td class="right"><button class="btn danger">削除</button></td>';
 
-  function rowTemplate(data = {}) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><input type="date" value="${data.date || ''}"/></td>
-      <td>
-        <select>
-          <option value=""></option>
-          ${CATS.map(c => `<option${data.cat === c ? ' selected' : ''} value="${c}">${c}</option>`).join('')}
-        </select>
-      </td>
-      <td><input type="text" placeholder="例：夕食・朝食、買い物" value="${escapeHtml(data.detail || '')}"/></td>
-      <td class="right"><input type="number" min="0" step="0.1" value="${data.hours != null ? data.hours : ''}"/></td>
-      <td class="right"><input type="number" min="0" step="1" value="${data.cost != null ? data.cost : ''}"/></td>
-      <td>
-        <select>
-          <option value=""></option>
-          ${PAYS.map(p => `<option${data.pay === p ? ' selected' : ''} value="${p}">${p}</option>`).join('')}
-        </select>
-      </td>
-      <td><input type="text" placeholder="例：PayPay履歴 2026-02 食材" value="${escapeHtml(data.evidence || '')}"/></td>
-      <td class="right"><button class="btn danger">削除</button></td>
-    `;
-    tr.querySelector('.btn.danger').addEventListener('click', () => { tr.remove(); persist(); recalc(); });
-    tr.querySelectorAll('input, select').forEach(el => {
-      el.addEventListener('change', () => { persist(); recalc(); });
-      el.addEventListener('keyup',  () => { persist(); });
+    tr.querySelector('.btn.danger').addEventListener('click', function() {
+      tr.remove(); persist(); recalc();
+    });
+    tr.querySelectorAll('input, select').forEach(function(el) {
+      el.addEventListener('change', function() { persist(); recalc(); });
+      el.addEventListener('keyup',  function() { persist(); });
     });
     return tr;
   }
 
-  function addRow(data) { tbody.appendChild(rowTemplate(data)); }
+  function addRow(data) { tbody.appendChild(makeRow(data)); }
 
   function getRows() {
-    return Array.from(tbody.querySelectorAll('tr')).map(tr => {
-      const tds = tr.querySelectorAll('td');
+    return Array.from(tbody.querySelectorAll('tr')).map(function(tr) {
+      var tds = tr.querySelectorAll('td');
       return {
         date:     tds[0].querySelector('input').value,
         cat:      tds[1].querySelector('select').value,
@@ -835,144 +862,146 @@ footer a:hover { text-decoration: underline; }
         pay:      tds[5].querySelector('select').value,
         evidence: tds[6].querySelector('input').value
       };
-    }).filter(r => r.date || r.cat || r.detail || r.hours || r.cost || r.pay || r.evidence);
+    }).filter(function(r) {
+      return r.date || r.cat || r.detail || r.hours || r.cost || r.pay || r.evidence;
+    });
   }
 
-  /* ─── 集計 ─── */
+  /* ── 集計 ── */
   function recalc() {
-    const rows = getRows();
-    const rate = parseFloat(qs('#rate').value || '0') || 0;
-    let direct = 0, hours = 0;
-    const byCat = {};
-    rows.forEach(r => {
-      direct += (r.cost || 0);
+    var rows = getRows();
+    var rate = parseFloat(qs('#rate').value || '0') || 0;
+    var direct = 0, hours = 0;
+    var byCat = {};
+    rows.forEach(function(r) {
+      direct += (r.cost  || 0);
       hours  += (r.hours || 0);
       if (r.cat) {
-        byCat[r.cat] = byCat[r.cat] || { direct: 0, hours: 0 };
-        byCat[r.cat].direct += (r.cost || 0);
+        if (!byCat[r.cat]) byCat[r.cat] = { direct: 0, hours: 0 };
+        byCat[r.cat].direct += (r.cost  || 0);
         byCat[r.cat].hours  += (r.hours || 0);
       }
     });
-    const timeCost = hours * rate;
-    const total    = direct + timeCost;
+    var timeCost = hours * rate;
+    var total    = direct + timeCost;
 
     qs('#kpiDirect').textContent   = fmtYen(direct);
     qs('#kpiHours').textContent    = fmtHours(hours);
     qs('#kpiTimeCost').textContent = fmtYen(timeCost);
     qs('#kpiTotal').textContent    = fmtYen(total);
-    qs('#status').textContent      = rows.length ? '更新済' : '入力待ち';
+    qs('#logStatus').textContent   = rows.length ? '更新済' : '入力待ち';
 
-    // カテゴリ別テーブル
-    const sorted = Object.keys(byCat)
-      .sort((a, b) => (byCat[b].direct + byCat[b].hours * rate) - (byCat[a].direct + byCat[a].hours * rate))
-      .slice(0, 7);
+    /* カテゴリ別集計 */
+    var sorted = Object.keys(byCat).sort(function(a, b) {
+      return (byCat[b].direct + byCat[b].hours * rate) - (byCat[a].direct + byCat[a].hours * rate);
+    }).slice(0, 7);
+
     if (sorted.length) {
-      qs('#catTable').innerHTML = `
-        <div class="hr"></div>
-        <div style="font-size:.8125em; font-weight:700; margin-bottom:.4em; color:var(--main-dark);">カテゴリ別集計（上位）</div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>カテゴリ</th><th class="right">直接費用</th><th class="right">時間</th><th class="right">総コスト</th></tr></thead>
-            <tbody>
-              ${sorted.map(cat => {
-                const v = byCat[cat].direct + byCat[cat].hours * rate;
-                return `<tr>
-                  <td>${cat}</td>
-                  <td class="right">${fmtYen(byCat[cat].direct)}</td>
-                  <td class="right">${fmtHours(byCat[cat].hours)}</td>
-                  <td class="right">${fmtYen(v)}</td>
-                </tr>`;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>`;
+      var rows_html = sorted.map(function(cat) {
+        var v = byCat[cat].direct + byCat[cat].hours * rate;
+        return '<tr><td>' + esc(cat) + '</td>' +
+          '<td class="right">' + fmtYen(byCat[cat].direct) + '</td>' +
+          '<td class="right">' + fmtHours(byCat[cat].hours) + '</td>' +
+          '<td class="right">' + fmtYen(v) + '</td></tr>';
+      }).join('');
+      qs('#catTable').innerHTML =
+        '<div class="hr"></div>' +
+        '<div class="section-label">カテゴリ別集計（上位）</div>' +
+        '<div class="tbl-wrap"><table style="min-width:360px;">' +
+          '<thead><tr><th>カテゴリ</th><th class="right">直接費用</th><th class="right">時間</th><th class="right">総コスト</th></tr></thead>' +
+          '<tbody>' + rows_html + '</tbody>' +
+        '</table></div>';
     } else {
       qs('#catTable').innerHTML = '';
     }
   }
 
-  /* ─── 永続化 ─── */
+  /* ── 永続化（localStorage）── */
+  var STORAGE_KEY = 'shukatsu_support_v3';
+
   function persist() {
-    const payload = {
-      rate: parseFloat(qs('#rate').value || '0') || 0,
+    var payload = {
+      rate:  qs('#rate').value,
       start: qs('#start').value,
       end:   qs('#end').value,
       memo:  qs('#memo').value,
       rows:  getRows(),
-      evidence: getEvidenceState(),
+      ev:    getEvState(),
       storage: qs('#storage').value,
       k_estate:      qs('#k_estate').value,
       k_reserveRate: qs('#k_reserveRate').value,
       k_details:     qs('#k_details').value,
       k_notes:       qs('#k_notes').value
     };
-    try { localStorage.setItem('shukatsu_support_v2', JSON.stringify(payload)); } catch(e) {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); } catch(e) { /* iframe制限 */ }
   }
 
   function restore() {
     try {
-      const raw = localStorage.getItem('shukatsu_support_v2');
+      var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return false;
-      const p = JSON.parse(raw);
-      qs('#rate').value  = p.rate ?? 2000;
+      var p = JSON.parse(raw);
+      qs('#rate').value  = p.rate  || '2000';
       qs('#start').value = p.start || '';
       qs('#end').value   = p.end   || '';
       qs('#memo').value  = p.memo  || '';
-      qs('#storage').value = p.storage || '';
-      qs('#k_estate').value      = p.k_estate      || '';
-      qs('#k_reserveRate').value = p.k_reserveRate  || '0.25';
-      qs('#k_details').value     = p.k_details      || '';
-      qs('#k_notes').value       = p.k_notes        || '';
+      qs('#storage').value       = p.storage      || '';
+      qs('#k_estate').value      = p.k_estate     || '';
+      qs('#k_reserveRate').value = p.k_reserveRate || '0.25';
+      qs('#k_details').value     = p.k_details    || '';
+      qs('#k_notes').value       = p.k_notes      || '';
       tbody.innerHTML = '';
       (p.rows || []).forEach(addRow);
-      if ((p.rows || []).length === 0) addRow({});
-      setEvidenceState(p.evidence || {});
+      if (!(p.rows && p.rows.length)) addRow({});
+      setEvState(p.ev || {});
       return true;
-    } catch (e) { return false; }
+    } catch(e) { return false; }
   }
 
-  /* ─── CSV出力 ─── */
+  /* ── CSV出力 ── */
   function exportCsv() {
-    const rows = getRows();
-    const rate = parseFloat(qs('#rate').value || '0') || 0;
-    const csvEsc = v => '"' + (v || '').toString().replace(/"/g, '""') + '"';
-    const lines = [['日付','カテゴリ','詳細','時間(h)','直接費用(円)','支払手段','証拠メモ','時間単価','時間コスト','総コスト'].join(',')];
-    rows.forEach(r => {
-      const tc = (r.hours || 0) * rate;
-      lines.push([r.date, r.cat, csvEsc(r.detail), r.hours, r.cost, r.pay,
-                  csvEsc(r.evidence), rate, Math.round(tc), Math.round((r.cost||0)+tc)].join(','));
+    var rows = getRows();
+    var rate = parseFloat(qs('#rate').value || '0') || 0;
+    function csvQ(v) { return '"' + (v || '').toString().replace(/"/g, '""') + '"'; }
+    var lines = [['日付','カテゴリ','詳細','時間(h)','直接費用(円)','支払手段','証拠メモ','時間単価','時間コスト','総コスト'].join(',')];
+    rows.forEach(function(r) {
+      var tc = (r.hours || 0) * rate;
+      lines.push([r.date, r.cat, csvQ(r.detail), r.hours, r.cost, r.pay,
+                  csvQ(r.evidence), rate, Math.round(tc), Math.round((r.cost||0)+tc)].join(','));
     });
-    const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'support_log.csv'; a.click();
+    var blob = new Blob(['\uFEFF' + lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'support_log.csv';
+    a.click();
   }
 
-  /* ─── 寄与分試算 ─── */
+  /* ── 寄与分試算 ── */
+  var _kiyoResult = null;
+
   function calcKiyo() {
-    // ログから自動取得（入力があれば）
-    const logRows = getRows();
-    const logRate = parseFloat(qs('#rate').value || '0') || 0;
-    let logDirect = 0, logHours = 0;
-    logRows.forEach(r => { logDirect += (r.cost || 0); logHours += (r.hours || 0); });
+    var logRows  = getRows();
+    var logRate  = parseFloat(qs('#rate').value || '0') || 0;
+    var logDirect = 0, logHours = 0;
+    logRows.forEach(function(r) { logDirect += (r.cost||0); logHours += (r.hours||0); });
 
-    const rate   = parseFloat(qs('#k_rate').value   || '0') || 0;
-    const years  = parseFloat(qs('#k_years').value  || '0') || 0;
-    const freq   = parseFloat(qs('#k_freq').value   || '0') || 0;
-    const stance = qs('#k_stance').value;
+    var rate   = parseFloat(qs('#k_rate').value   || '0') || 0;
+    var years  = parseFloat(qs('#k_years').value  || '0') || 0;
+    var freq   = parseFloat(qs('#k_freq').value   || '0') || 0;
+    var stance = qs('#k_stance').value;
+    var manualMonthlyCost = parseFloat(qs('#k_monthlyCost').value || '0') || 0;
+    var manualWeeklyHours = parseFloat(qs('#k_weeklyHours').value || '0') || 0;
 
-    // ログ優先、なければ手動入力
-    const manualMonthlyCost  = parseFloat(qs('#k_monthlyCost').value  || '0') || 0;
-    const manualWeeklyHours  = parseFloat(qs('#k_weeklyHours').value  || '0') || 0;
-
-    let annualDirect, annualHours;
+    var annualDirect, annualHours;
     if (logRows.length > 0) {
-      // ログベース（期間計を年換算）
-      const start = qs('#start').value ? new Date(qs('#start').value) : null;
-      const end   = qs('#end').value   ? new Date(qs('#end').value)   : new Date();
-      let months = 12;
-      if (start && end && end >= start) {
+      var startEl = qs('#start').value, endEl = qs('#end').value;
+      var startD = startEl ? new Date(startEl) : null;
+      var endD   = endEl   ? new Date(endEl)   : new Date();
+      var months = 12;
+      if (startD && endD && endD >= startD) {
         months = Math.max(1,
-          (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + 1);
+          (endD.getFullYear() - startD.getFullYear()) * 12 +
+          (endD.getMonth() - startD.getMonth()) + 1);
       }
       annualDirect = (logDirect / months) * 12;
       annualHours  = (logHours  / months) * 12;
@@ -981,15 +1010,14 @@ footer a:hover { text-decoration: underline; }
       annualHours  = manualWeeklyHours * 52;
     }
 
-    const annualTime  = annualHours * rate;
-    const annualTotal = annualDirect + annualTime;
+    var annualTime  = annualHours * rate;
+    var annualTotal = annualDirect + annualTime;
+    var directAll   = annualDirect * years;
+    var timeAll     = annualTime   * years;
 
-    const directAll = annualDirect * years;
-    const timeAll   = annualTime   * years;
-
-    const rCon = directAll * 1.0 + timeAll * 0.5;
-    const rStd = directAll * 1.0 + timeAll * 1.0;
-    const rAgg = directAll * 1.2 + timeAll * 1.5;
+    var rCon = directAll * 1.0 + timeAll * 0.5;
+    var rStd = directAll * 1.0 + timeAll * 1.0;
+    var rAgg = directAll * 1.2 + timeAll * 1.5;
 
     qs('#k_yDirect').textContent = fmtYen(annualDirect);
     qs('#k_yHours').textContent  = fmtHours(annualHours);
@@ -1001,171 +1029,184 @@ footer a:hover { text-decoration: underline; }
     qs('#kiyoStatus').textContent = '計算済';
     qs('#kiyoStatus').className   = 'badge ok';
 
-    const estate = parseFloat(qs('#k_estate').value || '0') || 0;
-    const rr     = parseFloat(qs('#k_reserveRate').value || '0') || 0;
+    var estate = parseFloat(qs('#k_estate').value || '0') || 0;
+    var rr     = parseFloat(qs('#k_reserveRate').value || '0') || 0;
+    var reserveHtml = '';
     if (estate > 0) {
-      const reserve   = estate * rr;
-      const settleStd = Math.max(0, reserve - rStd);
-      qs('#reserveBlock').innerHTML = `
-        <div class="hr"></div>
-        <div style="font-size:.8125em; font-weight:700; margin-bottom:.4em; color:var(--main-dark);">遺留分（参考）</div>
-        <div class="range-box">
-          遺産総額：<b>${fmtYen(estate)}</b> ／ 遺留分割合：<b>${(rr * 100).toFixed(1)}%</b><br/>
-          遺留分（概算）：<b>${fmtYen(reserve)}</b><br/>
-          標準寄与分を控除した交渉上の目安：<b>${fmtYen(settleStd)}</b><br/>
-          <span style="font-size:.8125em; color:var(--muted);">※法的確定額ではありません</span>
-        </div>`;
-    } else {
-      qs('#reserveBlock').innerHTML = '';
+      var reserve   = estate * rr;
+      var settleStd = Math.max(0, reserve - rStd);
+      reserveHtml =
+        '<div class="hr"></div>' +
+        '<div class="section-label">遺留分（参考）</div>' +
+        '<div class="range-box">' +
+          '遺産総額：<b>' + fmtYen(estate) + '</b> ／ 遺留分割合：<b>' + (rr * 100).toFixed(1) + '%</b><br>' +
+          '遺留分（概算）：<b>' + fmtYen(reserve) + '</b><br>' +
+          '標準寄与分控除後の交渉目安：<b>' + fmtYen(settleStd) + '</b><br>' +
+          '<span style="font-size:0.8125em; color:var(--muted);">※法的確定額ではありません</span>' +
+        '</div>';
     }
+    qs('#reserveBlock').innerHTML = reserveHtml;
 
-    // レポート用に値を保存
-    window._kiyoResult = { rate, years, freq, stance, annualDirect, annualHours, annualTime, annualTotal,
-      directAll, timeAll, rCon, rStd, rAgg,
-      estate, rr,
+    _kiyoResult = {
+      rate: rate, years: years, freq: freq, stance: stance,
+      annualDirect: annualDirect, annualHours: annualHours,
+      annualTime: annualTime, annualTotal: annualTotal,
+      directAll: directAll, timeAll: timeAll,
+      rCon: rCon, rStd: rStd, rAgg: rAgg,
+      estate: estate, rr: rr,
       details: qs('#k_details').value,
-      notes:   qs('#k_notes').value };
+      notes:   qs('#k_notes').value
+    };
     persist();
   }
 
-  /* ─── 証拠チェックリスト ─── */
-  const EVIDENCE_ITEMS = [
-    { k:'pay_food',    t:'PayPay履歴（食費）' },
-    { k:'pay_util',    t:'PayPay履歴（光熱費）' },
-    { k:'card',        t:'カード・口座明細（生活費）' },
-    { k:'proxy_card',  t:'代理人カード利用履歴' },
-    { k:'receipt_sign',t:'被支援者の受領サイン' },
-    { k:'medical',     t:'通院記録（診療明細・予約票等）' },
-    { k:'drug',        t:'処方箋・薬剤情報' },
-    { k:'tax_dep',     t:'扶養控除申告書（控）' },
-    { k:'tax_note',    t:'扶養控除の任意説明書' },
-    { k:'photos',      t:'写真（生活支援・支援状況）' },
-    { k:'others',      t:'その他（自由記入）' }
+  /* ── 証拠チェックリスト ── */
+  var EV_ITEMS = [
+    { k:'pay_food',     t:'PayPay履歴（食費）' },
+    { k:'pay_util',     t:'PayPay履歴（光熱費）' },
+    { k:'card',         t:'カード・口座明細（生活費）' },
+    { k:'proxy_card',   t:'代理人カード利用履歴' },
+    { k:'receipt_sign', t:'被支援者の受領サイン' },
+    { k:'medical',      t:'通院記録（診療明細・予約票等）' },
+    { k:'drug',         t:'処方箋・薬剤情報' },
+    { k:'tax_dep',      t:'扶養控除申告書（控）' },
+    { k:'tax_note',     t:'扶養控除の任意説明書' },
+    { k:'photos',       t:'写真（生活支援・支援状況）' },
+    { k:'others',       t:'その他（自由記入）' }
   ];
 
   function buildEvidenceUI() {
-    const evTbody = qs('#evTbody');
-    evTbody.innerHTML = EVIDENCE_ITEMS.map(it => `
-      <tr>
-        <td style="text-align:center;">
-          <input type="checkbox" data-ev-ck="${it.k}" style="width:1.2em;height:1.2em;cursor:pointer;"/>
-        </td>
-        <td>${it.t}</td>
-        <td>
-          <input data-ev-note="${it.k}" type="text"
-            placeholder="例：${qs('#storage').value || 'Google Drive/相続/証拠'} / キーワード"/>
-        </td>
-      </tr>`).join('');
+    var evTbody = qs('#evTbody');
+    evTbody.innerHTML = EV_ITEMS.map(function(it) {
+      return '<tr>' +
+        '<td style="text-align:center;">' +
+          '<input type="checkbox" data-ev-ck="' + it.k + '" style="width:1.2em;height:1.2em;cursor:pointer;"/>' +
+        '</td>' +
+        '<td>' + it.t + '</td>' +
+        '<td><input data-ev-note="' + it.k + '" type="text" placeholder="例：Google Drive/相続/証拠 / キーワード"/></td>' +
+        '</tr>';
+    }).join('');
 
-    qsa('[data-ev-note],[data-ev-ck]').forEach(el => {
-      el.addEventListener('change', () => { persist(); updateEvProgress(); });
-      el.addEventListener('keyup',  () => { persist(); });
+    qsa('[data-ev-ck], [data-ev-note]').forEach(function(el) {
+      el.addEventListener('change', function() { persist(); updateEvProgress(); });
+      el.addEventListener('keyup',  function() { persist(); });
     });
   }
 
   function updateEvProgress() {
-    const total   = EVIDENCE_ITEMS.length;
-    const checked = qsa('[data-ev-ck]').filter(el => el.checked).length;
-    const pct     = total ? Math.round(checked / total * 100) : 0;
-    qs('#evCount').textContent = `${checked} / ${total} 件`;
+    var total   = EV_ITEMS.length;
+    var checked = qsa('[data-ev-ck]').filter(function(el) { return el.checked; }).length;
+    var pct     = total ? Math.round(checked / total * 100) : 0;
+    qs('#evCount').textContent = checked + ' / ' + total + ' 件';
     qs('#evPct').textContent   = pct + '%';
     qs('#evBar').style.width   = pct + '%';
   }
 
-  function getEvidenceState() {
-    const s = {};
-    qsa('[data-ev-ck]').forEach(el   => s[el.getAttribute('data-ev-ck')]            = el.checked);
-    qsa('[data-ev-note]').forEach(el => s[el.getAttribute('data-ev-note') + '__note'] = el.value || '');
+  function getEvState() {
+    var s = {};
+    qsa('[data-ev-ck]').forEach(function(el) {
+      s[el.getAttribute('data-ev-ck')] = el.checked;
+    });
+    qsa('[data-ev-note]').forEach(function(el) {
+      s[el.getAttribute('data-ev-note') + '__note'] = el.value || '';
+    });
     return s;
   }
 
-  function setEvidenceState(state) {
-    qsa('[data-ev-ck]').forEach(el => {
+  function setEvState(state) {
+    qsa('[data-ev-ck]').forEach(function(el) {
       el.checked = !!state[el.getAttribute('data-ev-ck')];
     });
-    qsa('[data-ev-note]').forEach(el => {
+    qsa('[data-ev-note]').forEach(function(el) {
       el.value = state[el.getAttribute('data-ev-note') + '__note'] || '';
     });
     updateEvProgress();
   }
 
-  /* ─── 証拠パック サマリー（レポートタブ用） ─── */
+  /* ── 証拠サマリー（レポートタブ用） ── */
   function updateEvSummary() {
-    const checked = EVIDENCE_ITEMS.filter(it => {
-      const el = qs(`[data-ev-ck="${it.k}"]`);
+    var checked = EV_ITEMS.filter(function(it) {
+      var el = qs('[data-ev-ck="' + it.k + '"]');
       return el && el.checked;
     });
-    if (checked.length === 0) {
-      qs('#evSummaryReport').innerHTML = '<span style="color:var(--muted);">（③証拠パックにチェックを入れると、ここに反映されます）</span>';
+    var box = qs('#evSummaryReport');
+    if (!checked.length) {
+      box.innerHTML = '<p style="font-size:0.875em; color:var(--muted);">（③証拠パックにチェックを入れると、ここに反映されます）</p>';
       return;
     }
-    qs('#evSummaryReport').innerHTML = checked.map(it => {
-      const noteEl = qs(`[data-ev-note="${it.k}"]`);
-      const note   = noteEl ? noteEl.value : '';
-      return `<div>✅ ${it.t}${note ? '　<span style="color:var(--muted);">→ ' + escapeHtml(note) + '</span>' : ''}</div>`;
+    box.innerHTML = checked.map(function(it) {
+      var noteEl = qs('[data-ev-note="' + it.k + '"]');
+      var note   = noteEl ? noteEl.value : '';
+      return '<div style="font-size:0.875em; line-height:2;">' +
+        '✅ ' + it.t +
+        (note ? '　<span style="color:var(--muted);">→ ' + esc(note) + '</span>' : '') +
+        '</div>';
     }).join('');
   }
 
-  /* ─── レポート生成 ─── */
+  /* ── レポート生成 ── */
   function genReport() {
-    // ログ集計
-    const rows   = getRows();
-    const rate   = parseFloat(qs('#rate').value || '0') || 0;
-    let direct   = 0, hours = 0;
-    rows.forEach(r => { direct += (r.cost || 0); hours += (r.hours || 0); });
-    const timeCost = hours * rate;
-    const total    = direct + timeCost;
+    var rows     = getRows();
+    var rate     = parseFloat(qs('#rate').value || '0') || 0;
+    var direct   = 0, hours = 0;
+    rows.forEach(function(r) { direct += (r.cost||0); hours += (r.hours||0); });
+    var timeCost = hours * rate;
+    var total    = direct + timeCost;
 
-    // 寄与分（試算済みか再計算）
-    const kr = window._kiyoResult;
-    const rCon = kr ? kr.rCon : direct * 1.0 + timeCost * 0.5;
-    const rStd = kr ? kr.rStd : direct * 1.0 + timeCost * 1.0;
-    const rAgg = kr ? kr.rAgg : direct * 1.2 + timeCost * 1.5;
-    const stance = kr ? kr.stance : 'std';
-    const chosen = stance === 'con' ? rCon : stance === 'agg' ? rAgg : rStd;
-    const stanceName = stance === 'con' ? '保守' : stance === 'agg' ? '強気' : '標準';
+    var kr     = _kiyoResult;
+    var rCon   = kr ? kr.rCon   : direct * 1.0 + timeCost * 0.5;
+    var rStd   = kr ? kr.rStd   : direct * 1.0 + timeCost * 1.0;
+    var rAgg   = kr ? kr.rAgg   : direct * 1.2 + timeCost * 1.5;
+    var stance = kr ? kr.stance : 'std';
+    var chosen = stance === 'con' ? rCon : stance === 'agg' ? rAgg : rStd;
+    var stanceName = stance === 'con' ? '保守' : stance === 'agg' ? '強気' : '標準';
+    var estate = kr && kr.estate ? kr.estate : 0;
+    var rr     = kr && kr.rr    ? kr.rr     : 0;
 
-    const estate = kr && kr.estate ? kr.estate : 0;
-    const rr     = kr && kr.rr    ? kr.rr     : 0;
-    const reserveLine = estate > 0
-      ? `＜遺留分（参考）＞ 遺産総額 ${fmtYen(estate)}、遺留分割合 ${(rr * 100).toFixed(1)}%、概算 ${fmtYen(estate * rr)}`
+    var reserveLine = estate > 0
+      ? '＜遺留分（参考）＞ 遺産総額 ' + fmtYen(estate) + '、遺留分割合 ' + (rr*100).toFixed(1) + '%、概算 ' + fmtYen(estate*rr)
       : '＜遺留分（参考）＞（未入力）';
 
-    const details = kr && kr.details ? kr.details.split('\n').map(s => '・' + s).join('\n') : '（未入力）';
-    const notes   = kr && kr.notes   ? kr.notes   : '（未入力）';
-    const memo    = qs('#memo').value;
-    const start   = qs('#start').value;
-    const end_    = qs('#end').value;
+    var details = (kr && kr.details)
+      ? kr.details.split('\n').map(function(s) { return '・' + s; }).join('\n')
+      : '（未入力）';
+    var notes = (kr && kr.notes) ? kr.notes : '（未入力）';
 
-    // 証拠チェック
-    const evChecked = EVIDENCE_ITEMS.filter(it => {
-      const el = qs(`[data-ev-ck="${it.k}"]`); return el && el.checked;
+    var evChecked = EV_ITEMS.filter(function(it) {
+      var el = qs('[data-ev-ck="' + it.k + '"]');
+      return el && el.checked;
     });
-    const evLines = evChecked.length
-      ? evChecked.map(it => { const n = qs(`[data-ev-note="${it.k}"]`); return '・' + it.t + (n && n.value ? '（' + n.value + '）' : ''); }).join('\n')
+    var evLines = evChecked.length
+      ? evChecked.map(function(it) {
+          var n = qs('[data-ev-note="' + it.k + '"]');
+          return '・' + it.t + (n && n.value ? '（' + n.value + '）' : '');
+        }).join('\n')
       : '（未チェック）';
 
-    const today = new Date().toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit' });
+    var today = new Date().toLocaleDateString('ja-JP', {year:'numeric',month:'2-digit',day:'2-digit'});
+    var memo  = qs('#memo').value;
+    var start = qs('#start').value;
+    var endV  = qs('#end').value;
 
-    const lines = [
+    var lines = [
       '【生活支援・寄与分 試算レポート（相談・交渉用）】',
-      `生成日：${today}`,
-      memo ? `メモ：${memo}` : '',
+      '生成日：' + today,
+      memo ? 'メモ：' + memo : '',
       '',
-      `支援期間：${start || '（未入力）'} 〜 ${end_ || '現在'}`,
-      `時間単価：${fmtYen(rate)} / 時間`,
+      '支援期間：' + (start || '（未入力）') + ' 〜 ' + (endV || '現在'),
+      '時間単価：' + fmtYen(rate) + ' / 時間',
       '',
       '＜支援ログ集計＞',
-      `・直接費用合計：${fmtYen(direct)}`,
-      `・支援時間合計：${fmtHours(hours)}`,
-      `・みなし時間コスト：${fmtYen(timeCost)}`,
-      `・総コスト（参考）：${fmtYen(total)}`,
+      '・直接費用合計：'      + fmtYen(direct),
+      '・支援時間合計：'      + fmtHours(hours),
+      '・みなし時間コスト：'  + fmtYen(timeCost),
+      '・総コスト（参考）：'  + fmtYen(total),
       '',
       '＜寄与分 参考レンジ＞',
-      `・保守：${fmtYen(rCon)}`,
-      `・標準：${fmtYen(rStd)}`,
-      `・強気：${fmtYen(rAgg)}`,
-      `・本レポート採用（${stanceName}）：${fmtYen(chosen)}`,
+      '・保守：' + fmtYen(rCon),
+      '・標準：' + fmtYen(rStd),
+      '・強気：' + fmtYen(rAgg),
+      '・本レポート採用（' + stanceName + '）：' + fmtYen(chosen),
       '',
       reserveLine,
       '',
@@ -1180,33 +1221,38 @@ footer a:hover { text-decoration: underline; }
       '',
       '※寄与分の法的要件・相当額の判断は弁護士の見解に従う。',
       '出力：終活人.jp 生活支援・寄与分 試算ツール'
-    ].filter(l => l !== null).join('\n');
+    ].filter(function(l) { return l !== null; }).join('\n');
 
-    qs('#reportArea').value    = lines;
+    qs('#reportArea').value       = lines;
     qs('#reportStatus').textContent = '生成済';
     qs('#reportStatus').className   = 'badge ok';
   }
 
-  /* ─── イベント バインド ─── */
-  qs('#addRow').addEventListener('click', () => { addRow({}); persist(); });
-  qs('#recalc').addEventListener('click', () => { persist(); recalc(); });
-  qs('#exportCsv').addEventListener('click', () => { persist(); exportCsv(); });
-  qs('#clearAll').addEventListener('click', () => {
+  /* ── イベント登録 ── */
+  qs('#addRow').addEventListener('click',    function() { addRow({}); persist(); });
+  qs('#recalc').addEventListener('click',    function() { persist(); recalc(); });
+  qs('#exportCsv').addEventListener('click', function() { persist(); exportCsv(); });
+
+  qs('#clearAll').addEventListener('click', function() {
     if (!confirm('入力を全て消去します。よろしいですか？')) return;
     tbody.innerHTML = '';
     addRow({});
-    try { localStorage.removeItem('shukatsu_support_v2'); } catch(e) {}
+    try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
     recalc();
   });
-  qs('#loadSample').addEventListener('click', () => {
-    const today = new Date();
-    const d = offset => { const x = new Date(today); x.setDate(x.getDate() - offset); return x.toISOString().slice(0, 10); };
+
+  qs('#loadSample').addEventListener('click', function() {
+    var today = new Date();
+    function d(offset) {
+      var x = new Date(today); x.setDate(x.getDate() - offset);
+      return x.toISOString().slice(0, 10);
+    }
     tbody.innerHTML = '';
     [
-      { date:d(3), cat:'食費支援',   detail:'朝夕食材',       hours:1.5, cost:3200, pay:'PayPay',         evidence:'PayPay履歴 2026-02 食材' },
-      { date:d(2), cat:'通院送迎',   detail:'整形外科 送迎',  hours:1.0, cost:0,    pay:'',               evidence:'診療明細/予約票' },
-      { date:d(1), cat:'光熱費支援', detail:'電気・ガス',     hours:0,   cost:4500, pay:'PayPay',         evidence:'PayPay履歴 2026-02 光熱費' },
-      { date:d(0), cat:'服薬管理',   detail:'1週間分仕分け',  hours:0.5, cost:0,    pay:'',               evidence:'写真/メモ' }
+      {date:d(3), cat:'食費支援',   detail:'朝夕食材',      hours:1.5, cost:3200, pay:'PayPay',  evidence:'PayPay履歴 2026-02 食材'},
+      {date:d(2), cat:'通院送迎',   detail:'整形外科 送迎', hours:1.0, cost:0,    pay:'',        evidence:'診療明細/予約票'},
+      {date:d(1), cat:'光熱費支援', detail:'電気・ガス',    hours:0,   cost:4500, pay:'PayPay',  evidence:'PayPay履歴 2026-02 光熱費'},
+      {date:d(0), cat:'服薬管理',   detail:'1週間分仕分け', hours:0.5, cost:0,    pay:'',        evidence:'写真/メモ'}
     ].forEach(addRow);
     qs('#start').value = d(30);
     qs('#end').value   = d(0);
@@ -1215,31 +1261,35 @@ footer a:hover { text-decoration: underline; }
 
   qs('#calcKiyo').addEventListener('click', calcKiyo);
 
-  qs('#printEvidence').addEventListener('click', () => window.print());
-  qs('#printReport').addEventListener('click', () => window.print());
-  qs('#genReport').addEventListener('click', () => { genReport(); updateEvSummary(); });
-  qs('#copyReport').addEventListener('click', () => {
-    const txt = qs('#reportArea').value;
+  qs('#genReport').addEventListener('click', function() {
+    genReport(); updateEvSummary();
+  });
+
+  qs('#copyReport').addEventListener('click', function() {
+    var txt = qs('#reportArea').value;
     if (!txt) { alert('先に「レポートを生成」してください。'); return; }
-    navigator.clipboard.writeText(txt).then(() => {
+    navigator.clipboard.writeText(txt).then(function() {
       qs('#reportStatus').textContent = 'コピーしました';
-      setTimeout(() => { qs('#reportStatus').textContent = '生成済'; }, 1400);
+      setTimeout(function() { qs('#reportStatus').textContent = '生成済'; }, 1400);
     });
   });
 
-  ['#rate','#start','#end','#memo'].forEach(sel => {
-    qs(sel).addEventListener('change', () => { persist(); recalc(); });
-    qs(sel).addEventListener('keyup',  () => { persist(); });
-  });
-  ['#k_estate','#k_reserveRate','#k_details','#k_notes','#k_rate','#k_years','#k_freq','#k_monthlyCost','#k_weeklyHours'].forEach(sel => {
-    qs(sel).addEventListener('change', () => persist());
-    qs(sel).addEventListener('keyup',  () => persist());
+  ['#rate','#start','#end','#memo'].forEach(function(sel) {
+    qs(sel).addEventListener('change', function() { persist(); recalc(); });
+    qs(sel).addEventListener('keyup',  function() { persist(); });
   });
 
-  /* ─── 初期化 ─── */
+  ['#k_estate','#k_reserveRate','#k_details','#k_notes',
+   '#k_rate','#k_years','#k_freq','#k_monthlyCost','#k_weeklyHours'].forEach(function(sel) {
+    qs(sel).addEventListener('change', function() { persist(); });
+    qs(sel).addEventListener('keyup',  function() { persist(); });
+  });
+
+  /* ── 初期化 ── */
   buildEvidenceUI();
-  if (!restore()) addRow({});
+  if (!restore()) { addRow({}); }
   recalc();
+
 })();
 </script>
 </body>
