@@ -6,52 +6,108 @@
     <title>積立投資シミュレーション</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #10b981;
-            --bg-color: #f8fafc;
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+        button, input, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        :root {
+            --primary-color: #185FA5;
+            --secondary-color: #0C447C;
+            --bg-color: #F5F0E8;
+        }
+
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
             background-color: var(--bg-color);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
         }
+
+        /* 文字サイズ変更バー */
+        .fs-bar {
+            text-align: center;
+            margin-bottom: 12px;
+            font-size: 0.875em;
+            color: #555;
+            width: 100%;
+            max-width: 800px;
+        }
+        .fs-bar span {
+            margin-right: 8px;
+        }
+        .fs-btn {
+            padding: 3px 10px;
+            margin: 0 2px;
+            border: 1px solid #185FA5;
+            border-radius: 4px;
+            background: #FDFAF5;
+            color: #185FA5;
+            cursor: pointer;
+            font-size: 0.875em;
+        }
+        .fs-btn.active {
+            background: #185FA5;
+            color: #fff;
+        }
+
         .container {
-            background: white;
+            background: #FDFAF5;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 800px;
         }
+
         h1 {
             text-align: center;
-            color: #1e293b;
+            color: #185FA5;
             margin-bottom: 30px;
+            font-size: 1.5em;
         }
+
         .input-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin-bottom: 25px;
         }
+
         .control {
             display: flex;
             flex-direction: column;
         }
+
         label {
             font-weight: bold;
             margin-bottom: 8px;
-            font-size: 0.9rem;
+            font-size: 0.875em;
+            color: #555;
         }
+
         input {
             padding: 10px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #d4c9b0;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 1em;
+            background: #FDFAF5;
         }
+
         button {
             grid-column: span 2;
             padding: 15px;
@@ -59,13 +115,15 @@
             color: white;
             border: none;
             border-radius: 6px;
-            font-size: 1.1rem;
+            font-size: 1.125em;
             cursor: pointer;
             transition: background 0.2s;
         }
+
         button:hover {
-            background-color: #1d4ed8;
+            background-color: var(--secondary-color);
         }
+
         .results {
             margin-top: 30px;
             display: grid;
@@ -73,30 +131,70 @@
             gap: 15px;
             text-align: center;
         }
+
         .result-card {
             padding: 15px;
-            background: #f1f5f9;
+            background: #EDE8DF;
             border-radius: 8px;
+            border: 1px solid #d4c9b0;
+            font-size: 1em;
         }
+
         .result-card span {
             display: block;
-            font-size: 1.2rem;
+            font-size: 1.25em;
             font-weight: bold;
             color: var(--primary-color);
         }
+
+        .result-card.highlight {
+            border: 2px solid #185FA5;
+            background: #E6F1FB;
+        }
+
         canvas {
             margin-top: 30px;
+        }
+
+        .site-link {
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            color: #666;
+            font-size: 0.75em;
+            margin-bottom: 5px;
+        }
+        .site-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer-credit {
+            font-size: 0.75em;
+            color: #888;
+            text-align: center;
+            margin-top: 24px;
+        }
+        .footer-credit a {
+            color: #185FA5;
+            text-decoration: none;
+        }
+        .footer-credit a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
+<div class="fs-bar">
+    <span>文字サイズ</span>
+    <button class="fs-btn active" onclick="setFS(16,this)">100%</button>
+    <button class="fs-btn" onclick="setFS(19,this)">120%</button>
+    <button class="fs-btn" onclick="setFS(22,this)">140%</button>
+</div>
+
 <div class="container">
-    <p style="text-align: center; margin-bottom: 0;">
-        <a href="https://www.shukatsubito.jp/" target="_blank" style="text-decoration: none; color: #64748b; font-size: 0.9rem;">終活人.jp</a>
-    </p>
-    
-    <h1 style="text-align: center; margin-top: 5px; margin-bottom: 20px;">積立投資シミュレーション</h1>
+    <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener" class="site-link">終活人.jp</a>
+    <h1>積立投資シミュレーション</h1>
 
     <div class="input-group">
         <div class="control">
@@ -119,19 +217,29 @@
             投資累計額
             <span id="totalPrincipal">- 円</span>
         </div>
-        <div class="result-card" style="border: 2px solid var(--secondary-color);">
+        <div class="result-card highlight">
             最終積立総額
             <span id="totalAmount">- 円</span>
         </div>
     </div>
 
     <canvas id="myChart"></canvas>
+
+    <div class="footer-credit">
+        <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a>
+        <p>© 終活人.jp ／ 無断転載・商用利用禁止</p>
+    </div>
 </div>
 
 <script>
+    function setFS(px, btn) {
+        document.documentElement.style.fontSize = px + 'px';
+        document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
     let myChart = null;
 
-    // カンマ区切りにする関数
     function formatCurrency(input) {
         let value = input.value.replace(/,/g, '');
         if (!isNaN(value) && value !== "") {
@@ -139,7 +247,6 @@
         }
     }
 
-    // カンマを消して数値に戻す関数
     function getNumber(id) {
         return parseFloat(document.getElementById(id).value.replace(/,/g, '')) || 0;
     }
@@ -150,7 +257,6 @@
         const years = parseInt(document.getElementById('years').value);
         
         const r = annualRate / 12;
-        const months = years * 12;
 
         let labels = [];
         let principalData = [];
@@ -177,8 +283,8 @@
             data: {
                 labels: labels,
                 datasets: [
-                    { label: '投資累計額（元本）', data: principalData, backgroundColor: '#cbd5e1' },
-                    { label: '投資累計額 + 利回り（総額）', data: totalData, backgroundColor: '#10b981' }
+                    { label: '投資累計額（元本）', data: principalData, backgroundColor: '#d4c9b0' },
+                    { label: '投資累計額 + 利回り（総額）', data: totalData, backgroundColor: '#185FA5' }
                 ]
             },
             options: {
