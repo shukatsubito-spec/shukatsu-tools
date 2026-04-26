@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家族信託・後見 簡易診断ツール</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #79c4be;
+            --bg-color: #f0f9f8;
+            --text-color: #333;
+            --accent-blue: #e3f2fd;
+            --border-color: #e0f2f1;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 10px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .checker-container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: var(--bg-color);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* ヘッダーリンク */
+        .site-link {
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            color: #666;
+            font-size: 14px; /* キャプション相当 */
+            margin-bottom: 5px;
+        }
+        .site-link:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            color: #00796b;
+            text-align: center;
+            font-size: 24px; /* 1.5rem */
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .intro-box {
+            background: #fff;
+            border: 1px solid #00796b;
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 30px;
+            font-size: 16px; /* 本文サイズ */
+            text-align: left;
+        }
+
+        .question-group {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .group-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d35400; /* ブラウン・オレンジ系 */
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .group-title span {
+            font-size: 12px;
+            font-weight: normal;
+            margin-left: auto;
+            color: #666;
+        }
+
+        .option {
+            display: block;
+            position: relative;
+            padding: 8px 0 8px 30px;
+            cursor: pointer;
+            font-size: 16px; /* 本文サイズ */
+        }
+
+        .option input {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            transform: scale(1.2);
+        }
+
+        /* ネストされた選択肢 */
+        .nested {
+            margin-left: 30px;
+            border-left: 2px solid #eee;
+            padding-left: 15px;
+        }
+
+        .btn-calc {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 30px 0;
+        }
+
+        .btn-calc:hover {
+            opacity: 0.8;
+        }
+
+        .result-area {
+            margin-top: 25px;
+            padding: 25px;
+            background-color: var(--accent-blue);
+            border-radius: 12px;
+            display: none;
+        }
+
+        .result-header {
+            font-weight: bold;
+            color: #1565c0;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .advice-item {
+            margin-bottom: 15px;
+            font-size: 16px; /* 本文サイズ */
+        }
+
+        .footer-note {
+            font-size: 12px; /* キャプションサイズ */
+            color: #888;
+            text-align: center;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+
+        strong {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="checker-container">
+    <a href="https://www.shukatsubito.jp/" target="_blank" class="site-link">終活人.jp</a>
+    <h2>家族信託・後見 簡易診断ツール</h2>
+    
+    <div class="intro-box">
+        家族信託と後見について、あなたの気づきにつながることを目的とした簡易診断ツールです。
+    </div>
+
+    <div class="question-group">
+        <div class="group-title">【不動産の種類】<span>※名義人視点での不動産の種類を</span></div>
+        <label class="option">
+            <input type="checkbox" id="q_rental"> 所有している賃貸不動産（マンション、アパート、その他）
+        </label>
+        <label class="option">
+            <input type="checkbox" id="q_home"> 所有し居住している自宅不動産（戸建・マンションなど）
+        </label>
+        <div class="nested">
+            <label class="option">
+                <input type="checkbox" id="q_sale_ok"> 売却ができる不動産である（調査確認済）
+            </label>
+            <label class="option">
+                <input type="checkbox" id="q_sale_unknown"> 売却ができるかどうか不明（調査確認をしていない）
+            </label>
+        </div>
+    </div>
+
+    <div class="question-group">
+        <div class="group-title">【家族・管理の状況】</div>
+        <label class="option">
+            <input type="checkbox" id="q_consensus"> 家族・親族で対象不動産の維持・管理について合意がある
+        </label>
+        <label class="option">
+            <input type="checkbox" id="q_complex"> 賃貸不動産の契約管理、契約管理が複雑・困難な状態
+        </label>
+    </div>
+
+    <button class="btn-calc" onclick="diagnose()">診断結果を見る</button>
+
+    <div id="result" class="result-area">
+        <div class="result-header">💡 診断アドバイス</div>
+        <div id="advice_content"></div>
+    </div>
+
+    <div class="footer-note">
+        ※本ツールは一般的な傾向を示すもので、個別具体的な法的判断を代替するものではありません。
+    </div>
+</div>
+
+<script>
+    function diagnose() {
+        const isRental = document.getElementById('q_rental').checked;
+        const isHome = document.getElementById('q_home').checked;
+        const isSaleOk = document.getElementById('q_sale_ok').checked;
+        const isSaleUnknown = document.getElementById('q_sale_unknown').checked;
+        const hasConsensus = document.getElementById('q_consensus').checked;
+        const isComplex = document.getElementById('q_complex').checked;
+
+        let html = "";
+
+        // アドバイス：賃貸物件
+        if (isRental || isComplex) {
+            html += `<div class="advice-item">● <strong>賃貸経営の継続性：</strong> 管理が複雑、または収益物件をお持ちの場合、受託者が管理権限を持つ家族信託は非常に合理的です。</div>`;
+        }
+
+        // アドバイス：自宅と売却可否（出口戦略）
+        if (isHome) {
+            if (isSaleUnknown) {
+                html += `<div class="advice-item">● <strong>出口戦略の再検討：</strong> 売却が困難な不動産の場合、信託する実益が薄い可能性があります。無理に信託を組むより、身上保護（後見）の準備を優先する方が合理的な場合があります。</div>`;
+            } else if (isSaleOk) {
+                html += `<div class="advice-item">● <strong>売却資金の活用：</strong> 将来、施設費用に充てるための売却を想定する場合、信託は有効ですが、後見人がついた際は裁判所の許可が必要になる運用を理解しておきましょう。</div>`;
+            }
+        }
+
+        // アドバイス：コンセンサス
+        if (!hasConsensus) {
+            html += `<div class="advice-item">● <strong>紛争リスクへの備え：</strong> 親族間の合意が不十分な場合、後見人（弁護士等）から信託の有効性を疑われるリスクがあります。まずは情報の透明性を高めることが先決です。</div>`;
+        } else {
+            html += `<div class="advice-item">● <strong>合意形成の強み：</strong> 家族の合意があることは大きな強みです。信託を組む場合も、その合意内容を公正証書等で残すことをお勧めします。</div>`;
+        }
+
+        if (html === "") {
+            html = "項目を選択して「診断結果を見る」を押してください。";
+        }
+
+        document.getElementById('advice_content').innerHTML = html;
+        document.getElementById('result').style.display = 'block';
+        
+        // 結果画面までスクロール
+        document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
