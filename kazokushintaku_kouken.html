@@ -255,7 +255,7 @@
             <input type="checkbox" id="q_consensus"> 家族・親族で対象不動産の維持・管理について合意がある
         </label>
         <label class="option">
-            <input type="checkbox" id="q_complex"> 賃貸不動産の契約管理、契約管理が複雑・困難な状態
+            <input type="checkbox" id="q_complex"> 賃貸不動産の入退去管理・契約管理が複雑・困難な状態
         </label>
     </div>
 
@@ -301,12 +301,12 @@
             if (isSaleUnknown) {
                 html += `<div class="advice-item">● <strong>出口戦略の再検討：</strong> 売却が困難な不動産の場合、信託する実益が薄い可能性があります。無理に信託を組むより、身上保護（後見）の準備を優先する方が合理的な場合があります。</div>`;
             } else if (isSaleOk) {
-                html += `<div class="advice-item">● <strong>売却資金の活用：</strong> 将来、施設費用に充てるための売却を想定する場合、信託は有効ですが、後見人がついた際は裁判所の許可が必要になる運用を理解しておきましょう。</div>`;
+                html += `<div class="advice-item">● <strong>売却資金の活用：</strong> 将来、施設費用に充てるための売却を想定する場合、信託は有効な手段です。ただし、後見人がついた場合、後見人が信託契約そのものの無効を裁判所に申し立てるリスクがあります。信託を組む際は、契約内容の正当性・透明性を高めておくことが重要です。</div>`;
             }
         }
 
         if (!hasConsensus) {
-            html += `<div class="advice-item">● <strong>紛争リスクへの備え：</strong> 親族間の合意が不十分な場合、後見人（弁護士等）から信託の有効性を疑われるリスクがあります。まずは情報の透明性を高めることが先決です。</div>`;
+            html += `<div class="advice-item">● <strong>紛争リスクへの備え：</strong> 家族信託は、委託者・受託者間の契約で成立するため、他の家族全員の同意は法律上不要です。ただし、親族間の合意が不十分なまま信託を進めると、後に後見人（弁護士等）が就任した際、信託契約の有効性を疑い裁判所に異議を申し立てるリスクがあります。まずは情報の透明性を高めることが先決です。</div>`;
         } else {
             html += `<div class="advice-item">● <strong>合意形成の強み：</strong> 家族の合意があることは大きな強みです。信託を組む場合も、その合意内容を公正証書等で残すことをお勧めします。</div>`;
         }
