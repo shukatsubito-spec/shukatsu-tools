@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プロンプト！終活｜終活人.jp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  button,input,select,textarea{font-family:inherit;font-size:inherit;}
+  html{font-size:16px;}
+  body{font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#F5F0E8;color:#1a1a18;}
+  .wrap{max-width:860px;margin:0 auto;padding:1.5em 1em 3em;}
+
+  h1{font-size:1.5em;font-weight:700;color:#0C447C;text-align:center;margin-bottom:0.25em;}
+  .lead{font-size:0.875em;color:#555;text-align:center;margin-bottom:1.5em;line-height:1.7;}
+
+  /* 文字サイズバー */
+  .fs-bar{display:flex;align-items:center;justify-content:center;gap:0.5em;padding:0.5em 1em;background:#FDFAF5;border:0.5px solid #ddd;border-radius:8px;margin-bottom:1.5em;}
+  .fs-bar span{font-size:0.875em;color:#888;}
+  .fs-btn{padding:0.25em 1em;border-radius:6px;border:0.5px solid #B5D4F4;background:#F5F0E8;color:#185FA5;font-size:0.875em;cursor:pointer;transition:background 0.15s;}
+  .fs-btn:hover{background:#E6F1FB;}
+  .fs-btn.active{background:#185FA5;color:#fff;border-color:#185FA5;}
+
+  /* AIリンクバー */
+  .ai-bar{display:flex;gap:0.5em;flex-wrap:wrap;justify-content:center;margin-bottom:1.5em;}
+  .ai-link{display:inline-flex;align-items:center;gap:0.4em;padding:0.4em 1em;border-radius:20px;border:0.5px solid #ddd;background:#FDFAF5;text-decoration:none;color:#1a1a18;font-size:0.875em;transition:background 0.15s;}
+  .ai-link:hover{background:#E6F1FB;border-color:#185FA5;}
+  .ai-dot{width:0.7em;height:0.7em;border-radius:50%;flex-shrink:0;}
+  .ai-bar-note{font-size:0.75em;color:#aaa;text-align:center;margin-bottom:1.5em;line-height:1.6;}
+
+  /* カテゴリータブ */
+  .cat-tabs{display:flex;flex-wrap:wrap;gap:0.4em;margin-bottom:1.2em;}
+  .cat-tab{padding:0.4em 0.875em;border-radius:20px;border:0.5px solid transparent;background:#FDFAF5;color:#fff;font-size:0.875em;cursor:pointer;transition:all 0.15s;font-weight:500;}
+  .cat-tab:hover{opacity:0.85;}
+  .cat-tab.active{color:#fff;border-color:transparent;font-weight:700;box-shadow:0 0 0 3px #FFD700 inset;}
+
+  /* カテゴリーセクション */
+  .cat-section{display:none;margin-bottom:1em;}
+  .cat-section.show{display:block;}
+  .cat-title{font-size:1.125em;font-weight:700;color:#0C447C;margin-bottom:0.75em;padding-bottom:0.4em;border-bottom:2px solid #185FA5;}
+
+  /* プロンプトカード */
+  .prompt-grid{display:flex;flex-direction:column;gap:0.6em;}
+  .prompt-card{background:#FDFAF5;border:0.5px solid #ddd;border-radius:10px;overflow:hidden;}
+  .prompt-header{display:flex;align-items:center;justify-content:space-between;padding:0.75em 1em;cursor:pointer;user-select:none;}
+  .prompt-header:hover{background:#EDE8DF;}
+  .prompt-label{font-size:0.9375em;font-weight:500;color:#1a1a18;flex:1;}
+  .prompt-badge{font-size:0.7em;padding:2px 6px;border-radius:3px;margin-left:0.4em;white-space:nowrap;vertical-align:middle;}
+  .badge-solo{background:#FAECE7;color:#712B13;}
+  .badge-imp{background:#FAEEDA;color:#633806;}
+  .badge-new{background:#EAF3DE;color:#27500A;}
+  .prompt-toggle{font-size:0.8em;color:#aaa;flex-shrink:0;margin-left:0.5em;}
+
+  .prompt-body{display:none;padding:0 1em 1em;}
+  .prompt-body.open{display:block;}
+  .prompt-text-box{background:#f0f4fa;border:0.5px solid #B5D4F4;border-radius:8px;padding:0.875em 1em;font-size:0.875em;color:#1a1a18;line-height:1.8;white-space:pre-wrap;margin-bottom:0.5em;}
+  .prompt-note{font-size:0.75em;color:#888;line-height:1.6;margin-bottom:0.5em;}
+  .copy-row{display:flex;justify-content:flex-end;}
+  .copy-btn{font-size:0.875em;padding:0.375em 1em;border-radius:6px;border:0.5px solid #185FA5;background:#FDFAF5;color:#185FA5;cursor:pointer;transition:background 0.15s;}
+  .copy-btn:hover{background:#E6F1FB;}
+  .copy-btn.copied{background:#E1F5EE;color:#085041;border-color:#0F6E56;}
+
+  /* フッター */
+  .footer{margin-top:2em;padding-top:1em;border-top:0.5px solid #ddd;text-align:center;}
+  .footer a{color:#185FA5;text-decoration:none;font-size:1em;font-weight:500;border-bottom:1.5px solid #B5D4F4;}
+  .footer a:hover{color:#0C447C;}
+  .footer-credit{font-size:0.75em;color:#aaa;margin-top:6px;line-height:1.8;}
+
+  @media(max-width:540px){
+    .cat-tabs{gap:0.3em;}
+    .cat-tab{font-size:0.8em;padding:0.35em 0.7em;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>プロンプト！終活</h1>
+  <p class="lead">テーマを選んで、AIへの質問文（プロンプト）をコピーしてください。<br>そのままChatGPT・Gemini・Claude等に貼り付けて相談できます。</p>
+
+  <div class="fs-bar">
+    <span>文字サイズ</span>
+    <button class="fs-btn active" onclick="setFS(16,this)">100%</button>
+    <button class="fs-btn" onclick="setFS(19,this)">120%</button>
+    <button class="fs-btn" onclick="setFS(22,this)">140%</button>
+  </div>
+
+  <div class="ai-bar">
+    <a class="ai-link" href="https://chat.openai.com/" target="_blank" rel="noopener"><div class="ai-dot" style="background:#10a37f;"></div>ChatGPT</a>
+    <a class="ai-link" href="https://gemini.google.com/" target="_blank" rel="noopener"><div class="ai-dot" style="background:#4285f4;"></div>Gemini</a>
+    <a class="ai-link" href="https://claude.ai/" target="_blank" rel="noopener"><div class="ai-dot" style="background:#cc785c;"></div>Claude</a>
+    <a class="ai-link" href="https://copilot.microsoft.com/" target="_blank" rel="noopener"><div class="ai-dot" style="background:#0078d4;"></div>Copilot</a>
+  </div>
+  <p class="ai-bar-note">※AIの回答は参考情報です。重要な判断は必ず専門家にご確認ください。複数のAIで確認することでリスクを軽減できます。</p>
+
+  <!-- カテゴリータブ -->
+  <div class="cat-tabs">
+    <button class="cat-tab active" style="background:#534AB7;" onclick="showCat('money',this)">お金と資産</button>
+    <button class="cat-tab" style="background:#D85A30;" onclick="showCat('home',this)">自宅と実家</button>
+    <button class="cat-tab" style="background:#993C1D;" onclick="showCat('estate',this)">相続と遺言</button>
+    <button class="cat-tab" style="background:#5F5E5A;" onclick="showCat('funeral',this)">葬儀とお墓</button>
+    <button class="cat-tab" style="background:#3B6D11;" onclick="showCat('health',this)">健康と介護</button>
+    <button class="cat-tab" style="background:#0F6E56;" onclick="showCat('digital',this)">デジタル整理とペット</button>
+    <button class="cat-tab" style="background:#185FA5;" onclick="showCat('solo',this)">おひとりさま終活</button>
+  </div>
+
+  <!-- ===== お金と資産 ===== -->
+  <div class="cat-section show" id="cat-money">
+    <div class="cat-title">お金と資産</div>
+    <div class="prompt-grid" id="grid-money"></div>
+  </div>
+
+  <!-- ===== 自宅と実家 ===== -->
+  <div class="cat-section" id="cat-home">
+    <div class="cat-title">自宅と実家</div>
+    <div class="prompt-grid" id="grid-home"></div>
+  </div>
+
+  <!-- ===== 相続と遺言 ===== -->
+  <div class="cat-section" id="cat-estate">
+    <div class="cat-title">相続と遺言</div>
+    <div class="prompt-grid" id="grid-estate"></div>
+  </div>
+
+  <!-- ===== 葬儀とお墓 ===== -->
+  <div class="cat-section" id="cat-funeral">
+    <div class="cat-title">葬儀とお墓</div>
+    <div class="prompt-grid" id="grid-funeral"></div>
+  </div>
+
+  <!-- ===== 健康と介護 ===== -->
+  <div class="cat-section" id="cat-health">
+    <div class="cat-title">健康と介護</div>
+    <div class="prompt-grid" id="grid-health"></div>
+  </div>
+
+  <!-- ===== デジタル整理とペット ===== -->
+  <div class="cat-section" id="cat-digital">
+    <div class="cat-title">デジタル整理とペット</div>
+    <div class="prompt-grid" id="grid-digital"></div>
+  </div>
+
+  <!-- ===== おひとりさま終活 ===== -->
+  <div class="cat-section" id="cat-solo">
+    <div class="cat-title">おひとりさま終活</div>
+    <div class="prompt-grid" id="grid-solo"></div>
+  </div>
+
+  <div class="footer">
+    <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a>
+    <p class="footer-credit">© 終活人.jp ／ 無断転載・商用利用禁止 ／ 本ページのプロンプト例の著作権は終活人.jpに帰属します</p>
+  </div>
+
+</div>
+<script>
+// ===== 文字サイズ =====
+function setFS(px,btn){
+  document.documentElement.style.fontSize=px+'px';
+  document.querySelectorAll('.fs-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ===== カテゴリー切替 =====
+function showCat(id,btn){
+  document.querySelectorAll('.cat-section').forEach(s=>s.classList.remove('show'));
+  document.querySelectorAll('.cat-tab').forEach(b=>{
+    b.classList.remove('active');
+    b.style.color='#fff';
+  });
+  document.getElementById('cat-'+id).classList.add('show');
+  btn.classList.add('active');
+  btn.style.color='#fff';
+}
+
+// ===== プロンプトデータ =====
+const data = {
+  money: [
+    {
+      label:'金融口座の整理方法',
+      badges:[],
+      text:`終活として金融口座を整理したいと思っています。\n\n①複数の銀行口座を持っている場合、どの順番で整理するのがよいですか？\n②口座を解約する際に必要な手続きと注意点を教えてください。\n③通帳・キャッシュカードの保管方法のベストプラクティスはありますか？\n④ネット銀行口座の整理で気をつけることは何ですか？`,
+      note:'口座番号・残高の入力は不要です。金融機関名だけでAIは回答できます。'
+    },
+    {
+      label:'相続時の銀行口座について',
+      badges:[],
+      text:`本人が亡くなった後の銀行口座について知りたいです。\n\n①口座が凍結される仕組みとタイミングを教えてください。\n②法定相続人が口座を特定・凍結解除するために必要な情報と手続きを教えてください。\n③銀行名・支店名・口座番号の下3桁を残しておくだけで十分だと聞きましたが本当ですか？\n④複数の金融機関に口座がある場合、整理の優先順位はありますか？`,
+      note:''
+    },
+    {
+      label:'保険の見直しと整理',
+      badges:[],
+      text:`50代以降の保険の見直しについて相談したいです。\n\n①50代以降に見直すべき保険の種類と優先順位を教えてください。\n②解約返戻金がある保険を解約するタイミングの考え方を教えてください。\n③死亡保険金の受取人の変更が必要になるケース（離婚・再婚など）を教えてください。\n④保険証券の保管方法と家族への伝え方を教えてください。`,
+      note:''
+    },
+    {
+      label:'資産の棚卸し・整理方法',
+      badges:[],
+      text:`終活として資産の棚卸しをしたいと思っています。\n\n①終活における資産の棚卸しで確認すべき項目を網羅的に教えてください。\n②不動産・有価証券・預貯金・保険を一覧化する際のポイントは何ですか？\n③エンディングノートに資産情報を記録する際、書いてよいこと・書かない方がよいことはありますか？\n④資産目録（財産目録）を自分で作る方法を教えてください。`,
+      note:''
+    },
+    {
+      label:'年金・給付金の確認',
+      badges:[{cls:'badge-new',text:'お得情報'}],
+      text:`老後の収入となる年金や給付金について確認したいです。\n\n①自分が受け取れる年金の種類と確認方法を教えてください。\n②「ねんきんネット」の使い方と確認できる情報を教えてください。\n③知らずに損しがちな給付金・補助金・税の控除はどのようなものがありますか？\n④高齢者向けの各種サービス・割引・優待制度にはどのようなものがありますか？`,
+      note:''
+    },
+    {
+      label:'詐欺・悪質商法への備え',
+      badges:[{cls:'badge-imp',text:'重要'}],
+      text:`高齢者を狙った詐欺や悪質商法から身を守りたいです。\n\n①50代以降が特に注意すべき詐欺・悪質商法の種類と手口を教えてください。\n②「投資詐欺」「終活ビジネス詐欺」の典型的なパターンと見分け方を教えてください。\n③被害に遭った・遭いそうな場合の相談窓口を教えてください。\n④家族への「気をつけて」という伝え方のコツを教えてください。`,
+      note:'AIの回答はあくまで参考です。被害に遭った場合は警察・消費者センターに相談してください。'
+    }
+  ],
+
+  home: [
+    {
+      label:'家の荷物整理・生前整理の始め方',
+      badges:[],
+      text:`家の荷物を整理したいのですが、どこから手をつければよいか分かりません。\n\n①生前整理を進める際の基本的な手順と優先順位を教えてください。\n②捨てるべきもの・残すべきものの判断基準はありますか？\n③一人で整理するのが難しい場合、どのようなサービスや支援がありますか？\n④整理が進まない心理的な障壁の克服方法を教えてください。`,
+      note:''
+    },
+    {
+      label:'実家の片付け・空き家問題',
+      badges:[],
+      text:`親の実家の片付けと空き家の扱いについて相談したいです。\n\n①親が施設に入った後、または亡くなった後の実家の片付けの進め方を教えてください。\n②空き家を放置するリスクと「空き家等対策特別措置法」について教えてください。\n③実家を売却・賃貸・解体する場合のそれぞれのメリット・デメリットを教えてください。\n④遺品整理業者を選ぶ際の注意点と費用の相場を教えてください。`,
+      note:''
+    },
+    {
+      label:'自宅の売却・住み替えの検討',
+      badges:[],
+      text:`老後を見据えた自宅の売却や住み替えについて相談したいです。\n\n①自宅を売却して住み替えるタイミングの考え方を教えてください。\n②「リバースモーゲージ」とは何ですか？メリット・デメリットと向いている人を教えてください。\n③マンションへの住み替え・賃貸への移行・施設入居それぞれの判断基準を教えてください。\n④自宅売却時に知っておくべき税金（譲渡所得税など）の基本を教えてください。`,
+      note:'具体的な売却・住み替えの実行は不動産の専門家にご相談ください。'
+    },
+    {
+      label:'不動産の名義・登記の整理',
+      badges:[],
+      text:`不動産の名義や登記の整理について知りたいです。\n\n①共有名義の不動産がある場合、生前に整理しておくべき理由と方法を教えてください。\n②土地の境界確認が必要になるケースと手続きを教えてください。\n③相続登記の義務化（2024年4月施行）の内容と対応方法を教えてください。\n④古い不動産（農地・山林など）が登記されていない場合の対処法を教えてください。`,
+      note:''
+    },
+    {
+      label:'バリアフリー・住宅改修',
+      badges:[],
+      text:`老後の住まいのバリアフリー化について相談したいです。\n\n①自宅をバリアフリーにするために優先的に改修すべき箇所を教えてください。\n②介護保険を使った住宅改修の補助制度（上限20万円）の使い方を教えてください。\n③バリアフリー改修工事を依頼する際の業者選びのポイントを教えてください。\n④賃貸住宅に住んでいる場合、バリアフリー化はどのように対応できますか？`,
+      note:''
+    }
+  ],
+
+  estate: [
+    {
+      label:'エンディングノートの書き方',
+      badges:[],
+      text:`エンディングノートを書きたいのですが、何をどう書けばよいか分かりません。\n\n①エンディングノートに書くべき項目を網羅的に教えてください。\n②遺言書とエンディングノートの違いと、それぞれの役割を教えてください。\n③書きにくい項目（財産・家族へのメッセージなど）の書き方のコツを教えてください。\n④定期的に見直すタイミングと更新の仕方を教えてください。`,
+      note:''
+    },
+    {
+      label:'遺言書の種類と作り方',
+      badges:[{cls:'badge-imp',text:'重要'}],
+      text:`遺言書について基礎から教えてください。\n\n①自筆証書遺言と公正証書遺言の違い・メリット・デメリットを教えてください。\n②自筆証書遺言を法務局に預ける「保管制度」の手続きと費用を教えてください。\n③公正証書遺言を作成する手順と費用の目安を教えてください。\n④遺言書が無効になってしまうケース（よくある間違い）を教えてください。`,
+      note:'遺言書の内容については必ず弁護士・司法書士にご相談ください。'
+    },
+    {
+      label:'相続手続きの流れと期限',
+      badges:[{cls:'badge-imp',text:'期限注意'}],
+      text:`相続が発生した場合の手続きについて教えてください。\n\n①相続開始後にやるべきことを時系列で教えてください。特に期限があるものを重点的に。\n②相続放棄の手続き・期限・注意点を教えてください。\n③相続税の申告が必要かどうかの確認方法と申告期限を教えてください。\n④相続手続きで専門家（税理士・司法書士・弁護士）に頼むべき場面を教えてください。`,
+      note:'相続税の申告期限は「相続の開始があったことを知った日の翌日から10ヶ月以内」です。'
+    },
+    {
+      label:'遺産分割・争族の防ぎ方',
+      badges:[],
+      text:`相続でのトラブル（争族）を防ぐ方法を教えてください。\n\n①相続トラブルが起きやすいケースのパターンを教えてください。\n②遺産分割協議がまとまらない場合の解決方法を教えてください。\n③生前にできる争族対策（遺言書・生前贈与・家族会議など）を教えてください。\n④「遺留分」とは何ですか？遺留分侵害額請求への対処方法を教えてください。`,
+      note:''
+    },
+    {
+      label:'遺贈寄付・社会貢献',
+      badges:[{cls:'badge-new',text:'社会貢献'}],
+      text:`財産を社会のために役立てたいと思っています。\n\n①「遺贈寄付」とは何ですか？遺言書での手続き方法を教えてください。\n②信頼できる寄付先（NPO・公益財団法人等）の選び方と確認方法を教えてください。\n③法定相続人がいない場合、財産を国庫に入れないための方法を教えてください。\n④生前贈与と遺贈の違い、それぞれの税務上の取り扱いを教えてください。`,
+      note:''
+    },
+    {
+      label:'生前贈与の基礎知識',
+      badges:[],
+      text:`生前贈与について基礎から教えてください。\n\n①生前贈与の基本的な仕組みと相続税との関係を教えてください。\n②2024年の税制改正による生前贈与の加算期間延長（3年→7年）の影響を教えてください。\n③「相続時精算課税制度」と「暦年贈与」の違いと選び方を教えてください。\n④生前贈与で気をつけるべき「名義預金」問題とは何ですか？`,
+      note:'生前贈与の具体的な実行は税理士にご相談ください。'
+    }
+  ],
+
+  funeral: [
+    {
+      label:'葬儀の種類と費用の相場',
+      badges:[],
+      text:`自分の葬儀について事前に考えておきたいです。\n\n①一般葬・家族葬・直葬・自然葬それぞれの特徴と費用の相場を教えてください。\n②葬儀費用を抑えるための方法と注意点を教えてください。\n③生前に葬儀社と「生前予約」や「互助会」に入るメリット・デメリットを教えてください。\n④葬儀に関する希望を家族に伝える方法とタイミングを教えてください。`,
+      note:''
+    },
+    {
+      label:'お墓の種類と選び方',
+      badges:[],
+      text:`お墓について基礎から教えてください。\n\n①一般墓地・納骨堂・樹木葬・散骨・手元供養それぞれの特徴と費用を教えてください。\n②「永代供養」とは何ですか？永代供養墓を選ぶ際の注意点を教えてください。\n③既にお墓がある場合、改葬（お墓の引越し）の手続きと費用を教えてください。\n④宗教・宗派によるお墓の制約と、無宗教の場合の選択肢を教えてください。`,
+      note:''
+    },
+    {
+      label:'死後の手続きと届け出',
+      badges:[],
+      text:`人が亡くなった後に必要な行政手続きを教えてください。\n\n①死亡届の提出先・期限・必要書類を教えてください。\n②葬儀後にやるべき行政手続きを時系列で教えてください（年金・健康保険・住民票など）。\n③故人の各種契約（電気・ガス・水道・携帯・クレジットカードなど）の解約手順を教えてください。\n④死後事務を生前に専門家に依頼する「死後事務委任契約」について教えてください。`,
+      note:''
+    },
+    {
+      label:'葬儀の事前準備チェック',
+      badges:[{cls:'badge-new',text:'チェックリスト'}],
+      text:`葬儀の事前準備として確認しておくべきことをチェックしたいです。\n\n①葬儀の事前準備として今すぐやっておくべきことのリストを作ってください。\n②遺影写真の準備・選び方のポイントを教えてください。\n③葬儀に参列してほしい人・知らせる人のリストを作る際のポイントを教えてください。\n④お布施・戒名・法要の基礎知識を教えてください。`,
+      note:''
+    }
+  ],
+
+  health: [
+    {
+      label:'終末期医療・延命措置の希望',
+      badges:[{cls:'badge-imp',text:'特に重要'}],
+      text:`自分が意識を失った状態や終末期になった時の医療について家族に伝えておきたいです。\n\n①延命措置を望まない場合、どのような書類や方法で意思表示をしておけばよいですか？\n②「尊厳死宣言書」「事前指示書」「DNAR指示」とは何ですか？それぞれの法的効力を教えてください。\n③病院・施設に入院・入居した際、延命措置の希望をどのように伝えればよいですか？\n④家族に延命措置の希望を伝える際の話し合いの進め方を教えてください。`,
+      note:'終末期医療の意思決定については、かかりつけ医・主治医にもご相談ください。'
+    },
+    {
+      label:'介護保険の使い方',
+      badges:[],
+      text:`介護保険制度について基礎から教えてください。\n\n①介護保険の申請手順・要介護認定の流れを教えてください。\n②要介護度別に利用できるサービスと自己負担額の目安を教えてください。\n③ケアマネジャーの選び方と付き合い方のポイントを教えてください。\n④在宅介護と施設介護のそれぞれのメリット・デメリットと判断の目安を教えてください。`,
+      note:''
+    },
+    {
+      label:'介護施設の種類と選び方',
+      badges:[],
+      text:`介護が必要になった時の施設について知りたいです。\n\n①特別養護老人ホーム・有料老人ホーム・グループホーム・サービス付き高齢者向け住宅の違いを教えてください。\n②施設を選ぶ際にチェックすべきポイントを教えてください。\n③施設の費用の相場と、費用を抑えるための制度（補足給付など）を教えてください。\n④認知症が進んだ場合の施設の選択肢と入居の流れを教えてください。`,
+      note:''
+    },
+    {
+      label:'認知症への備え',
+      badges:[{cls:'badge-imp',text:'早めに準備'}],
+      text:`認知症に備えた準備について教えてください。\n\n①認知症の初期症状のチェックポイントと早期受診の重要性を教えてください。\n②認知症になる前に準備しておくべきこと（法律・財産・生活）を教えてください。\n③「任意後見制度」と「法定後見制度」の違いと、元気なうちに準備できることを教えてください。\n④認知症の親の財産管理で家族が困るケースと対策を教えてください。`,
+      note:''
+    },
+    {
+      label:'かかりつけ医・医療情報の整理',
+      badges:[],
+      text:`医療情報の整理とかかりつけ医について相談したいです。\n\n①エンディングノートに記録しておくべき医療情報（持病・服薬・アレルギーなど）を教えてください。\n②かかりつけ医を持つメリットと選び方を教えてください。\n③「お薬手帳」の活用方法と複数の薬を服用している場合の注意点を教えてください。\n④救急搬送された場合に備えて準備しておくべきことを教えてください。`,
+      note:''
+    },
+    {
+      label:'住み替え・近居・二拠点生活',
+      badges:[],
+      text:`老後の住まいの選択肢について相談したいです。\n\n①老後の住み替えを検討する際の判断基準（医療・交通・費用など）を教えてください。\n②子どもの近くへ「近居」するメリット・デメリットと実現するための手順を教えてください。\n③「二拠点生活」を老後に送る場合のメリット・デメリットと注意点を教えてください。\n④高齢者向け住宅（サ高住など）と一般賃貸の比較を教えてください。`,
+      note:''
+    }
+  ],
+
+  digital: [
+    {
+      label:'スマホ・PC・データの整理',
+      badges:[],
+      text:`スマホやパソコンのデータを整理したいです。\n\n①終活として整理すべきデジタルデータの種類と優先順位を教えてください。\n②写真・動画データの整理・保存・家族への引き継ぎ方法を教えてください。\n③不要なファイル・アプリの整理方法と、個人情報の安全な削除方法を教えてください。\n④スマホ・PCを廃棄する際のデータ消去の正しい方法を教えてください。`,
+      note:''
+    },
+    {
+      label:'SNS・サブスクリプションの整理',
+      badges:[],
+      text:`SNSやサブスクリプションサービスの整理について教えてください。\n\n①終活として整理すべきSNSアカウントの種類と整理方法を教えてください。\n②各SNS（LINE・Facebook・Instagram・X等）の「追悼アカウント」機能について教えてください。\n③サブスクリプションサービスの一覧化と解約手順を教えてください。\n④クレジットカードに紐付いた定期課金の確認・解約方法を教えてください。`,
+      note:''
+    },
+    {
+      label:'デジタル遺品・パスワード管理',
+      badges:[{cls:'badge-imp',text:'重要'}],
+      text:`デジタル遺品の管理について相談したいです。\n\n①「デジタル遺品」とは何ですか？家族が困るケースを具体的に教えてください。\n②パスワードを安全に管理・引き継ぐ方法を教えてください（パスワードマネージャー等）。\n③ネット銀行・電子マネー・暗号資産などデジタル資産の引き継ぎ方法を教えてください。\n④メールアカウントのデータを家族に引き継ぐ・または削除する方法を教えてください。`,
+      note:'パスワードはデジタルと紙の両方で安全に管理することをお勧めします。'
+    },
+    {
+      label:'AIの使い方・プロンプトの基礎',
+      badges:[{cls:'badge-new',text:'初心者向け'}],
+      text:`AIを使った終活相談の始め方を教えてください。\n\n①ChatGPT・Gemini・Claude・Copilotそれぞれの特徴と使い分けを教えてください。\n②AIに質問する際の基本的なコツ（プロンプトの書き方）を具体例で教えてください。\n③AIの回答を鵜呑みにしてはいけない理由と、ハルシネーション（誤情報）の見分け方を教えてください。\n④スマホでAIを使う際の基本的な操作方法を初心者向けに教えてください。`,
+      note:'AIの回答は必ず複数のAIで確認するか、専門家に確認してください。'
+    },
+    {
+      label:'ペットのための終活準備',
+      badges:[{cls:'badge-new',text:'ペット'}],
+      text:`自分が亡くなった後や入院した後のペットのことが心配です。\n\n①ペットの引き継ぎ先を事前に決めておく方法と注意点を教えてください。\n②「ペット信託」とは何ですか？設定の手順と費用を教えてください。\n③遺言書にペットの世話を依頼することは法的に有効ですか？\n④エンディングノートに記録しておくべきペット情報のリストを作ってください。`,
+      note:''
+    },
+    {
+      label:'ペットの医療・介護への備え',
+      badges:[{cls:'badge-new',text:'ペット'}],
+      text:`高齢ペットの医療・介護について相談したいです。\n\n①高齢ペットに多い病気と、費用に備えるペット保険の選び方を教えてください。\n②ペットの終末期医療・延命治療についての考え方と獣医師への相談方法を教えてください。\n③ペットが亡くなった後の火葬・供養の選択肢と費用の相場を教えてください。\n④飼い主が先に入院・施設入居した場合のペットの緊急対応について教えてください。`,
+      note:''
+    }
+  ],
+
+  solo: [
+    {
+      label:'おひとりさま終活の始め方',
+      badges:[{cls:'badge-solo',text:'おひとりさま'}],
+      text:`身寄りがなく、おひとりさまとして終活を始めたいです。\n\n①家族も身近な友人もいない場合、終活はどこから始めればよいですか？\n②おひとりさまが特に優先して準備すべきことのリストを教えてください。\n③地域の行政サービス（民生委員・地域包括支援センター等）の活用方法を教えてください。\n④おひとりさまの終活を支援してくれる専門家・サービスにはどのようなものがありますか？`,
+      note:''
+    },
+    {
+      label:'緊急連絡先・身元保証人の確保',
+      badges:[{cls:'badge-solo',text:'おひとりさま'}],
+      text:`緊急連絡先や身元保証人について相談したいです。\n\n①家族以外で緊急連絡先・身元保証人になれる人や機関はありますか？\n②「身元保証人」が必要な場面（病院・施設・賃貸契約など）で身寄りがない場合の対処法を教えてください。\n③「身元保証サービス（民間）」を選ぶ際の注意点と費用の相場を教えてください。\n④「死後事務委任契約」を結んでおくとよい理由と、信頼できる依頼先の選び方を教えてください。`,
+      note:'身元保証サービスの選定には十分な調査と専門家への確認をお勧めします。'
+    },
+    {
+      label:'孤独死の予防・見守りサービス',
+      badges:[{cls:'badge-solo',text:'おひとりさま'}],
+      text:`一人暮らしで孤独死が心配です。\n\n①孤独死を防ぐために今すぐできる対策を教えてください。\n②民間の見守りサービス（センサー型・訪問型・電話型など）の種類と費用を教えてください。\n③自治体・行政が提供する高齢者向け見守りサービスの調べ方を教えてください。\n④「孤独死」が発生した場合、大家・周囲への影響と、生前にできる対策を教えてください。`,
+      note:''
+    },
+    {
+      label:'家族へのメッセージの残し方',
+      badges:[{cls:'badge-solo',text:'おひとりさま'}],
+      text:`身近に家族がいませんが、大切な人へメッセージを残したいです。\n\n①家族・友人・知人へのメッセージをエンディングノートに残す際のポイントを教えてください。\n②感謝を伝えたいが直接言えない相手への手紙・メッセージの書き方を教えてください。\n③動画・音声でメッセージを残す方法と、再生できる環境の確保方法を教えてください。\n④孤独を感じながら生きてきた人が、自分の人生を肯定的に振り返るための考え方を教えてください。`,
+      note:''
+    },
+    {
+      label:'財産の整理と寄付・社会貢献',
+      badges:[{cls:'badge-solo',text:'おひとりさま'},{cls:'badge-new',text:'社会貢献'}],
+      text:`法定相続人がおらず、財産を社会のために役立てたいと思っています。\n\n①法定相続人がいない場合、遺産は最終的にどうなりますか？国庫に入るのを防ぐ方法は？\n②遺言書で全財産を団体・NPO等に寄付する「遺贈寄付」の手続きを教えてください。\n③信頼できる寄付先の選び方と、寄付額を指定する方法を教えてください。\n④遺言執行者を専門家（弁護士・司法書士）に依頼する際の費用と手順を教えてください。`,
+      note:''
+    },
+    {
+      label:'行政・地域の相談窓口',
+      badges:[{cls:'badge-solo',text:'おひとりさま'}],
+      text:`一人で抱え込まずに相談できる窓口を知りたいです。\n\n①高齢者の生活全般の相談窓口「地域包括支援センター」の役割と利用方法を教えてください。\n②無料で使える法律相談・司法書士相談の窓口を教えてください。\n③生活に困った場合に使える公的サービス（生活困窮者自立支援制度など）を教えてください。\n④孤独・孤立を感じた時の相談窓口（よりそいホットライン等）を教えてください。`,
+      note:'緊急の場合は迷わず公的機関にご連絡ください。'
+    }
+  ]
+};
+
+// ===== カードを生成 =====
+function buildCards(){
+  Object.keys(data).forEach(cat=>{
+    const grid=document.getElementById('grid-'+cat);
+    data[cat].forEach((item,idx)=>{
+      const id=`${cat}_${idx}`;
+      const badges=item.badges.map(b=>`<span class="prompt-badge ${b.cls}">${b.text}</span>`).join('');
+      const note=item.note?`<p class="prompt-note">※ ${item.note}</p>`:'';
+      const card=document.createElement('div');
+      card.className='prompt-card';
+      card.innerHTML=`
+        <div class="prompt-header" onclick="toggleCard('${id}')">
+          <span class="prompt-label">${item.label}${badges}</span>
+          <span class="prompt-toggle" id="tog-${id}">▼</span>
+        </div>
+        <div class="prompt-body" id="body-${id}">
+          <div class="prompt-text-box">${escHtml(item.text)}</div>
+          ${note}
+          <div class="copy-row">
+            <button class="copy-btn" id="copybtn-${id}" onclick="copyCard('${id}')">このプロンプトをコピー</button>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  });
+}
+
+function escHtml(str){
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toggleCard(id){
+  const body=document.getElementById('body-'+id);
+  const tog=document.getElementById('tog-'+id);
+  const open=body.classList.toggle('open');
+  tog.textContent=open?'▲':'▼';
+}
+
+function copyCard(id){
+  const cat=id.split('_')[0];
+  const idx=parseInt(id.split('_')[1]);
+  const text=data[cat][idx].text;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.getElementById('copybtn-'+id);
+    btn.textContent='コピーしました！';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='このプロンプトをコピー';btn.classList.remove('copied');},2500);
+  });
+}
+
+buildCards();
+</script>
+</body>
+</html>
