@@ -76,6 +76,10 @@
   .free-field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
   .free-field-label{font-size:0.6875em;color:#444;}
   .free-area{border:1px solid #ccc;border-radius:6px;padding:8px 10px;min-height:56px;width:100%;font-size:0.6875em;color:#bbb;}
+  .footer{margin-top:2em;padding-top:1em;border-top:0.5px solid #ddd;text-align:center;}
+  .footer a{color:#185FA5;text-decoration:none;font-size:1em;font-weight:500;border-bottom:1.5px solid #B5D4F4;}
+  .footer a:hover{color:#0C447C;}
+  .footer-credit{font-size:0.75em;color:#aaa;margin-top:6px;line-height:1.8;}
   @media print{
     .preview-controls,.btn-row,.step-1,.print-note,h1,.site-name,.font-size-bar,.site-credit{display:none!important;}
     body{background:#FDFAF5;}
@@ -90,6 +94,7 @@
 <div class="app">
 
   <h1>セルフ簡易エンディングノートメーカー</h1>
+  <p class="site-name"><a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a></p>
 
   <div class="font-size-bar">
     <span>文字サイズ</span>
@@ -277,6 +282,11 @@
     <div class="preview-area" id="preview-area"></div>
     <p class="print-note">※印刷時はブラウザの印刷メニューで「背景のグラフィック」をオンにしてください</p>
   </div>
+  <div class="footer">
+    <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a>
+    <p class="footer-credit">© 終活人.jp ／ 無断転載・商用利用禁止 ／ 本ツールの著作権は終活人.jpに帰属します</p>
+  </div>
+
 </div>
 
 <script>
