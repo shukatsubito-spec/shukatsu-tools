@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>健康と介護｜終活人.jp</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+
+html {
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  font-size: 1em;
+  line-height: 1.8;
+  background: #F5F0E8;
+  color: #1f2937;
+  overflow-x: hidden;
+  word-break: break-word;
+}
+
+/* ============================
+   文字拡大バー
+   ============================ */
+#font-size-bar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(253,250,245,.96);
+  border-bottom: 1px solid #d6cfc4;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(4px);
+}
+#font-size-bar span {
+  font-size: 0.75em;
+  color: #6b7280;
+  margin-right: 2px;
+}
+.fsz-btn {
+  border: 1px solid #c9c2b6;
+  background: #FDFAF5;
+  color: #334155;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75em;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  transition: all .15s;
+}
+.fsz-btn:hover { background: #EDE8DF; }
+.fsz-btn.active {
+  background: #185FA5;
+  color: #fff;
+  border-color: #185FA5;
+}
+
+/* ============================
+   ヘッダー帯
+   ============================ */
+.site-header {
+  background: #D85A30;
+  padding: 28px 20px 24px;
+  text-align: center;
+}
+.site-header h1 {
+  font-size: 1.375em;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: .06em;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.site-header .header-sub {
+  font-size: 0.875em;
+  color: rgba(255,255,255,.88);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+.site-header .header-site {
+  font-size: 0.8125em;
+  color: rgba(255,255,255,.80);
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* ============================
+   レイアウト
+   ============================ */
+.wrap {
+  max-width: min(860px, 100%);
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+/* ============================
+   イントロ
+   ============================ */
+.intro-box {
+  background: #FDFAF5;
+  border: 1px solid #d6cfc4;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+  font-size: 0.9375em;
+  line-height: 1.8;
+  color: #374151;
+}
+.intro-box strong {
+  color: #185FA5;
+}
+
+/* ============================
+   セクションタイトル
+   ============================ */
+.section-title {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 6px;
+  letter-spacing: .02em;
+}
+.section-sub {
+  font-size: 0.875em;
+  color: #6b7280;
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+/* ============================
+   タブ帯
+   ============================ */
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid #c9c2b6;
+}
+.tab-btn {
+  padding: 16px 8px;
+  border-radius: 0;
+  border: none;
+  border-right: 1.5px solid #c9c2b6;
+  background: #FDFAF5;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  color: #6b7280;
+  letter-spacing: .02em;
+  text-align: center;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn:hover { background: #EDE8DF; color: #374151; }
+.tab-btn .tab-icon { font-size: 1.375em; }
+.tab-btn .tab-label { font-size: 0.9375em; }
+.tab-btn .tab-hint { font-size: 0.6875em; color: #9ca3af; font-weight: 400; }
+.tab-btn.active-t1 { background: #D85A30; color: #fff; border-right-color: #D85A30; }
+.tab-btn.active-t1 .tab-hint { color: #fcd9c8; }
+.tab-btn.active-t2 { background: #1D9E75; color: #fff; border-right-color: #1D9E75; }
+.tab-btn.active-t2 .tab-hint { color: #a7e8d4; }
+.tab-btn.active-t3 { background: #534AB7; color: #fff; border-right-color: #534AB7; }
+.tab-btn.active-t3 .tab-hint { color: #cccaf5; }
+@media (max-width: 480px) {
+  .tab-btn { padding: 12px 4px; }
+  .tab-btn .tab-label { font-size: 0.8125em; }
+}
+
+/* ============================
+   パネル
+   ============================ */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ============================
+   バッジ
+   ============================ */
+.badge {
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+  letter-spacing: .03em;
+}
+.badge-t1 { background: #FAECE7; color: #993C1D; }
+.badge-t2 { background: #E1F5EE; color: #0F6E56; }
+.badge-t3 { background: #EEEDFE; color: #3C3489; }
+
+/* ============================
+   説明文
+   ============================ */
+.panel-desc {
+  font-size: 0.9375em;
+  color: #374151;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  background: #FDFAF5;
+  border: 1px solid #d6cfc4;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+/* ============================
+   統計カード
+   ============================ */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+@media (max-width: 480px) {
+  .stat-row { grid-template-columns: 1fr 1fr; }
+}
+.stat-card {
+  background: #FDFAF5;
+  border: 1px solid #d6cfc4;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.stat-num {
+  font-size: 1.375em;
+  font-weight: 900;
+  line-height: 1.2;
+}
+.stat-label {
+  font-size: 0.75em;
+  color: #6b7280;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.num-t1 { color: #D85A30; }
+.num-t2 { color: #1D9E75; }
+.num-t3 { color: #7F77DD; }
+
+/* ============================
+   メーターバー
+   ============================ */
+.meter-section { margin-bottom: 20px; }
+.meter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.meter-label {
+  font-size: 0.8125em;
+  color: #6b7280;
+  min-width: 80px;
+}
+.meter-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: #EDE8DF;
+  overflow: hidden;
+}
+.meter-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.meter-val {
+  font-size: 0.8125em;
+  color: #9ca3af;
+  min-width: 60px;
+  text-align: right;
+}
+
+/* ============================
+   タイムライン
+   ============================ */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+  margin-top: 4px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
+  background: #d6cfc4;
+}
+.step {
+  position: relative;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+.step:last-child { margin-bottom: 0; }
+.dot {
+  position: absolute;
+  left: -22px;
+  top: 16px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+  background: #FDFAF5;
+  transition: transform .2s;
+}
+.step:hover .dot,
+.step.open .dot { transform: scale(1.3); }
+
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d6cfc4;
+  background: #FDFAF5;
+  transition: border-color .2s, background .2s;
+}
+.step:hover .step-head { background: #EDE8DF; border-color: #c9c2b6; }
+.step.open .step-head { border-color: #185FA5; background: #E6F1FB; }
+
+.step-icon { font-size: 1.125em; min-width: 24px; text-align: center; }
+.step-title { font-size: 0.9375em; font-weight: 700; flex: 1; color: #1f2937; }
+.step-time { font-size: 0.75em; color: #9ca3af; white-space: nowrap; }
+
+.step-body {
+  display: none;
+  padding: 12px 16px 14px 48px;
+  font-size: 0.875em;
+  color: #374151;
+  line-height: 1.8;
+  border: 1px solid #d6cfc4;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: #FDFAF5;
+}
+.step.open .step-body { display: block; }
+
+.intervention {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.8125em;
+  line-height: 1.7;
+}
+.intervention strong {
+  display: block;
+  font-size: 0.8125em;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+/* ============================
+   注記
+   ============================ */
+.arrow-note {
+  font-size: 0.8125em;
+  color: #6b7280;
+  margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.7;
+  border-top: 1px solid #d6cfc4;
+  padding-top: 14px;
+}
+.arrow-note::before { content: '※'; min-width: 14px; }
+
+/* ============================
+   保険セクション
+   ============================ */
+.hoken-section {
+  margin-top: 24px;
+  border: 1.5px solid #185FA5;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.hoken-header {
+  background: #185FA5;
+  color: #fff;
+  padding: 12px 16px;
+  font-size: 0.9375em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hoken-body {
+  background: #FDFAF5;
+  padding: 16px;
+}
+.hoken-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+@media (max-width: 560px) {
+  .hoken-grid { grid-template-columns: 1fr; }
+}
+.hoken-card {
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.875em;
+  line-height: 1.7;
+}
+.hoken-card.public {
+  background: #E6F1FB;
+  border: 1px solid #B5D4F4;
+}
+.hoken-card.private {
+  background: #EAF3DE;
+  border: 1px solid #C0DD97;
+}
+.hoken-card-title {
+  font-size: 0.8125em;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hoken-card.public .hoken-card-title { color: #0C447C; }
+.hoken-card.private .hoken-card-title { color: #3B6D11; }
+.hoken-list {
+  margin: 0;
+  padding-left: 1.1em;
+  color: #374151;
+}
+.hoken-list li { margin-bottom: 3px; }
+
+/* AIプロンプトボックス */
+.ai-prompt-box {
+  background: #FAEEDA;
+  border: 1px solid #FAC775;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 12px;
+}
+.ai-prompt-title {
+  font-size: 0.8125em;
+  font-weight: 700;
+  color: #854F0B;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ai-prompt-item {
+  background: #FDFAF5;
+  border: 1px solid #d6cfc4;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.8125em;
+  color: #374151;
+  line-height: 1.7;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.ai-prompt-item:last-child { margin-bottom: 0; }
+.ai-copy-btn {
+  flex-shrink: 0;
+  border: 1px solid #c9c2b6;
+  background: #F5F0E8;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75em;
+  cursor: pointer;
+  color: #374151;
+  font-weight: 700;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.ai-copy-btn:hover { background: #EDE8DF; }
+.ai-copy-btn.copied { background: #185FA5; color: #fff; border-color: #185FA5; }
+.hoken-note {
+  font-size: 0.75em;
+  color: #6b7280;
+  margin-top: 10px;
+  line-height: 1.7;
+  border-top: 1px solid #d6cfc4;
+  padding-top: 10px;
+}
+
+/* ============================
+   戻るボタン
+   ============================ */
+.back-to-top {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+.back-to-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FDFAF5;
+  border: 1px solid #d6cfc4;
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 0.8125em;
+  font-weight: 700;
+  color: #185FA5;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .2s;
+  text-decoration: none;
+}
+.back-to-top-btn:hover {
+  background: #E6F1FB;
+  border-color: #185FA5;
+}
+
+/* ============================
+   免責
+   ============================ */
+.disclaimer {
+  font-size: 0.75em;
+  color: #334155;
+  background: #FDFAF5;
+  border: 1px solid #d6cfc4;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 28px;
+  line-height: 1.7;
+}
+
+/* ============================
+   フッター
+   ============================ */
+footer {
+  background: #FDFAF5;
+  border-top: 1px solid #d6cfc4;
+  padding: 20px 16px;
+  text-align: center;
+  margin-top: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ヘッダー帯 -->
+<header class="site-header">
+  <h1>健康〜介護の経路</h1>
+  <p class="header-sub">健康な状態から要介護になるまでの3つのパターンを知り、備えを考えましょう</p>
+  <p class="header-site">終活人.jp</p>
+</header>
+
+<!-- 文字拡大バー -->
+<div id="font-size-bar">
+  <span>文字サイズ：</span>
+  <button class="fsz-btn active" onclick="setFsz(100, this)">100%</button>
+  <button class="fsz-btn" onclick="setFsz(120, this)">120%</button>
+  <button class="fsz-btn" onclick="setFsz(140, this)">140%</button>
+</div>
+<script>
+function setFsz(pct, btn) {
+  document.documentElement.style.fontSize = (16 * pct / 100) + 'px';
+  document.querySelectorAll('.fsz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+
+
+
+<div class="wrap">
+
+  <!-- イントロ前の余白調整 -->
+  <p class="section-sub" style="margin-top:4px;">「要介護」は突然のことだけではありません。健康な状態からどのような経路をたどって介護状態になるのか、3つのパターンで確認してみましょう。</p>
+
+  <!-- イントロ -->
+  <div class="intro-box">
+    私たちは「介護」というと、<strong>すでに介護状態になった場面</strong>を思い浮かべがちです。<br>
+    しかし実際には、健康な状態から要介護になるまでには、<strong>さまざまな経路と時間軸</strong>があります。<br>
+    瞬時に変わることもあれば、数年かけてゆっくり変化することも。それを知るだけで、備え方が変わります。
+  </div>
+
+  <!-- タブ -->
+  <div class="section-title" style="font-size:1.125em; margin-bottom:10px;">要介護になるまでの3つの経路</div>
+  <p class="section-sub">タブを選ぶと経路ごとの変化の流れが確認できます。各ステップをタップ／クリックすると詳細が開きます。</p>
+
+  <div class="tabs">
+    <button class="tab-btn active-t1" id="tab1" onclick="showPanel('p1','active-t1',this)">
+      <span class="tab-icon">⚡</span>
+      <span class="tab-label">突発型</span>
+      <span class="tab-hint">数日〜数か月</span>
+    </button>
+    <button class="tab-btn" id="tab2" onclick="showPanel('p2','active-t2',this)">
+      <span class="tab-icon">📉</span>
+      <span class="tab-label">蓄積・進行型</span>
+      <span class="tab-hint">数か月〜数年</span>
+    </button>
+    <button class="tab-btn" id="tab3" onclick="showPanel('p3','active-t3',this)">
+      <span class="tab-icon">🕐</span>
+      <span class="tab-label">若年期起因型</span>
+      <span class="tab-hint">直後〜長期</span>
+    </button>
+  </div>
+
+  <!-- ========== 突発型 ========== -->
+  <div class="panel active" id="p1">
+
+    <span class="badge badge-t1">突発的経路 ─ 数日〜数か月</span>
+    <div class="panel-desc">
+      転倒・骨折・脳卒中・事故など、<strong>ある出来事を境に急速にADL（日常生活動作）が低下</strong>するパターンです。
+      「自転車で転んで大腿骨を骨折し、そのまま寝たきりに」という経路がこれにあたります。
+      全国統計では骨折・転倒13.9%、脳血管疾患16.1%が要介護の主因となっています。
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num num-t1">数日〜</div><div class="stat-label">変化のスピード</div></div>
+      <div class="stat-card"><div class="stat-num num-t1">13.9%</div><div class="stat-label">骨折・転倒が原因</div></div>
+      <div class="stat-card"><div class="stat-num num-t1">約40日</div><div class="stat-label">要介護認定の平均期間</div></div>
+    </div>
+
+    <div class="meter-section">
+      <div class="meter-row">
+        <span class="meter-label">スピード</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:95%;background:#D85A30;"></div></div>
+        <span class="meter-val">非常に速い</span>
+      </div>
+      <div class="meter-row">
+        <span class="meter-label">予測しやすさ</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:15%;background:#D85A30;"></div></div>
+        <span class="meter-val">低い</span>
+      </div>
+      <div class="meter-row">
+        <span class="meter-label">介入できる余地</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:40%;background:#D85A30;"></div></div>
+        <span class="meter-val">事前と事後</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step open">
+        <div class="dot" style="border-color:#1D9E75; background:#E1F5EE;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">🟢</span>
+          <span class="step-title">健康状態</span>
+          <span class="step-time">出来事の前</span>
+        </div>
+        <div class="step-body">
+          日常生活を自立して送っている状態。外出・運動・社会参加が可能。
+          この段階での転倒予防（筋力維持・足元の整備・視力管理）が最初の介入ポイントです。
+          <div class="intervention" style="border-color:#1D9E75; background:#E1F5EE;">
+            <strong style="color:#0F6E56">🛡 予防の介入ポイント</strong>
+            転倒リスク評価・住環境チェック・骨粗しょう症対策・適度な運動の継続
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#EF9F27; background:#FAEEDA;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">⚡</span>
+          <span class="step-title">急性イベント発生</span>
+          <span class="step-time">当日〜数日</span>
+        </div>
+        <div class="step-body">
+          転倒・大腿骨骨折、脳卒中発症、交通事故など。例：自転車で転倒→頭部外傷または大腿骨骨折。
+          この瞬間に生活機能が急激に低下し始めます。
+          歩行・排泄・入浴・移動などの日常生活動作に重大な支障をもたらしやすい状態です。
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#E24B4A; background:#FCEBEB;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">🏥</span>
+          <span class="step-title">急性期治療・入院</span>
+          <span class="step-time">数日〜数週間</span>
+        </div>
+        <div class="step-body">
+          救急搬送・手術・集中治療。この期間は医療が主体ですが、
+          廃用症候群（安静による筋力低下）が同時に進行しやすい状態です。
+          退院後の「支援の空白期間」に再転倒や機能低下が起きやすいことに注意が必要です。
+          <div class="intervention" style="border-color:#E24B4A; background:#FCEBEB;">
+            <strong style="color:#A32D2D">⚠ この時期のリスク</strong>
+            入院中の廃用症候群 ／ 退院直後の再転倒 ／ 支援のつなぎ目での空白
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#185FA5; background:#E6F1FB;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">🔄</span>
+          <span class="step-title">回復・リハビリ期</span>
+          <span class="step-time">数週〜数か月</span>
+        </div>
+        <div class="step-body">
+          回復期リハビリ病院または自宅でのリハビリ。十分な回復が得られない場合、
+          住環境の不適合・介助者不在・再転倒への不安が重なり、要介護認定申請へ進みやすくなります。
+          <div class="intervention" style="border-color:#185FA5; background:#E6F1FB;">
+            <strong style="color:#0C447C">💡 重要な介入ポイント</strong>
+            福祉用具の導入・住宅改修・家族への介護教育・暫定サービスの利用開始
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#888780; background:#F1EFE8;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">📋</span>
+          <span class="step-title">要介護認定申請・認定</span>
+          <span class="step-time">平均約40日で認定</span>
+        </div>
+        <div class="step-body">
+          認定調査（平均11日）＋ 主治医意見書作成（平均17.8日）＋ 審査判定。
+          この「認定待ち」の間の支援切れを防ぐ設計が重要です。
+          認定後は介護保険サービスの利用が始まります。
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+
+    <p class="arrow-note">転倒・脳卒中などは「健康だった人が一日で要介護になる」という認識が大切です。予防は発症前と退院直後の2つのタイミングで可能です。</p>
+
+    <!-- 保険セクション 突発型 -->
+    <div class="hoken-section">
+      <div class="hoken-header">🛡 突発型に備える保険の考え方（専門家への相談ポイント）</div>
+      <div class="hoken-body">
+        <div class="hoken-grid">
+          <div class="hoken-card public">
+            <div class="hoken-card-title">🏛 公的保険</div>
+            <ul class="hoken-list">
+              <li><strong>公的医療保険</strong>（健保・国保）<br>入院・手術・リハビリの医療費をカバー</li>
+              <li><strong>介護保険</strong>（40歳以上）<br>要介護認定後の介護サービス費用に適用</li>
+              <li><strong>障害年金</strong><br>重度後遺症で就労困難な場合に受給可能性あり</li>
+            </ul>
+          </div>
+          <div class="hoken-card private">
+            <div class="hoken-card-title">🏢 私的保険（民間・共済）</div>
+            <ul class="hoken-list">
+              <li><strong>自動車保険の人身傷害補償特約</strong><br>交通事故による入院・後遺障害をカバー</li>
+              <li><strong>傷害保険（共済）</strong><br>転倒・骨折など不慮の事故による入院・手術</li>
+              <li><strong>民間介護保険（共済）</strong><br>要介護状態になった際の一時金・年金給付</li>
+              <li><strong>医療保険の入院特約</strong><br>急性期の入院費・手術給付</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ai-prompt-box">
+          <div class="ai-prompt-title">🤖 AIに相談するプロンプト例（コピーして使えます）</div>
+          <div class="ai-prompt-item">
+            <span>転倒・骨折や脳卒中など突発的な事故・疾患で要介護になった場合、公的医療保険と介護保険でどこまでカバーされますか？民間の傷害保険や介護保険と組み合わせる際のポイントも教えてください。</span>
+            <button class="ai-copy-btn" onclick="copyPrompt(this)">コピー</button>
+          </div>
+          <div class="ai-prompt-item">
+            <span>自動車保険の人身傷害補償特約と傷害保険（共済）の違いを、交通事故で後遺障害が残った場合を例に説明してください。40代・50代での加入時の注意点も教えてください。</span>
+            <button class="ai-copy-btn" onclick="copyPrompt(this)">コピー</button>
+          </div>
+        </div>
+        <p class="hoken-note">※保険の選択・加入については、ファイナンシャルプランナー（FP）・保険代理店・共済窓口など専門家にご相談ください。公的制度の詳細は地域包括支援センターや市区町村窓口でも確認できます。</p>
+      </div>
+    </div>
+
+    <div class="back-to-top">
+      <a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a>
+    </div>
+
+  </div><!-- /p1 -->
+
+  <!-- ========== 緩徐型 ========== -->
+  <div class="panel" id="p2">
+
+    <span class="badge badge-t2">蓄積・進行型 ─ 数か月〜数年</span>
+    <div class="panel-desc">
+      フレイル・サルコペニア・低栄養・認知症の進行などにより、<strong>小さな変化が蓄積しながら徐々に生活機能が低下</strong>するパターンです。
+      インフレによる食費削減→低栄養→フレイルという<strong>社会経済的な連鎖</strong>も含まれます。
+      認知症は全国統計で要介護原因の第1位（16.6%）で、この経路の代表例です。
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num num-t2">数年</div><div class="stat-label">変化のスピード目安</div></div>
+      <div class="stat-card"><div class="stat-num num-t2">16.6%</div><div class="stat-label">認知症が最多原因</div></div>
+      <div class="stat-card"><div class="stat-num num-t2">早期介入</div><div class="stat-label">余地が最も大きい</div></div>
+    </div>
+
+    <div class="meter-section">
+      <div class="meter-row">
+        <span class="meter-label">スピード</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:25%;background:#1D9E75;"></div></div>
+        <span class="meter-val">緩やか</span>
+      </div>
+      <div class="meter-row">
+        <span class="meter-label">予測しやすさ</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:75%;background:#1D9E75;"></div></div>
+        <span class="meter-val">比較的高い</span>
+      </div>
+      <div class="meter-row">
+        <span class="meter-label">介入できる余地</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:90%;background:#1D9E75;"></div></div>
+        <span class="meter-val">非常に大きい</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step open">
+        <div class="dot" style="border-color:#1D9E75; background:#E1F5EE;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">🟢</span>
+          <span class="step-title">健康状態</span>
+          <span class="step-time">問題なし</span>
+        </div>
+        <div class="step-body">
+          身体機能・認知機能・社会参加ともに良好な状態。
+          この段階での予防活動（運動・口腔ケア・栄養・社会参加）が最も効果的です。
+          <div class="intervention" style="border-color:#1D9E75; background:#E1F5EE;">
+            <strong style="color:#0F6E56">🛡 予防の介入ポイント</strong>
+            たんぱく質の摂取・慢性疾患の管理・孤立防止・地域活動への参加
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#EF9F27; background:#FAEEDA;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">⚠️</span>
+          <span class="step-title">社会経済的ストレス・生活変化</span>
+          <span class="step-time">気づきにくい段階</span>
+        </div>
+        <div class="step-body">
+          インフレによる食費削減・社会的孤立・運動量の低下・慢性疾患の悪化など。
+          低所得世帯では食費・光熱費の負担が高く、たんぱく質・野菜・乳製品の購入を削減しやすくなります。
+          <div class="intervention" style="border-color:#BA7517; background:#FAEEDA;">
+            <strong style="color:#854F0B">⚠ 見逃しやすいサイン</strong>
+            体重の減少・食欲低下・外出頻度の低下・疲れやすさ・閉じこもり
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#EF9F27; background:#FAEEDA;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">📉</span>
+          <span class="step-title">低栄養・筋力低下の進行</span>
+          <span class="step-time">数か月〜1年</span>
+        </div>
+        <div class="step-body">
+          食事の多様性が低下し、サルコペニア（筋肉量の減少）が進行します。
+          食料不安のある高齢者はフレイルまたはプレフレイルである割合が高いことが国際研究でも示されています。
+          体重減少・筋肉量減少・活動性低下を通じて、要介護化の前段階が形成されます。
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#E24B4A; background:#FCEBEB;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">🧩</span>
+          <span class="step-title">フレイル（虚弱）の発生</span>
+          <span class="step-time">1〜3年</span>
+        </div>
+        <div class="step-body">
+          身体的脆弱性だけでなく、栄養・社会参加・心理面の多面的な低下が起きます。
+          軽い感染や小さな転倒で一段と機能が落ちやすい状態です。
+          ここでの介入が最も効果的とされています。
+          <div class="intervention" style="border-color:#185FA5; background:#E6F1FB;">
+            <strong style="color:#0C447C">💡 最も重要な介入ポイント</strong>
+            栄養指導・通いの場の活用・筋力トレーニング・服薬の見直し・食支援
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#E24B4A; background:#FCEBEB;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">🚨</span>
+          <span class="step-title">きっかけイベントで急悪化</span>
+          <span class="step-time">数日で急変</span>
+        </div>
+        <div class="step-body">
+          フレイルの状態のときに転倒・感染・入院・認知機能の低下などが重なると、
+          一段と機能が低下します。低栄養を伴うフレイルでは、食事量・食事内容・
+          買い物能力・経済状態まで評価しないと改善しにくいとされています。
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#888780; background:#F1EFE8;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">📋</span>
+          <span class="step-title">要介護状態・認定申請</span>
+          <span class="step-time">数年後</span>
+        </div>
+        <div class="step-body">
+          リハビリテーション栄養・転倒予防・住環境調整・認知機能低下への支援が必要になります。
+          医療・介護予防事業・地域包括支援センター・家族支援の連結が重要です。
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+
+    <p class="arrow-note">蓄積・進行型は「いつから悪くなったかわからない」という特徴があります。インフレ・低所得・孤立という社会的要因が介護リスクを高めることを意識した支援が求められます。</p>
+
+    <!-- 保険セクション 蓄積・進行型 -->
+    <div class="hoken-section">
+      <div class="hoken-header">🛡 蓄積・進行型に備える保険の考え方（専門家への相談ポイント）</div>
+      <div class="hoken-body">
+        <div class="hoken-grid">
+          <div class="hoken-card public">
+            <div class="hoken-card-title">🏛 公的保険</div>
+            <ul class="hoken-list">
+              <li><strong>介護保険</strong>（40歳以上）<br>フレイル・認知症進行後の要介護認定でサービス利用可</li>
+              <li><strong>公的医療保険</strong><br>慢性疾患の通院・投薬・入院費をカバー</li>
+              <li><strong>高額療養費制度</strong><br>月の医療費が一定額を超えた場合に払い戻し</li>
+            </ul>
+          </div>
+          <div class="hoken-card private">
+            <div class="hoken-card-title">🏢 私的保険（民間・共済）</div>
+            <ul class="hoken-list">
+              <li><strong>民間介護保険（共済）</strong><br>要介護2〜3以上で給付される商品が多い</li>
+              <li><strong>医療保険・がん保険</strong><br>慢性疾患の悪化・入院・手術をカバー</li>
+              <li><strong>就業不能保険</strong><br>フレイル・疾患で働けなくなった際の収入補償</li>
+              <li><strong>認知症保険</strong><br>認知症と診断された際の一時金・費用給付</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ai-prompt-box">
+          <div class="ai-prompt-title">🤖 AIに相談するプロンプト例（コピーして使えます）</div>
+          <div class="ai-prompt-item">
+            <span>フレイルや認知症が進行して要介護になった場合、公的介護保険でどのようなサービスが受けられますか？民間の介護保険・認知症保険と組み合わせる際の考え方も教えてください。</span>
+            <button class="ai-copy-btn" onclick="copyPrompt(this)">コピー</button>
+          </div>
+          <div class="ai-prompt-item">
+            <span>65歳以上で民間介護保険に加入する場合、保険料・給付条件・免責期間のチェックポイントを教えてください。共済との違いも含めて比較してください。</span>
+            <button class="ai-copy-btn" onclick="copyPrompt(this)">コピー</button>
+          </div>
+        </div>
+        <p class="hoken-note">※保険の選択・加入については、ファイナンシャルプランナー（FP）・保険代理店・共済窓口など専門家にご相談ください。公的制度の詳細は地域包括支援センターや市区町村窓口でも確認できます。</p>
+      </div>
+    </div>
+
+    <div class="back-to-top">
+      <a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a>
+    </div>
+
+  </div><!-- /p2 -->
+
+  <!-- ========== 若年期起因型 ========== -->
+  <div class="panel" id="p3">
+
+    <span class="badge badge-t3">若年期起因型 ─ 直後から長期にわたる変化</span>
+    <div class="panel-desc">
+      交通事故後遺症・脊髄損傷・難病・慢性疼痛などにより、
+      <strong>40〜50代以前から生活機能障害が残存し、加齢や疾病増悪で支援必要度が高まる</strong>パターンです。
+      発症から要介護状態まで十数年かかることもあり、<strong>制度の狭間に落ちやすい</strong>経路です。
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num num-t3">十数年</div><div class="stat-label">変化の時間幅（最長）</div></div>
+      <div class="stat-card"><div class="stat-num num-t3">多様</div><div class="stat-label">経路のパターン</div></div>
+      <div class="stat-card"><div class="stat-num num-t3" style="font-size:1em;">支援制度横断利用</div><div class="stat-label">必要な支援の視点</div></div>
+    </div>
+
+    <div class="meter-section">
+      <div class="meter-row">
+        <span class="meter-label">スピード</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:20%;background:#7F77DD;"></div></div>
+        <span class="meter-val">長期・多様</span>
+      </div>
+      <div class="meter-row">
+        <span class="meter-label">予測しやすさ</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:45%;background:#7F77DD;"></div></div>
+        <span class="meter-val">中程度</span>
+      </div>
+      <div class="meter-row">
+        <span class="meter-label">制度の複雑さ</span>
+        <div class="meter-bar"><div class="meter-fill" style="width:90%;background:#7F77DD;"></div></div>
+        <span class="meter-val">非常に高い</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step open">
+        <div class="dot" style="border-color:#1D9E75; background:#E1F5EE;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">🟢</span>
+          <span class="step-title">健康状態（若年期）</span>
+          <span class="step-time">10〜30代</span>
+        </div>
+        <div class="step-body">
+          就労・学業・家庭生活を送っている状態。
+          この段階では介護リスクの認識はほぼなく、備えの意識も持ちにくい時期です。
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#E24B4A; background:#FCEBEB;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">💥</span>
+          <span class="step-title">若年期の重大イベント</span>
+          <span class="step-time">突然の出来事</span>
+        </div>
+        <div class="step-body">
+          交通事故による髄液漏れ・脊髄損傷、脳外傷、難病発症（神経疾患・指定難病など）、慢性疼痛の発生。
+          発症直後から介助が必要になる場合もあれば、しばらくは就労継続できる場合もあります。
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#EF9F27; background:#FAEEDA;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">⚖️</span>
+          <span class="step-title">就労・生活の継続と後遺症の共存</span>
+          <span class="step-time">数年〜十数年</span>
+        </div>
+        <div class="step-body">
+          後遺症や障害を抱えながら就労・家庭生活を続ける時期。
+          この期間が非常に長い場合があります（髄液漏れのように症状が緩やかに悪化するケースなど）。
+          障害福祉サービスと介護保険制度の境界が複雑で、支援につながりにくい状況が続きやすいです。
+          <div class="intervention" style="border-color:#BA7517; background:#FAEEDA;">
+            <strong style="color:#854F0B">⚠ 見えにくいリスク</strong>
+            経済的困難・就労継続の限界・家族の介護疲れ・制度の狭間に落ちやすい
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#7F77DD; background:#EEEDFE;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">📈</span>
+          <span class="step-title">加齢による機能低下の顕在化</span>
+          <span class="step-time">40〜60代</span>
+        </div>
+        <div class="step-body">
+          若年期の後遺症に加齢が重なり、支援必要度が高まります。
+          脳血管疾患・外傷後遺症・慢性疾患の重症化が40〜50代の要介護化の中心的リスクです。
+          全年齢統計では見えにくい層であるため、個別の評価が特に重要です。
+          <div class="intervention" style="border-color:#534AB7; background:#EEEDFE;">
+            <strong style="color:#3C3489">💡 必要な支援</strong>
+            就労継続支援・障害福祉サービスとの連携・収入減少への相談・家族負担の評価
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="dot" style="border-color:#888780; background:#F1EFE8;"></div>
+        <div class="step-head" onclick="toggleStep(this.parentElement)">
+          <span class="step-icon">📋</span>
+          <span class="step-title">要介護認定・サービス利用</span>
+          <span class="step-time">認定後</span>
+        </div>
+        <div class="step-body">
+          介護保険の原因分類だけでなく、障害福祉・医療・就労・家族介護の状況を含む個別評価が必要です。
+          要介護認定の有無だけでなく、発症前後の経済条件・栄養状態まで含めた総合的な評価が求められます。
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+
+    <p class="arrow-note">若年期起因型は「介護保険の想定外」に置かれやすく、制度の狭間に落ちやすい経路です。発症から要介護認定まで十数年かかることもあります。</p>
+
+    <!-- 保険セクション 若年期起因型 -->
+    <div class="hoken-section">
+      <div class="hoken-header">🛡 若年期起因型に備える保険の考え方（専門家への相談ポイント）</div>
+      <div class="hoken-body">
+        <div class="hoken-grid">
+          <div class="hoken-card public">
+            <div class="hoken-card-title">🏛 公的保険</div>
+            <ul class="hoken-list">
+              <li><strong>公的医療保険</strong><br>事故・難病の急性期〜慢性期の医療費をカバー</li>
+              <li><strong>障害年金（国民・厚生）</strong><br>障害等級に応じて受給可能。申請時期が重要</li>
+              <li><strong>介護保険</strong>（40歳以上・特定疾病）<br>若年でも特定疾病に該当すれば利用可</li>
+              <li><strong>障害福祉サービス</strong><br>介護保険と並行して利用できる場合あり</li>
+            </ul>
+          </div>
+          <div class="hoken-card private">
+            <div class="hoken-card-title">🏢 私的保険（民間・共済）</div>
+            <ul class="hoken-list">
+              <li><strong>自動車保険の人身傷害補償特約</strong><br>交通事故起因の後遺障害・介護費用をカバー</li>
+              <li><strong>傷害保険（共済）の後遺障害特約</strong><br>事故による長期的な後遺症に対応</li>
+              <li><strong>就業不能保険・所得補償保険</strong><br>若年期から長期で働けない場合の収入を補償</li>
+              <li><strong>民間介護保険</strong><br>若いうちに加入すると保険料が低く抑えられる</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ai-prompt-box">
+          <div class="ai-prompt-title">🤖 AIに相談するプロンプト例（コピーして使えます）</div>
+          <div class="ai-prompt-item">
+            <span>30〜40代で交通事故の後遺症や難病により就労が困難になった場合、障害年金・障害福祉サービス・介護保険はどのように使い分けられますか？申請の優先順位と注意点を教えてください。</span>
+            <button class="ai-copy-btn" onclick="copyPrompt(this)">コピー</button>
+          </div>
+          <div class="ai-prompt-item">
+            <span>若い頃（20〜40代）に加入しておくと長期後遺症リスクに備えられる保険・共済の種類と選び方のポイントを、公的保険との役割分担の観点から教えてください。</span>
+            <button class="ai-copy-btn" onclick="copyPrompt(this)">コピー</button>
+          </div>
+        </div>
+        <p class="hoken-note">※保険の選択・加入については、ファイナンシャルプランナー（FP）・保険代理店・共済窓口など専門家にご相談ください。障害年金・障害福祉の申請は市区町村窓口または社会保険労務士にご相談ください。</p>
+      </div>
+    </div>
+
+    <div class="back-to-top">
+      <a class="back-to-top-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">▲ ページ上部へ戻る</a>
+    </div>
+
+  </div><!-- /p3 -->
+
+  <!-- 免責 -->
+  <div class="disclaimer">
+    <b>ご利用にあたって：</b><br>
+    本ページは終活の入口として「知る・整理する」ことを目的とした学習用コンテンツです。
+    介護・医療・福祉に関する最終判断は、必ず専門家（ケアマネジャー・医師・地域包括支援センター等）にご確認ください。
+    AIへの質問時には、個人を特定できる情報（氏名・住所・口座番号等）は入力しないようお願いします。
+  </div>
+
+  <p style="font-size:0.75em; color:#9ca3af; margin-top:12px; line-height:1.7;">
+    ※このページはページを閉じるとリセットされます（データはブラウザ外に保存・送信されません）。
+  </p>
+
+</div><!-- /wrap -->
+
+<!-- フッター -->
+<footer>
+  <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener"
+     style="display:inline-block;font-weight:900;font-size:1em;color:#185FA5;
+            text-decoration:none;margin-bottom:6px;letter-spacing:.04em;">
+    終活人.jp
+  </a><br>
+  <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener"
+     style="font-size:0.75em;color:#6b7280;text-decoration:underline;">
+    https://www.shukatsubito.jp/
+  </a>
+  <p style="font-size:0.75em;color:#6b7280;line-height:1.8;margin:8px 0 0;">
+    © 終活人.jp ／ 無断転載・商用利用禁止
+  </p>
+</footer>
+
+<script>
+// タブ切り替え
+var activeClass = 'active-t1';
+function showPanel(id, cls, btn) {
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active-t1','active-t2','active-t3'); });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add(cls);
+}
+
+// ステップのアコーディオン
+function toggleStep(el) {
+  el.classList.toggle('open');
+}
+
+// AIプロンプトのコピー
+function copyPrompt(btn) {
+  var text = btn.previousElementSibling.textContent.trim();
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '✓ コピー済';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'コピー';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✓ コピー済';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'コピー';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
