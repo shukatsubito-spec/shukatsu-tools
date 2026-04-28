@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>チャレンジ！終活｜10のテーマをクリアしていこう</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Shippori+Mincho:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@700&display=swap');
 
 /* ===== 文字拡大バー ===== */
 #font-size-bar {
@@ -13,18 +13,18 @@
   background: rgba(255,255,255,.96);
   border-bottom: 1px solid #e2e8f0;
   padding: 6px 14px;
-  display: flex; align-items: center; gap: 8px;
+  display: flex; justify-content: center; align-items: center; gap: 8px;
   backdrop-filter: blur(4px);
 }
 #font-size-bar span { font-size: 0.75rem; color: #64748b; margin-right: 2px; }
 .fsz-btn {
-  border: 1px solid #cbd5e1; background: #fff; color: #334155;
+  border: 1px solid #B5D4F4; background: #fff; color: #185FA5;
   border-radius: 6px; padding: 4px 10px; font-size: 0.75rem;
   cursor: pointer; font-family: inherit; font-weight: 700;
   transition: all .15s;
 }
-.fsz-btn:hover { background: #f1f5f9; }
-.fsz-btn.active { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+.fsz-btn:hover { background: #E6F1FB; }
+.fsz-btn.active { background: #185FA5; color: #fff; border-color: #185FA5; }
 
 :root {
   --ink: #1a1a2e;
@@ -56,8 +56,8 @@ html { scroll-behavior: smooth; overflow-x: hidden; font-size: 16px; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-  font-size: 1rem;
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  font-size: 1em;
   line-height: 1.8;
   overflow-x: hidden;
   word-break: break-word;
@@ -65,9 +65,9 @@ body {
 
 /* ===== HERO ===== */
 .hero {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, #0C447C 0%, #185FA5 60%, #2176C2 100%);
   color: #fff;
-  padding: 56px 20px 44px;
+  padding: clamp(28px, 6vw, 48px) 20px clamp(24px, 5vw, 40px);
   text-align: center;
   position: relative;
   overflow: hidden;

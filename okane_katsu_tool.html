@@ -14,20 +14,20 @@
   border-bottom: 1px solid #e2e8f0;
   padding: 6px 14px;
   display: flex;
-  justify-content: center; /* ← センタリング */
+  justify-content: center;
   align-items: center;
   gap: 8px;
   backdrop-filter: blur(4px);
 }
-#font-size-bar span { font-size: 12px; color: #64748b; margin-right: 2px; }
+#font-size-bar span { font-size: 0.75rem; color: #64748b; margin-right: 2px; }
 .fsz-btn {
-  border: 1px solid #cbd5e1; background: #fff; color: #334155;
-  border-radius: 6px; padding: 4px 10px; font-size: 12px;
+  border: 1px solid #B5D4F4; background: #fff; color: #185FA5;
+  border-radius: 6px; padding: 4px 10px; font-size: 0.75rem;
   cursor: pointer; font-family: inherit; font-weight: 700;
   transition: all .15s;
 }
-.fsz-btn:hover { background: #f1f5f9; }
-.fsz-btn.active { background: #1a4480; color: #fff; border-color: #1a4480; }
+.fsz-btn:hover { background: #E6F1FB; }
+.fsz-btn.active { background: #185FA5; color: #fff; border-color: #185FA5; }
 
 :root {
   --ink: #1f2937;
@@ -49,12 +49,12 @@
   --shadow-md: 0 6px 24px rgba(31,41,55,.12);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; overflow-x: hidden; font-size: 16px; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-  font-size: 16px;
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  font-size: 1em;
   line-height: 1.8;
   overflow-x: hidden;
   word-break: break-word;
@@ -73,7 +73,7 @@ body {
   border: 1px solid rgba(255,255,255,.25);
   border-radius: 999px;
   padding: 4px 16px;
-  font-size: 12px;
+  font-size: 0.75rem;
   letter-spacing: .1em;
   margin-bottom: 14px;
 }
@@ -83,7 +83,7 @@ body {
   font-weight: 700;
   margin-bottom: 10px;
 }
-.page-header p { font-size: 14px; color: rgba(255,255,255,.8); max-width: min(480px, 100%); margin: 0 auto; }
+.page-header p { font-size: 0.875rem; color: rgba(255,255,255,.8); max-width: min(480px, 100%); margin: 0 auto; }
 
 /* ===== NAV TABS ===== */
 .nav-tabs {
@@ -109,7 +109,7 @@ body {
   border: none;
   background: transparent;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 0.813rem;
   font-weight: 700;
   cursor: pointer;
   border-bottom: 3px solid transparent;
@@ -143,17 +143,17 @@ body {
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   font-weight: 900;
-  font-size: 16px;
+  font-size: 1.0rem;
   flex-shrink: 0;
 }
-.sec-header h2 { font-size: 20px; font-weight: 700; }
+.sec-header h2 { font-size: 1.25rem; font-weight: 700; }
 .sec-header .sec-badge {
   display: inline-block;
   background: #eff6ff;
   color: var(--accent);
   border-radius: 8px;
   padding: 3px 10px;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
@@ -229,7 +229,7 @@ details[open] .ad-chevron { transform: rotate(180deg); }
   padding: 20px;
   box-shadow: var(--shadow);
 }
-.diag-lead { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
+.diag-lead { color: var(--muted); font-size: 0.875rem; margin-bottom: 14px; }
 
 .progress-bar-wrap {
   height: 8px;
@@ -253,7 +253,7 @@ fieldset {
   margin: 0 0 12px;
   background: var(--white);
 }
-legend { font-weight: 700; font-size: 14px; color: var(--ink); padding: 0 4px; }
+legend { font-weight: 700; font-size: 0.875rem; color: var(--ink); padding: 0 4px; }
 label.opt {
   display: flex;
   align-items: flex-start;
@@ -262,7 +262,7 @@ label.opt {
   padding: 8px 10px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.5;
 }
 label.opt:hover { background: #f1f5f9; }
@@ -273,7 +273,7 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   appearance: none;
   border-radius: 10px;
   padding: 10px 18px;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
@@ -294,9 +294,9 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   margin-bottom: 10px;
   border-left: 6px solid var(--accent);
 }
-#kpis .kpi-card h4 { font-size: 15px; margin-bottom: 6px; }
+#kpis .kpi-card h4 { font-size: 0.938rem; margin-bottom: 6px; }
 .tips-list { padding-left: 1.2em; margin-top: 8px; }
-.tips-list li { margin: .4rem 0; font-size: 14px; }
+.tips-list li { margin: .4rem 0; font-size: 0.875rem; }
 
 /* ===== ライフプラン計算 ===== */
 .lp-wrap {
@@ -335,17 +335,17 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   margin-bottom: 12px;
 }
 .lp-block-head h4 {
-  font-size: 15px;
+  font-size: 0.938rem;
   font-weight: 700;
   margin: 0;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.lp-block-head h4 small { color: var(--muted); font-size: 12px; font-weight: 400; }
+.lp-block-head h4 small { color: var(--muted); font-size: 0.75rem; font-weight: 400; }
 .lp-section-label {
   display: inline-block;
-  font-size: 11px;
+  font-size: 0.688rem;
   font-weight: 900;
   letter-spacing: .06em;
   padding: 3px 10px;
@@ -369,14 +369,14 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   transform: translate(-50%, -50%);
   background: #fafafa;
   padding: 0 10px;
-  font-size: 11px;
+  font-size: 0.688rem;
   font-weight: 900;
   color: #991b1b;
   letter-spacing: .1em;
   white-space: nowrap;
 }
 
-.bonus-ctrl { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.bonus-ctrl { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
 .bonus-ctrl input {
   width: 44px;
   text-align: center;
@@ -394,17 +394,17 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   border: 1px solid var(--line);
   border-radius: 8px;
   font: inherit;
-  font-size: 13px;
+  font-size: 0.813rem;
   width: 100%;
   background: #fff;
 }
 .lp-row .amount-wrap { display: flex; align-items: center; gap: 4px; }
 .lp-row .amount-wrap input { flex: 1; }
-.lp-row .unit { font-size: 12px; color: var(--muted); white-space: nowrap; }
-.lp-del { border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; height: 32px; width: 32px; font-size: 14px; }
+.lp-row .unit { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+.lp-del { border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; height: 32px; width: 32px; font-size: 0.875rem; }
 .lp-del:hover { background: #fee2e2; }
 .lp-add { margin-top: 10px; }
-.lp-add-btn { border: 1px dashed #dc2626; background: #fff; color: #dc2626; border-radius: 8px; padding: 7px 12px; font-size: 13px; cursor: pointer; font-family: inherit; }
+.lp-add-btn { border: 1px dashed #dc2626; background: #fff; color: #dc2626; border-radius: 8px; padding: 7px 12px; font-size: 0.813rem; cursor: pointer; font-family: inherit; }
 .lp-add-btn:hover { background: #fef2f2; }
 
 /* 右カラム：結果パネル */
@@ -417,7 +417,7 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   top: 80px;
 }
 .lp-result-title {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 900;
   color: var(--ink);
   margin-bottom: 14px;
@@ -429,7 +429,7 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
 /* 月間・年間ブロック */
 .lp-result-block { margin-bottom: 12px; }
 .lp-result-period {
-  font-size: 11px;
+  font-size: 0.688rem;
   font-weight: 900;
   letter-spacing: .08em;
   padding: 3px 10px;
@@ -458,9 +458,9 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
   background: #fef2f2;
   border-color: #fca5a5;
 }
-.lp-result-label { font-size: 12px; color: var(--muted); font-weight: 700; }
+.lp-result-label { font-size: 0.75rem; color: var(--muted); font-weight: 700; }
 .lp-result-val {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 900;
   color: var(--ink);
   letter-spacing: -.01em;
@@ -470,16 +470,16 @@ label.opt input { margin-top: 2px; accent-color: var(--accent); flex-shrink: 0; 
 
 hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0; }
 .lp-tools { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
-.lp-check-label { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.lp-check-label { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 6px; cursor: pointer; }
 
 /* 旧スタイル（後方互換） */
 .kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-.kpi-item .kpi-label { font-size: 11px; color: var(--muted); margin-bottom: 3px; }
-.kpi-item .kpi-val { font-size: 20px; font-weight: 900; }
+.kpi-item .kpi-label { font-size: 0.688rem; color: var(--muted); margin-bottom: 3px; }
+.kpi-item .kpi-val { font-size: 1.25rem; font-weight: 900; }
 .kpi-item .kpi-val.negative { color: #dc2626; }
 .kpi-item .kpi-val.positive { color: var(--ok); }
 .kpi-period {
-  display: inline-block; font-size: 10px; font-weight: 700;
+  display: inline-block; font-size: 0.625rem; font-weight: 700;
   padding: 2px 6px; border-radius: 4px;
   background: #fce7f3; color: #9d174d; margin-bottom: 4px;
 }
@@ -498,13 +498,13 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
   padding: 14px;
   margin-bottom: 10px;
 }
-.ins-q-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-.ins-q-help { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.ins-q-item h4 { font-size: 0.875rem; font-weight: 700; margin-bottom: 4px; }
+.ins-q-help { font-size: 0.75rem; color: var(--muted); margin-bottom: 8px; }
 .ins-opts { display: flex; gap: 10px; flex-wrap: wrap; }
 .ins-radio {
   display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px;
-  cursor: pointer; font-size: 13px;
+  cursor: pointer; font-size: 0.813rem;
 }
 .ins-radio input { accent-color: var(--accent); }
 .ins-result-grid { display: grid; gap: 10px; }
@@ -515,9 +515,9 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
   padding: 14px;
   background: #fafafa;
 }
-.ins-rec h5 { font-size: 14px; margin-bottom: 6px; }
+.ins-rec h5 { font-size: 0.875rem; margin-bottom: 6px; }
 .ins-tag {
-  display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; margin: 2px;
+  display: inline-block; font-size: 0.688rem; padding: 2px 8px; border-radius: 999px; margin: 2px;
 }
 .t-blue { background: #e0f2fe; color: #0c4a6e; }
 .t-green { background: #dcfce7; color: #065f46; }
@@ -525,7 +525,7 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
 .t-gray { background: #f3f4f6; color: #111827; }
 .ins-cta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
 .ins-cta-btn {
-  display: inline-block; border-radius: 8px; padding: 7px 12px; font-size: 13px;
+  display: inline-block; border-radius: 8px; padding: 7px 12px; font-size: 0.813rem;
   text-decoration: none; border: 1px solid var(--line); color: var(--ink); font-weight: 700;
 }
 .ins-cta-btn.primary { background: var(--ok); color: #fff; border-color: var(--ok); }
@@ -535,7 +535,7 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
   background: #f8fafc;
   border-radius: 10px;
   padding: 10px 14px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--muted);
   margin-top: 14px;
   line-height: 1.7;
@@ -556,7 +556,7 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 7px 18px;
-  font-size: 13px;
+  font-size: 0.813rem;
   font-weight: 700;
   color: var(--accent);
   cursor: pointer;
@@ -572,7 +572,7 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
   align-items: center;
   gap: 5px;
   font-weight: 900;
-  font-size: 13px;
+  font-size: 0.813rem;
   padding: 5px 14px;
   border-radius: 999px;
   margin-bottom: 8px;
@@ -593,14 +593,14 @@ hr.kpi-divider { border: none; border-top: 1px solid var(--line); margin: 12px 0
   border: 1px solid #fde68a;
   border-radius: 10px;
   padding: 10px 14px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #78350f;
   margin-bottom: 16px;
 }
-.note-row { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.note-row { font-size: 0.75rem; color: var(--muted); margin-top: 8px; }
 
 @media(max-width:480px){
-  .tab-btn { padding: 12px 14px; font-size: 12px; }
+  .tab-btn { padding: 12px 14px; font-size: 0.75rem; }
   .main-wrap { padding: 16px 12px 40px; }
 }
 </style>
@@ -727,9 +727,9 @@ function setFsz(pct, btn){
 
           <div class="lp-tools">
             <label class="lp-check-label"><input type="checkbox" id="lpAutoSave" checked> 自動保存</label>
-            <button class="btn btn-ghost" id="lpResetBtn" style="font-size:12px;padding:6px 12px;">リセット</button>
+            <button class="btn btn-ghost" id="lpResetBtn" style="font-size: 0.75rem;padding:6px 12px;">リセット</button>
           </div>
-          <p style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.7;">※入力データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません。</p>
+          <p style="font-size: 0.75rem;color:#64748b;margin-top:8px;line-height:1.7;">※入力データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません。</p>
         </div>
 
       </div>
@@ -834,11 +834,11 @@ function setFsz(pct, btn){
       </form>
 
       <div class="diag-result" id="diagResult" hidden>
-        <h3 style="font-size:16px;margin-bottom:12px;">🎯 あなたの優先テーマ（上位3つ）</h3>
+        <h3 style="font-size: 1.0rem;margin-bottom:12px;">🎯 あなたの優先テーマ（上位3つ）</h3>
         <div id="kpis"></div>
         <details style="margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:10px;">
-          <summary style="cursor:pointer;font-weight:700;font-size:13px;">全テーマのスコア一覧</summary>
-          <ul id="allTips" style="padding-left:1.2em;margin-top:8px;font-size:13px;"></ul>
+          <summary style="cursor:pointer;font-weight:700;font-size: 0.813rem;">全テーマのスコア一覧</summary>
+          <ul id="allTips" style="padding-left:1.2em;margin-top:8px;font-size: 0.813rem;"></ul>
         </details>
       </div>
     </div>
@@ -1049,7 +1049,7 @@ function setFsz(pct, btn){
         <button class="btn btn-primary" id="insCalcBtn">診断結果を表示</button>
       </div>
       <div id="insResult" hidden style="margin-top:16px;">
-        <h3 style="font-size:16px;margin-bottom:12px;">📋 ニーズが確認された保険・共済</h3>
+        <h3 style="font-size: 1.0rem;margin-bottom:12px;">📋 ニーズが確認された保険・共済</h3>
         <div class="ins-result-grid" id="insRecsGrid"></div>
         <div class="ins-disclaimer">
           本診断は一般的な情報提供を目的としており、特定の保険商品の推薦・販売行為ではありません。
@@ -1244,8 +1244,8 @@ document.getElementById('insCalcBtn').addEventListener('click', ()=>{
   if(needs.length === 0){
     grid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:16px 0;">
-        <span class="judge-badge judge-ok" style="font-size:16px;padding:10px 24px;">👍 イイね！備えは概ね整っています</span>
-        <p style="font-size:13px;color:var(--muted);margin-top:10px;">定期的に内容の見直しを続けましょう。</p>
+        <span class="judge-badge judge-ok" style="font-size: 1.0rem;padding:10px 24px;">👍 イイね！備えは概ね整っています</span>
+        <p style="font-size: 0.813rem;color:var(--muted);margin-top:10px;">定期的に内容の見直しを続けましょう。</p>
       </div>`;
   } else {
     const sorted = needs.sort((a,b)=>{ const order={ng:0,warn:1,ok:2}; return order[insMap[a].level]-order[insMap[b].level]; });
@@ -1255,7 +1255,7 @@ document.getElementById('insCalcBtn').addEventListener('click', ()=>{
       return `<div class="ins-rec ${r.level==='ng'?'rec-ng':r.level==='warn'?'rec-warn':'rec-ok'}">
         <span class="judge-badge ${r.level==='ng'?'judge-ng':r.level==='warn'?'judge-warn':'judge-ok'}">${r.badge}</span>
         <h5 style="margin:6px 0 4px;">${r.title}</h5>
-        <p style="font-size:13px;color:var(--muted);margin:0 0 8px;line-height:1.65;">${r.desc}</p>
+        <p style="font-size: 0.813rem;color:var(--muted);margin:0 0 8px;line-height:1.65;">${r.desc}</p>
         <div class="ins-cta">${links}</div>
       </div>`;
     }).join('');
@@ -1280,10 +1280,10 @@ document.getElementById('insClearBtn').addEventListener('click', ()=>{
   margin-top:0;
 ">
   <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener"
-     style="display:inline-block;font-weight:700;font-size:15px;color:#1f2937;text-decoration:none;margin-bottom:8px;letter-spacing:.04em;">
+     style="display:inline-block;font-weight:700;font-size: 0.938rem;color:#1f2937;text-decoration:none;margin-bottom:8px;letter-spacing:.04em;">
     終活人.jp
   </a>
-  <p style="font-size:12px;color:#64748b;line-height:1.8;margin:0;">
+  <p style="font-size: 0.75rem;color:#64748b;line-height:1.8;margin:0;">
     © 終活人.jp ／ 無断転載・商用利用禁止 ／ 本ツールの著作権は終活人.jpに帰属します。
   </p>
 </footer>
