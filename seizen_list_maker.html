@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生前整理・デジタル整理 一覧表メーカー｜終活人.jp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  button,input,select,textarea{font-family:inherit;}
+  html{font-size:16px;}
+  body{
+    font-family:'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;
+    background:#F5F0E8;
+    color:#1a1a18;
+    font-size:14px; /* 本文14pt相当 */
+    line-height:1.8;
+  }
+  .app{max-width:860px;margin:0 auto;padding:1.5rem 1rem 3rem;}
+
+  /* ヘッダー */
+  .site-name{text-align:center;font-size:10px;font-weight:500;margin-bottom:0.2rem;}
+  .site-name a{color:#185FA5;text-decoration:none;border-bottom:1.5px solid #B5D4F4;padding-bottom:1px;}
+  h1{font-size:1.2em;font-weight:700;color:#0C447C;text-align:center;margin-bottom:0.2rem;letter-spacing:0.05em;}
+  .tagline{text-align:center;font-size:10px;color:#888;margin-bottom:0.3rem;}
+  .site-credit{text-align:center;font-size:10px;color:#aaa;margin-bottom:0.75rem;}
+
+  /* 利用規約バナー */
+  .terms-bar{
+    background:#FFF8EC;border:1px solid #E8C97A;border-radius:8px;
+    padding:0.6rem 1rem;margin-bottom:0.75rem;font-size:10px;color:#7A5500;line-height:1.7;
+  }
+  .terms-bar strong{color:#5A3C00;}
+
+  /* 文字サイズ */
+  .font-size-bar{
+    display:flex;align-items:center;justify-content:center;gap:0.5rem;
+    margin-bottom:1rem;padding:0.5rem 0.75rem;
+    background:#FDFAF5;border:0.5px solid #ddd;border-radius:8px;
+  }
+  .font-size-bar span{font-size:10px;color:#888;}
+  .fs-btn{
+    padding:0.25rem 0.875rem;border-radius:6px;border:0.5px solid #B5D4F4;
+    background:#F5F0E8;color:#185FA5;font-size:10px;cursor:pointer;transition:background 0.15s;
+  }
+  .fs-btn:hover{background:#E6F1FB;}
+  .fs-btn.active{background:#185FA5;color:#fff;border-color:#185FA5;}
+
+  /* ステップ */
+  .step{display:none;} .step.active{display:block;}
+
+  /* 説明 */
+  .intro{background:#FDFAF5;border:0.5px solid #ddd;border-radius:0.75rem;padding:1rem 1.25rem;margin-bottom:1.25rem;}
+  .intro p{font-size:1em;color:#555;line-height:1.8;}
+  .note-badge{display:inline-block;background:#FAEEDA;border:0.5px solid #854F0B;color:#633806;font-size:10px;padding:2px 8px;border-radius:4px;margin-top:6px;}
+
+  /* セクションブロック */
+  .section-block{background:#FDFAF5;border:0.5px solid #ddd;border-radius:0.75rem;margin-bottom:0.625rem;overflow:hidden;}
+  .section-header{display:flex;align-items:center;gap:0.625rem;padding:0.75rem 1rem;cursor:pointer;user-select:none;}
+  .section-header:hover{background:#EDE8DF;}
+  .sec-color{width:6px;height:2.25rem;border-radius:3px;flex-shrink:0;}
+  .sec-title{font-size:1em;font-weight:500;flex:1;}
+  .sec-check{font-size:10px;color:#999;}
+  .section-items{border-top:0.5px solid #ddd;padding:0.75rem 1rem;display:none;}
+  .section-items.open{display:block;}
+
+  /* 各チェック項目行 */
+  .item-row{
+    display:flex;align-items:center;gap:10px;
+    padding:0.45rem 0.6rem;border-radius:6px;
+    border:0.5px solid #ddd;background:#F5F0E8;
+    margin-bottom:6px;
+    flex-wrap:wrap;
+  }
+  .item-row:hover{background:#E6F1FB;}
+  .item-row.priority-high{border-left:3px solid #C0392B;background:#FDF5F4;}
+  .item-row.priority-mid{border-left:3px solid #E67E22;background:#FDF9F4;}
+  .item-row.priority-low{border-left:3px solid #27AE60;background:#F4FDF6;}
+  .item-chk{flex-shrink:0;width:16px;height:16px;cursor:pointer;}
+  .item-name{flex:1;font-size:1em;line-height:1.5;cursor:pointer;}
+  .item-desc{font-size:10px;color:#888;width:100%;padding-left:26px;margin-top:-2px;line-height:1.6;}
+  
+  /* 件数セレクト */
+  .count-wrap{display:flex;align-items:center;gap:5px;flex-shrink:0;font-size:10px;color:#555;}
+  .count-wrap select{
+    font-size:10px;padding:2px 4px;border:1px solid #B5D4F4;border-radius:4px;
+    background:#fff;color:#185FA5;cursor:pointer;
+  }
+  .count-wrap .count-label{white-space:nowrap;}
+
+  /* 優先度凡例 */
+  .priority-legend{display:flex;gap:12px;margin-bottom:10px;font-size:10px;flex-wrap:wrap;}
+  .pl-item{display:flex;align-items:center;gap:4px;}
+  .pl-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+
+  /* ボタン */
+  .btn-row{display:flex;gap:0.625rem;margin-top:1.25rem;flex-wrap:wrap;}
+  .btn{padding:0.6rem 1.4rem;border-radius:8px;font-size:1em;cursor:pointer;border:0.5px solid #bbb;background:#FDFAF5;color:#1a1a18;}
+  .btn-primary{background:#185FA5;color:#fff;border-color:#185FA5;}
+  .btn:hover{opacity:0.85;}
+  .selected-count{font-size:10px;color:#555;margin-top:8px;}
+
+  /* プレビュー */
+  .preview-controls{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;}
+  .preview-area{background:#FDFAF5;border:0.5px solid #ccc;border-radius:8px;}
+  .print-note{font-size:10px;color:#999;text-align:center;margin-top:8px;}
+
+  /* === 印刷用A4ページ === */
+  .a4page{width:100%;padding:28px 32px;box-sizing:border-box;border-bottom:1px dashed #ddd;}
+  .a4page:last-child{border-bottom:none;}
+
+  /* 印刷ヘッダー */
+  .print-header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #0C447C;padding-bottom:8px;margin-bottom:14px;}
+  .print-title{font-size:1.1em;font-weight:700;color:#0C447C;letter-spacing:0.05em;}
+  .print-subtitle{font-size:10px;color:#888;}
+  .print-meta{font-size:10px;color:#555;text-align:right;line-height:1.9;}
+  .print-meta span{display:inline-block;border-bottom:1px solid #bbb;min-width:80px;margin-left:4px;}
+
+  /* セクション見出し（印刷） */
+  .ps-title{
+    font-size:0.95em;font-weight:700;color:#fff;
+    padding:4px 12px;border-radius:4px;
+    margin-bottom:8px;margin-top:14px;
+    display:inline-block;
+  }
+
+  /* 一覧表テーブル */
+  .list-table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:10px;}
+  .list-table th{
+    background:#EDE8DF;color:#333;font-weight:500;
+    padding:5px 8px;border:1px solid #ccc;text-align:left;
+    font-size:10px;
+  }
+  .list-table td{border:1px solid #ccc;padding:5px 8px;vertical-align:top;}
+  .list-table tr.data-row td{background:#FDFAF5;}
+  .list-table tr.data-row:nth-child(even) td{background:#F5F0E8;}
+  .list-table .col-no{width:30px;text-align:center;font-weight:500;}
+  .list-table .col-item{width:120px;font-weight:500;}
+  .list-table .col-content{width:auto;}
+  .list-table .col-write{width:160px;}
+  .write-lines{display:flex;flex-direction:column;gap:6px;}
+  .write-line{border-bottom:1px solid #bbb;min-height:16px;width:100%;}
+
+  /* 記入例ラベル */
+  .entry-hint{font-size:9px;color:#aaa;font-style:italic;}
+
+  /* フッター印刷 */
+  .print-footer{margin-top:16px;padding-top:8px;border-top:1px solid #ddd;display:flex;justify-content:space-between;align-items:center;}
+  .print-footer-left{font-size:9px;color:#aaa;line-height:1.7;}
+  .print-footer-right{font-size:9px;color:#aaa;}
+
+  /* フッター（画面） */
+  .footer{margin-top:2em;padding-top:1em;border-top:0.5px solid #ddd;text-align:center;}
+  .footer a{color:#185FA5;text-decoration:none;font-size:1em;font-weight:500;border-bottom:1.5px solid #B5D4F4;}
+  .footer a:hover{color:#0C447C;}
+  .footer-credit{font-size:10px;color:#aaa;margin-top:6px;line-height:1.8;}
+
+  /* 印刷時 */
+  @media print{
+    .preview-controls,.btn-row,.step-1,.print-note,
+    h1,.site-name,.font-size-bar,.site-credit,.terms-bar,.tagline,
+    #custom-seizen-list,#custom-digital-list,
+    button[onclick^="addCustomItem"]{display:none!important;}
+    body{background:#fff;font-size:10pt;}
+    .app{padding:0;max-width:100%;}
+    .preview-area{border:none;border-radius:0;}
+    .a4page{padding:12mm 15mm;border-bottom:none;page-break-after:always;}
+    .a4page:last-child{page-break-after:auto;}
+    .list-table{font-size:9pt;}
+    .list-table th,.list-table td{padding:4px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <p class="site-name"><a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a></p>
+  <h1>生前整理・デジタル整理 一覧表メーカー</h1>
+  <p class="tagline">必要な項目だけ選んで、記入欄付き印刷用一覧表を作成できます</p>
+  <p class="site-credit">© 終活人.jp</p>
+
+  <div class="terms-bar">
+    <strong>【ご利用にあたって】</strong>
+    本ツールは終活人.jpが提供する無料ツールです。作成した一覧表はご本人・ご家族の整理目的にのみご利用ください。
+    <strong>パスワードや暗証番号そのものは記入せず、別途安全な場所で管理してください。</strong>
+    無断転載・商用利用は禁止です。本ツールの著作権は終活人.jpに帰属します。
+  </div>
+
+  <div class="font-size-bar">
+    <span>文字サイズ</span>
+    <button class="fs-btn active" onclick="setFS(14,this)">100%</button>
+    <button class="fs-btn" onclick="setFS(16.8,this)">120%</button>
+    <button class="fs-btn" onclick="setFS(19.6,this)">140%</button>
+    <button class="fs-btn" onclick="setFS(22.4,this)">160%</button>
+  </div>
+
+  <!-- STEP1: 項目選択 -->
+  <div class="step active" id="step1">
+    <div class="intro">
+      <p>整理したい項目にチェックを入れ、各項目の<strong>件数（口数）</strong>を選択してください。選んだ項目だけの記入欄付き一覧表を印刷できます。</p>
+      <p style="margin-top:8px;font-size:10px;color:#888;">※ 優先度：<span style="color:#C0392B;">■高</span>＝遺族が特に困りやすい項目　<span style="color:#E67E22;">■中</span>＝あると安心な項目　<span style="color:#27AE60;">■低</span>＝余裕があれば</p>
+      <span class="note-badge">印刷専用 ／ 手書き記入用</span>
+    </div>
+
+    <!-- 生前整理セクション -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#0C447C;"></div>
+        <span class="sec-title">📋 生前整理</span>
+        <span class="sec-check">▼ 開く</span>
+      </div>
+      <div class="section-items">
+
+        <!-- 書類・証明 -->
+        <div style="font-size:10px;font-weight:700;color:#0C447C;margin-bottom:8px;padding-left:4px;">■ 重要書類・証明書</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i01">
+          <label class="item-name" for="i01">本人確認書類</label>
+          <span class="item-desc">戸籍・住民票・保険証・マイナンバー・運転免許証（含む運転経歴証明書）関連の保管場所</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i01"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i02">
+          <label class="item-name" for="i02">保険</label>
+          <span class="item-desc">生命保険・医療保険・火災保険などの会社名、証券番号、連絡先</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i02"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i03">
+          <label class="item-name" for="i03">年金</label>
+          <span class="item-desc">基礎年金番号、年金証書、年金機構からの通知書の保管場所</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i03"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+
+        <!-- 資産・財産 -->
+        <div style="font-size:10px;font-weight:700;color:#0C447C;margin:12px 0 8px 4px;">■ 資産・財産</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i04">
+          <label class="item-name" for="i04">銀行口座</label>
+          <span class="item-desc">金融機関名、支店名、口座種別、口座番号、通帳・届出印の場所</span>
+          <div class="count-wrap"><span class="count-label">口数：</span><select class="item-count" data-id="i04"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>口</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i05">
+          <label class="item-name" for="i05">証券口座</label>
+          <span class="item-desc">証券会社名、口座番号、保有商品、NISA等の有無</span>
+          <div class="count-wrap"><span class="count-label">口数：</span><select class="item-count" data-id="i05"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>口</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i06">
+          <label class="item-name" for="i06">不動産</label>
+          <span class="item-desc">所在地、名義、権利証／登記識別情報、ローン残高、管理会社</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i06"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i07">
+          <label class="item-name" for="i07">借入・負債</label>
+          <span class="item-desc">住宅ローン、カードローン、未払金、連絡先、返済口座</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i07"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i07b">
+          <label class="item-name" for="i07b">借入返済</label>
+          <span class="item-desc">返済証明・返済時振り込み控え・返済記録の保管場所と管理方法</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i07b"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="i08">
+          <label class="item-name" for="i08">貴重品・その他資産</label>
+          <span class="item-desc">貴金属、骨董、車、会員権などの保管場所と一覧</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i08"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+
+        <!-- 法的手続き -->
+        <div style="font-size:10px;font-weight:700;color:#0C447C;margin:12px 0 8px 4px;">■ 法的手続き</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i09">
+          <label class="item-name" for="i09">遺言書</label>
+          <span class="item-desc">有無、公正証書／自筆等の方式、保管場所、関係者への伝達先</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i09"><option>1</option><option>2</option><option>3</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="i10">
+          <label class="item-name" for="i10">成年後見・任意後見</label>
+          <span class="item-desc">任意後見契約、見守り契約、相談先、契約書の保管場所</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i10"><option>1</option><option>2</option><option>3</option></select><span>件</span></div>
+        </div>
+
+        <!-- 医療・介護 -->
+        <div style="font-size:10px;font-weight:700;color:#0C447C;margin:12px 0 8px 4px;">■ 医療・介護</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i11">
+          <label class="item-name" for="i11">医療情報</label>
+          <span class="item-desc">かかりつけ医、持病、アレルギー、服薬内容、お薬手帳の場所</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i11"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="i12">
+          <label class="item-name" for="i12">介護の希望</label>
+          <span class="item-desc">在宅／施設の希望、候補施設、ケアマネ・相談先</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i12"><option>1</option><option>2</option><option>3</option></select><span>件</span></div>
+        </div>
+
+        <!-- 人間関係 -->
+        <div style="font-size:10px;font-weight:700;color:#0C447C;margin:12px 0 8px 4px;">■ 人間関係・連絡先</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i13">
+          <label class="item-name" for="i13">緊急連絡先</label>
+          <span class="item-desc">氏名、続柄、電話番号、連絡順位</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i13"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="i14">
+          <label class="item-name" for="i14">友人・知人（訃報連絡先）</label>
+          <span class="item-desc">訃報を知らせてほしい相手、知らせない相手、連絡先</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i14"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+
+        <!-- 葬儀・供養 -->
+        <div style="font-size:10px;font-weight:700;color:#0C447C;margin:12px 0 8px 4px;">■ 葬儀・供養・住まい</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i15">
+          <label class="item-name" for="i15">葬儀・供養の希望</label>
+          <span class="item-desc">葬儀形式、宗教、遺影、納骨・墓・散骨の希望</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i15"><option>1</option><option>2</option><option>3</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="i16">
+          <label class="item-name" for="i16">住まいの契約</label>
+          <span class="item-desc">賃貸契約、電気・ガス・水道、NHK、固定電話等の契約先</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i16"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="i17">
+          <label class="item-name" for="i17">会員・定期購読</label>
+          <span class="item-desc">新聞、通販、会員カード、年会費サービス、解約窓口</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="i17"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+
+        <!-- カスタム項目（生前整理） -->
+        <div style="font-size:10px;font-weight:700;color:#0C447C;margin:16px 0 8px 4px;border-top:1px dashed #ccc;padding-top:12px;">■ 任意追加項目（生前整理）</div>
+        <div style="font-size:10px;color:#888;margin-bottom:8px;padding-left:4px;">項目名を入力してチェックすると一覧表に追加されます（最大3件）。印刷後に手書きでも記入できます。</div>
+        <div id="custom-seizen-list"></div>
+        <button type="button" class="btn" style="font-size:10px;padding:4px 12px;margin-top:4px;" onclick="addCustomItem('seizen')">＋ 項目を追加する</button>
+
+      </div>
+    </div>
+
+    <!-- デジタル整理セクション -->
+    <div class="section-block">
+      <div class="section-header" onclick="toggleSec(this)">
+        <div class="sec-color" style="background:#185FA5;"></div>
+        <span class="sec-title">💻 デジタル整理</span>
+        <span class="sec-check">▼ 開く</span>
+      </div>
+      <div class="section-items">
+
+        <!-- 端末・メール -->
+        <div style="font-size:10px;font-weight:700;color:#185FA5;margin-bottom:8px;padding-left:4px;">■ 端末・アカウント基本</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d01">
+          <label class="item-name" for="d01">スマートフォン・PC</label>
+          <span class="item-desc">端末名、ロック解除方法、予備端末の有無</span>
+          <div class="count-wrap"><span class="count-label">台数：</span><select class="item-count" data-id="d01"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>台</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d02">
+          <label class="item-name" for="d02">メールアカウント</label>
+          <span class="item-desc">メールアドレス、復旧用電話番号、主要用途、停止希望</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d02"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d03">
+          <label class="item-name" for="d03">パスワード管理</label>
+          <span class="item-desc">管理方法、保管場所、2段階認証、バックアップコード</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d03"><option>1</option><option>2</option><option>3</option></select><span>件</span></div>
+        </div>
+
+        <!-- SNS -->
+        <div style="font-size:10px;font-weight:700;color:#185FA5;margin:12px 0 8px 4px;">■ SNS・コミュニケーション</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d04">
+          <label class="item-name" for="d04">SNSアカウント</label>
+          <span class="item-desc">Facebook、Instagram、X、LINE等のID、登録メール、削除／追悼化希望</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d04"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+
+        <!-- オンライン金融 -->
+        <div style="font-size:10px;font-weight:700;color:#185FA5;margin:12px 0 8px 4px;">■ オンライン金融・資産</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d05">
+          <label class="item-name" for="d05">オンラインバンク</label>
+          <span class="item-desc">銀行名、支店、口座番号、利用端末、通知先メール</span>
+          <div class="count-wrap"><span class="count-label">口数：</span><select class="item-count" data-id="d05"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>口</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d06">
+          <label class="item-name" for="d06">ネット証券口座</label>
+          <span class="item-desc">証券会社、口座番号、保有商品、連絡先</span>
+          <div class="count-wrap"><span class="count-label">口数：</span><select class="item-count" data-id="d06"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>口</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d07">
+          <label class="item-name" for="d07">暗号資産</label>
+          <span class="item-desc">取引所名、ウォレット種別、保管方法、家族が把握すべき所在</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d07"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="d08">
+          <label class="item-name" for="d08">電子マネー・ポイント</label>
+          <span class="item-desc">サービス名、残高の目安、問い合わせ先、失効条件</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d08"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+
+        <!-- サブスク・EC -->
+        <div style="font-size:10px;font-weight:700;color:#185FA5;margin:12px 0 8px 4px;">■ サブスクリプション・EC</div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d09">
+          <label class="item-name" for="d09">サブスクリプション</label>
+          <span class="item-desc">動画、音楽、ソフト、クラウド等の契約名、請求先、更新日、解約方法</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d09"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="d10">
+          <label class="item-name" for="d10">ECサイト</label>
+          <span class="item-desc">Amazon、楽天等のID、定期便、保存済み支払方法、ポイント</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d10"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+
+        <!-- データ・クラウド -->
+        <div style="font-size:10px;font-weight:700;color:#185FA5;margin:12px 0 8px 4px;">■ データ・クラウド</div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="d11">
+          <label class="item-name" for="d11">写真・動画データ</label>
+          <span class="item-desc">端末内・外付け・クラウドの保存場所、残す／削除する希望</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d11"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-mid">
+          <input type="checkbox" class="item-chk" id="d12">
+          <label class="item-name" for="d12">文書データ</label>
+          <span class="item-desc">仕事資料、契約書PDF、家計データなどの保存場所</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d12"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-high">
+          <input type="checkbox" class="item-chk" id="d13">
+          <label class="item-name" for="d13">クラウドストレージ</label>
+          <span class="item-desc">iCloud、Googleドライブ等のアカウント、共有設定、バックアップ先</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d13"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-low">
+          <input type="checkbox" class="item-chk" id="d14">
+          <label class="item-name" for="d14">ゲーム・コミュニティ</label>
+          <span class="item-desc">ゲームID、課金履歴、連携SNS、削除／継続の希望</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d14"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><span>件</span></div>
+        </div>
+        <div class="item-row priority-low">
+          <input type="checkbox" class="item-chk" id="d15">
+          <label class="item-name" for="d15">個人サイト・ブログ</label>
+          <span class="item-desc">ドメイン、サーバー契約、更新期限、管理画面、削除希望</span>
+          <div class="count-wrap"><span class="count-label">件数：</span><select class="item-count" data-id="d15"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>件</span></div>
+        </div>
+
+        <!-- カスタム項目（デジタル整理） -->
+        <div style="font-size:10px;font-weight:700;color:#185FA5;margin:16px 0 8px 4px;border-top:1px dashed #ccc;padding-top:12px;">■ 任意追加項目（デジタル整理）</div>
+        <div style="font-size:10px;color:#888;margin-bottom:8px;padding-left:4px;">項目名を入力してチェックすると一覧表に追加されます（最大3件）。印刷後に手書きでも記入できます。</div>
+        <div id="custom-digital-list"></div>
+        <button type="button" class="btn" style="font-size:10px;padding:4px 12px;margin-top:4px;" onclick="addCustomItem('digital')">＋ 項目を追加する</button>
+
+      </div>
+    </div>
+
+    <p class="selected-count" id="selected-count">0項目が選択されています</p>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="generateList()">選んだ項目で一覧表を作成 →</button>
+    </div>
+  </div>
+
+  <!-- STEP2: プレビュー・印刷 -->
+  <div class="step" id="step2">
+    <div class="preview-controls">
+      <button class="btn" onclick="goBack()">← 項目を選び直す</button>
+      <button class="btn btn-primary" onclick="window.print()">印刷する（A4）</button>
+    </div>
+    <div class="preview-area" id="preview-area"></div>
+    <p class="print-note">※印刷時はブラウザの印刷メニューで「背景のグラフィック」をオンにすると見やすく印刷できます</p>
+  </div>
+
+  <div class="footer">
+    <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener">終活人.jp</a>
+    <p class="footer-credit">© 終活人.jp ／ 無断転載・商用利用禁止 ／ 本ツールの著作権は終活人.jpに帰属します</p>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+// 文字サイズ
+function setFS(px, btn){
+  document.documentElement.style.fontSize = px + 'px';
+  document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// セクション開閉
+function toggleSec(header){
+  const items = header.nextElementSibling;
+  const cnt = header.querySelector('.sec-check');
+  if(items.classList.contains('open')){
+    items.classList.remove('open');
+    cnt.textContent = '▼ 開く';
+  } else {
+    items.classList.add('open');
+    cnt.textContent = '▲ 閉じる';
+  }
+}
+
+// チェック数カウント
+function updateCount(){
+  const n = document.querySelectorAll('.item-chk:checked').length;
+  document.getElementById('selected-count').textContent = n + '項目が選択されています';
+}
+document.querySelectorAll('.item-chk').forEach(cb => cb.addEventListener('change', updateCount));
+
+// 項目定義（id, label, desc, unit, category, priority, fields配列）
+const ITEMS = {
+  // 生前整理
+  i01:{label:'本人確認書類',desc:'戸籍・住民票・保険証・マイナンバー・運転免許証関連',unit:'件',cat:'📋 生前整理',sub:'重要書類・証明書',color:'#0C447C',pri:'高',
+    fields:['書類の種類','保管場所','運転免許証（または運転経歴証明書）の有無・保管場所','備考']},
+  i02:{label:'保険',desc:'生命保険・医療保険・火災保険など',unit:'件',cat:'📋 生前整理',sub:'重要書類・証明書',color:'#0C447C',pri:'高',
+    fields:['保険会社名','証券番号','連絡先電話番号','保管場所','備考']},
+  i03:{label:'年金',desc:'基礎年金番号・年金証書など',unit:'件',cat:'📋 生前整理',sub:'重要書類・証明書',color:'#0C447C',pri:'高',
+    fields:['基礎年金番号','年金証書の保管場所','年金機構への連絡先','備考']},
+  i04:{label:'銀行口座',desc:'預貯金口座',unit:'口',cat:'📋 生前整理',sub:'資産・財産',color:'#0C447C',pri:'高',
+    fields:['金融機関名・支店名','口座種別・口座番号','通帳・届出印の保管場所','備考']},
+  i05:{label:'証券口座',desc:'証券・投資口座',unit:'口',cat:'📋 生前整理',sub:'資産・財産',color:'#0C447C',pri:'高',
+    fields:['証券会社名','口座番号','保有商品・NISA等','連絡先','備考']},
+  i06:{label:'不動産',desc:'所有・賃借不動産',unit:'件',cat:'📋 生前整理',sub:'資産・財産',color:'#0C447C',pri:'高',
+    fields:['所在地','名義人','権利証・登記識別情報の保管場所','ローン残高・管理会社','備考']},
+  i07:{label:'借入・負債',desc:'ローン・未払金など',unit:'件',cat:'📋 生前整理',sub:'資産・財産',color:'#0C447C',pri:'高',
+    fields:['借入先名・種別','残高の目安','連絡先・返済口座','連帯保証契約書（含む連帯保証念書または約定書）の有無・保管場所','備考']},
+  i07b:{label:'借入返済',desc:'返済証明・振り込み控え・返済記録',unit:'件',cat:'📋 生前整理',sub:'資産・財産',color:'#0C447C',pri:'高',
+    fields:['借入先名・種別','返済証明書の保管場所','返済時振り込み控えの保管場所','返済記録（台帳・通帳など）の保管場所','備考']},
+  i08:{label:'貴重品・その他資産',desc:'貴金属・骨董・車・会員権など',unit:'件',cat:'📋 生前整理',sub:'資産・財産',color:'#0C447C',pri:'中',
+    fields:['品名・種別','保管場所','評価額の目安','備考']},
+  i09:{label:'遺言書',desc:'公正証書・自筆証書など',unit:'件',cat:'📋 生前整理',sub:'法的手続き',color:'#0C447C',pri:'高',
+    fields:['遺言書の種別','保管場所','執行者名・連絡先','備考']},
+  i10:{label:'成年後見・任意後見',desc:'後見契約・見守り契約など',unit:'件',cat:'📋 生前整理',sub:'法的手続き',color:'#0C447C',pri:'中',
+    fields:['契約の種別','相談先・担当者名','契約書の保管場所','備考']},
+  i11:{label:'医療情報',desc:'かかりつけ医・服薬など',unit:'件',cat:'📋 生前整理',sub:'医療・介護',color:'#0C447C',pri:'高',
+    fields:['かかりつけ医・病院名','診療科・担当医','持病・アレルギー','服薬内容・お薬手帳の場所','備考']},
+  i12:{label:'介護の希望',desc:'介護施設・ケアマネなど',unit:'件',cat:'📋 生前整理',sub:'医療・介護',color:'#0C447C',pri:'中',
+    fields:['在宅・施設の希望','候補施設名・所在地','ケアマネ・相談先','備考']},
+  i13:{label:'緊急連絡先',desc:'家族・知人の緊急連絡先',unit:'件',cat:'📋 生前整理',sub:'人間関係・連絡先',color:'#0C447C',pri:'高',
+    fields:['氏名','続柄・関係','電話番号（携帯）','電話番号（自宅）','連絡順位・備考']},
+  i14:{label:'友人・知人（訃報連絡先）',desc:'訃報を伝えてほしい相手',unit:'件',cat:'📋 生前整理',sub:'人間関係・連絡先',color:'#0C447C',pri:'中',
+    fields:['氏名','連絡先','連絡希望（する・しない）','備考']},
+  i15:{label:'葬儀・供養の希望',desc:'形式・宗教・お墓など',unit:'件',cat:'📋 生前整理',sub:'葬儀・供養・住まい',color:'#0C447C',pri:'高',
+    fields:['葬儀形式の希望','宗教・宗派','遺影・納骨・散骨の希望','お墓・供養先','備考']},
+  i16:{label:'住まいの契約',desc:'電気・ガス・水道・通信など',unit:'件',cat:'📋 生前整理',sub:'葬儀・供養・住まい',color:'#0C447C',pri:'高',
+    fields:['サービス名・会社名','契約者名・顧客番号','連絡先・解約方法','備考']},
+  i17:{label:'会員・定期購読',desc:'新聞・通販・会員カードなど',unit:'件',cat:'📋 生前整理',sub:'葬儀・供養・住まい',color:'#0C447C',pri:'中',
+    fields:['サービス名・会社名','会員番号・カード番号','解約窓口・連絡先','備考']},
+
+  // デジタル整理
+  d01:{label:'スマートフォン・PC',desc:'端末・ロック解除情報',unit:'台',cat:'💻 デジタル整理',sub:'端末・アカウント基本',color:'#185FA5',pri:'高',
+    fields:['端末名・機種','ロック解除方法（保管場所のみ記入）','予備端末の有無','備考']},
+  d02:{label:'メールアカウント',desc:'メールアドレス・用途など',unit:'件',cat:'💻 デジタル整理',sub:'端末・アカウント基本',color:'#185FA5',pri:'高',
+    fields:['メールアドレス','サービス名','復旧用電話番号','主な用途','停止・削除の希望']},
+  d03:{label:'パスワード管理',desc:'管理方法・保管場所',unit:'件',cat:'💻 デジタル整理',sub:'端末・アカウント基本',color:'#185FA5',pri:'高',
+    fields:['管理方法（アプリ名・手帳など）','保管場所','2段階認証の利用','バックアップコードの保管場所']},
+  d04:{label:'SNSアカウント',desc:'Facebook・Instagram・X・LINEなど',unit:'件',cat:'💻 デジタル整理',sub:'SNS・コミュニケーション',color:'#185FA5',pri:'高',
+    fields:['サービス名','ID・ユーザー名','登録メールアドレス','削除・追悼化の希望','備考']},
+  d05:{label:'オンラインバンク',desc:'ネット銀行口座',unit:'口',cat:'💻 デジタル整理',sub:'オンライン金融・資産',color:'#185FA5',pri:'高',
+    fields:['銀行名・支店','口座番号','利用端末','通知先メール','備考']},
+  d06:{label:'ネット証券口座',desc:'オンライン証券・投資',unit:'口',cat:'💻 デジタル整理',sub:'オンライン金融・資産',color:'#185FA5',pri:'高',
+    fields:['証券会社名','口座番号','保有商品','連絡先','備考']},
+  d07:{label:'暗号資産',desc:'仮想通貨・ウォレット',unit:'件',cat:'💻 デジタル整理',sub:'オンライン金融・資産',color:'#185FA5',pri:'高',
+    fields:['取引所名・サービス名','ウォレット種別','保管方法・所在','家族への引き継ぎ方法','備考']},
+  d08:{label:'電子マネー・ポイント',desc:'Suica・PayPay・各種ポイントなど',unit:'件',cat:'💻 デジタル整理',sub:'オンライン金融・資産',color:'#185FA5',pri:'中',
+    fields:['サービス名','残高の目安','問い合わせ先','失効条件・備考']},
+  d09:{label:'サブスクリプション',desc:'動画・音楽・ソフト・クラウドなど',unit:'件',cat:'💻 デジタル整理',sub:'サブスクリプション・EC',color:'#185FA5',pri:'高',
+    fields:['サービス名','契約プラン','請求先カード・口座','更新日・金額','解約方法・備考']},
+  d10:{label:'ECサイト',desc:'Amazon・楽天などのショッピングサイト',unit:'件',cat:'💻 デジタル整理',sub:'サブスクリプション・EC',color:'#185FA5',pri:'中',
+    fields:['サービス名','ID・メールアドレス','定期便・保存済み支払方法','ポイント残高・備考']},
+  d11:{label:'写真・動画データ',desc:'端末・クラウドの保存場所',unit:'件',cat:'💻 デジタル整理',sub:'データ・クラウド',color:'#185FA5',pri:'中',
+    fields:['保存場所（端末名・サービス名）','残す・削除の希望','引き継ぎ先','備考']},
+  d12:{label:'文書データ',desc:'仕事資料・契約書など',unit:'件',cat:'💻 デジタル整理',sub:'データ・クラウド',color:'#185FA5',pri:'中',
+    fields:['データの種類','保存場所','取り扱い希望（保存・削除）','備考']},
+  d13:{label:'クラウドストレージ',desc:'iCloud・Googleドライブなど',unit:'件',cat:'💻 デジタル整理',sub:'データ・クラウド',color:'#185FA5',pri:'高',
+    fields:['サービス名','アカウント（メールアドレス）','共有設定・バックアップ先','削除・引き継ぎ希望','備考']},
+  d14:{label:'ゲーム・コミュニティ',desc:'オンラインゲーム・フォーラムなど',unit:'件',cat:'💻 デジタル整理',sub:'データ・クラウド',color:'#185FA5',pri:'低',
+    fields:['サービス名・ゲーム名','ID・ユーザー名','課金・連携情報','削除・継続の希望','備考']},
+  d15:{label:'個人サイト・ブログ',desc:'ドメイン・サーバー契約など',unit:'件',cat:'💻 デジタル整理',sub:'データ・クラウド',color:'#185FA5',pri:'低',
+    fields:['サイト名・URL','ドメイン・サーバー会社','更新期限','管理画面・削除希望','備考']},
+};
+
+function getCount(id){
+  const sel = document.querySelector(`.item-count[data-id="${id}"]`);
+  return sel ? parseInt(sel.value) : 1;
+}
+
+// カスタム項目管理
+const customCounts = {seizen: 0, digital: 0};
+const MAX_CUSTOM = 3;
+
+function addCustomItem(type){
+  const container = document.getElementById(`custom-${type}-list`);
+  if(customCounts[type] >= MAX_CUSTOM){
+    alert(`任意追加項目は最大${MAX_CUSTOM}件までです`);
+    return;
+  }
+  const idx = ++customCounts[type];
+  const id = `custom_${type}_${idx}`;
+  const catLabel = type === 'seizen' ? '📋 生前整理' : '💻 デジタル整理';
+  const color = type === 'seizen' ? '#0C447C' : '#185FA5';
+
+  const row = document.createElement('div');
+  row.className = 'item-row priority-mid';
+  row.id = `row_${id}`;
+  row.style.borderLeft = `3px solid ${color}`;
+  row.style.background = '#F0F4FF';
+  row.innerHTML = `
+    <input type="checkbox" class="item-chk custom-chk" id="${id}" data-type="${type}" data-idx="${idx}">
+    <input type="text" class="custom-name-input" placeholder="項目名を入力（例：土地の売買契約書）"
+      data-id="${id}"
+      style="flex:1;font-size:1em;border:none;border-bottom:1.5px solid #B5D4F4;background:transparent;padding:2px 4px;outline:none;color:#1a1a18;"
+      oninput="syncCustomLabel(this)">
+    <div class="count-wrap">
+      <span class="count-label">件数：</span>
+      <select class="item-count custom-count" data-id="${id}">
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+      </select>
+      <span>件</span>
+    </div>
+    <button type="button" onclick="removeCustomItem('${id}','${type}')"
+      style="font-size:10px;padding:2px 8px;border:1px solid #ccc;border-radius:4px;background:#fff;cursor:pointer;color:#999;">削除</button>
+  `;
+  container.appendChild(row);
+  // チェックボックスのchangeイベント登録
+  row.querySelector(`#${id}`).addEventListener('change', updateCount);
+}
+
+function syncCustomLabel(input){
+  // チェックが入っている場合、項目名変更を反映（カウントのみ）
+  updateCount();
+}
+
+function removeCustomItem(id, type){
+  const row = document.getElementById(`row_${id}`);
+  if(row){ row.remove(); customCounts[type]--; updateCount(); }
+}
+
+function getCustomItems(){
+  const items = [];
+  document.querySelectorAll('.custom-chk:checked').forEach(cb => {
+    const id = cb.id;
+    const nameInput = document.querySelector(`.custom-name-input[data-id="${id}"]`);
+    const countSel = document.querySelector(`.custom-count[data-id="${id}"]`);
+    const label = nameInput ? nameInput.value.trim() : '';
+    const count = countSel ? parseInt(countSel.value) : 1;
+    const type = cb.dataset.type;
+    if(label){
+      items.push({
+        id,
+        label,
+        desc:'任意追加項目',
+        unit:'件',
+        cat: type === 'seizen' ? '📋 生前整理' : '💻 デジタル整理',
+        sub:'任意追加項目',
+        color: type === 'seizen' ? '#0C447C' : '#185FA5',
+        pri:'中',
+        count,
+        fields:['整理内容・確認事項','保管場所','担当者・連絡先','備考１','備考２']
+      });
+    }
+  });
+  return items;
+}
+
+function generateList(){
+  const checked = [];
+  document.querySelectorAll('.item-chk:checked:not(.custom-chk)').forEach(cb => {
+    checked.push(cb.id);
+  });
+  const customItems = getCustomItems();
+  if(checked.length === 0 && customItems.length === 0){
+    alert('項目を1つ以上選択してください');
+    return;
+  }
+
+  // セクション・サブセクション順にグループ化
+  const catOrder = ['📋 生前整理','💻 デジタル整理'];
+  const grouped = {};
+  checked.forEach(id => {
+    const it = ITEMS[id];
+    if(!it) return;
+    if(!grouped[it.cat]) grouped[it.cat] = {};
+    if(!grouped[it.cat][it.sub]) grouped[it.cat][it.sub] = [];
+    grouped[it.cat][it.sub].push({id, count: getCount(id), ...it});
+  });
+  // カスタム項目をgroupedに追加
+  customItems.forEach(it => {
+    if(!grouped[it.cat]) grouped[it.cat] = {};
+    if(!grouped[it.cat][it.sub]) grouped[it.cat][it.sub] = [];
+    grouped[it.cat][it.sub].push(it);
+  });
+
+  let html = '';
+
+  // 表紙ページ
+  html += `
+  <div class="a4page">
+    <div class="print-header">
+      <div>
+        <div class="print-title">生前整理・デジタル整理 一覧表</div>
+        <div class="print-subtitle">終活人.jp ／ 手書き記入用</div>
+      </div>
+      <div class="print-meta">
+        記入日：<span></span><br>
+        最終更新日：<span></span><br>
+        記入者：<span></span>
+      </div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:10px;margin-bottom:12px;">
+      <tr>
+        <td style="width:50%;padding:6px 8px;border:1px solid #ccc;background:#F5F0E8;">
+          <span style="color:#555;font-size:9px;">この用紙の保管場所</span><br>
+          <div style="border-bottom:1px solid #bbb;min-height:20px;margin-top:4px;"></div>
+        </td>
+        <td style="width:50%;padding:6px 8px;border:1px solid #ccc;background:#F5F0E8;">
+          <span style="color:#555;font-size:9px;">この用紙を見てよい人</span><br>
+          <div style="border-bottom:1px solid #bbb;min-height:20px;margin-top:4px;"></div>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:6px 8px;border:1px solid #ccc;background:#F5F0E8;">
+          <span style="color:#555;font-size:9px;">家族に最初に見てほしい場所</span><br>
+          <div style="border-bottom:1px solid #bbb;min-height:20px;margin-top:4px;"></div>
+        </td>
+        <td style="padding:6px 8px;border:1px solid #ccc;background:#F5F0E8;">
+          <span style="color:#555;font-size:9px;">すぐ連絡してほしい人</span><br>
+          <div style="border-bottom:1px solid #bbb;min-height:20px;margin-top:4px;"></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:10px;color:#888;background:#FFF8EC;border:1px solid #E8C97A;border-radius:6px;padding:8px 12px;line-height:1.7;margin-bottom:14px;">
+      <strong style="color:#7A5500;">【ご注意】</strong>
+      パスワードや暗証番号の数字そのものは記入せず、保管場所（金庫・手帳など）のみをご記入ください。
+      本用紙は終活人.jpの整理ツールで作成しました。
+    </div>
+    <div style="font-size:10px;color:#555;margin-bottom:8px;font-weight:500;">■ この一覧表に含まれる項目</div>
+    <table class="list-table">
+      <thead><tr>
+        <th class="col-no">No.</th>
+        <th class="col-item">項目</th>
+        <th>内容・種別</th>
+        <th style="width:60px;text-align:center;">件数</th>
+        <th style="width:60px;text-align:center;">優先度</th>
+      </tr></thead>
+      <tbody>`;
+  let rowNo = 1;
+  catOrder.forEach(cat => {
+    if(!grouped[cat]) return;
+    Object.values(grouped[cat]).forEach(items => {
+      items.forEach(it => {
+        const priColor = it.pri==='高'?'#C0392B':it.pri==='中'?'#E67E22':'#27AE60';
+        html += `<tr class="data-row">
+          <td class="col-no">${rowNo++}</td>
+          <td class="col-item">${it.label}</td>
+          <td style="font-size:9px;color:#555;">${it.desc}</td>
+          <td style="text-align:center;">${it.count}${it.unit}</td>
+          <td style="text-align:center;color:${priColor};font-weight:700;">${it.pri}</td>
+        </tr>`;
+      });
+    });
+  });
+  html += `</tbody></table>
+    <div class="print-footer">
+      <div class="print-footer-left">© 終活人.jp ／ 無断転載・商用利用禁止<br>https://www.shukatsubito.jp/</div>
+      <div class="print-footer-right">目次ページ</div>
+    </div>
+  </div>`;
+
+  // 各項目の詳細記入ページ
+  catOrder.forEach(cat => {
+    if(!grouped[cat]) return;
+    Object.entries(grouped[cat]).forEach(([sub, items]) => {
+      items.forEach(it => {
+        const catColor = it.color;
+        for(let c = 1; c <= it.count; c++){
+          const suffix = it.count > 1 ? `（${c}/${it.count}）` : '';
+          html += `<div class="a4page">
+            <div class="print-header">
+              <div>
+                <div class="print-title">生前整理・デジタル整理 一覧表</div>
+                <div class="print-subtitle">${cat} ／ ${sub}</div>
+              </div>
+              <div class="print-meta">
+                記入日：<span></span><br>
+                更新日：<span></span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <div style="background:${catColor};color:#fff;font-weight:700;font-size:0.95em;padding:5px 14px;border-radius:5px;">${it.label}${suffix}</div>
+              <div style="font-size:10px;color:#888;">${it.desc}</div>
+              <div style="margin-left:auto;font-size:10px;color:${it.pri==='高'?'#C0392B':it.pri==='中'?'#E67E22':'#27AE60'};font-weight:700;border:1px solid currentColor;padding:2px 8px;border-radius:4px;">優先度：${it.pri}</div>
+            </div>
+            <table class="list-table">
+              <thead><tr>
+                <th style="width:160px;">確認項目</th>
+                <th>記入欄（手書き）</th>
+              </tr></thead>
+              <tbody>`;
+          it.fields.forEach(f => {
+            html += `<tr class="data-row">
+              <td style="font-size:10px;color:#333;font-weight:500;">${f}</td>
+              <td><div class="write-line"></div></td>
+            </tr>`;
+          });
+          // 自由メモ行を追加
+          html += `<tr class="data-row">
+            <td style="font-size:10px;color:#333;font-weight:500;">メモ・補足</td>
+            <td>
+              <div class="write-line" style="margin-bottom:6px;"></div>
+              <div class="write-line" style="margin-bottom:6px;"></div>
+              <div class="write-line"></div>
+            </td>
+          </tr>`;
+          html += `</tbody></table>
+            <div style="margin-top:12px;padding:8px 12px;background:#F5F0E8;border-radius:6px;font-size:9px;color:#888;line-height:1.7;">
+              ⚠️ パスワード・暗証番号の数字そのものは記入せず、保管場所の情報のみご記入ください。
+            </div>
+            <div class="print-footer">
+              <div class="print-footer-left">© 終活人.jp ／ 無断転載・商用利用禁止</div>
+              <div class="print-footer-right">${it.label}${suffix}</div>
+            </div>
+          </div>`;
+        }
+      });
+    });
+  });
+
+  document.getElementById('preview-area').innerHTML = html;
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goBack(){
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step1').classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
