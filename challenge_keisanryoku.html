@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チャレンジ！計算力｜終活人.jp</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+    </style>
+    <style>
+        /* ===== リセット・基本設定（スペック§1準拠） ===== */
+        html {
+            font-size: 14px;
+            overflow-x: hidden;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+            font-size: 1em;
+            line-height: 1.8;
+            overflow-x: hidden;
+            word-break: break-word;
+            background-color: #F5F0E8; /* スペック§9 ページ背景（ツール系） */
+            color: #1a1a18;            /* スペック§9 テキスト（本文） */
+            min-height: 100vh;
+        }
+
+        /* ===== 文字拡大バー（スペック§2-A sticky型） ===== */
+        #font-size-bar {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+        }
+        #font-size-bar span {
+            font-size: 12px;
+            color: #64748b;
+            margin-right: 2px;
+        }
+        .fsz-btn {
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            color: #334155;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 700;
+            transition: all .15s;
+        }
+        .fsz-btn:hover { background: #f1f5f9; }
+        .fsz-btn.active { background: #185FA5; color: #fff; border-color: #185FA5; }
+
+        /* ===== ページラッパー ===== */
+        .page-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.75rem 1rem 0;
+        }
+
+        /* ===== アプリコンテナ（スペック§1 min()関数） ===== */
+        .app-container {
+            width: 100%;
+            max-width: min(480px, 100%);
+        }
+
+        /* ===== ヘッダーロゴ ===== */
+        .logo-header {
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+        .logo-main {
+            font-family: 'Bebas Neue', 'Noto Sans JP', cursive;
+            font-size: 2.8rem;
+            letter-spacing: 0.08em;
+            line-height: 1;
+            color: #0C447C; /* スペック§9 ダークブルー（見出し） */
+        }
+        .logo-sub {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            color: #888;   /* スペック§9 テキスト（キャプション） */
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+            margin-bottom: 0.4rem;
+        }
+        /* タイトル下 サイト名リンク */
+        .site-link {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #185FA5; /* スペック§9 メインブルー */
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            border-bottom: 1.5px solid #B5D4F4; /* スペック§9 ライトブルー */
+            transition: color 0.15s;
+        }
+        .site-link:hover { color: #0C447C; }
+
+        /* ===== カード ===== */
+        .card {
+            background: #FDFAF5; /* スペック§9 カード背景 */
+            border: 0.5px solid #ddd;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+        }
+        /* カード上部アクセントライン */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #185FA5, #B5D4F4, #185FA5);
+        }
+
+        /* ===== セクションラベル ===== */
+        .section-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 0.6rem;
+        }
+
+        /* ===== コース選択 ===== */
+        .mode-select {
+            width: 100%;
+            background: #fff;
+            border: 1px solid #B5D4F4; /* スペック§9 ライトブルー */
+            color: #1a1a18;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            border-radius: 0.6rem;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23185FA5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .mode-select:focus {
+            border-color: #185FA5;
+            box-shadow: 0 0 0 3px rgba(24,95,165,0.1);
+        }
+
+        /* ===== 難易度 ===== */
+        .diff-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+        }
+        .diff-label { cursor: pointer; }
+        .diff-label input { position: absolute; opacity: 0; width: 0; height: 0; }
+        .diff-btn {
+            text-align: center;
+            padding: 0.6rem 0.5rem;
+            border-radius: 0.6rem;
+            border: 1px solid #ddd;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #888;
+            background: #fff;
+            transition: all 0.15s;
+            user-select: none;
+        }
+        /* 初級：緑系 */
+        .diff-label input:checked + .diff-btn[data-diff="easy"] {
+            border-color: #27AE60;
+            background: #F4FDF6;
+            color: #27AE60;
+        }
+        /* 中級：ブルー系 */
+        .diff-label input:checked + .diff-btn[data-diff="normal"] {
+            border-color: #185FA5;
+            background: #E6F1FB;
+            color: #185FA5;
+        }
+        /* 上級：赤系 */
+        .diff-label input:checked + .diff-btn[data-diff="hard"] {
+            border-color: #C0392B;
+            background: #FDF5F4;
+            color: #C0392B;
+        }
+
+        /* ===== ボタン類 ===== */
+        .btn-primary {
+            width: 100%;
+            background: #185FA5; /* スペック§9 メインブルー */
+            color: #fff;
+            font-family: 'Bebas Neue', 'Noto Sans JP', cursive;
+            font-size: 1.5rem;
+            letter-spacing: 0.15em;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 3px 12px rgba(24,95,165,0.3);
+        }
+        .btn-primary:hover {
+            background: #0C447C;
+            box-shadow: 0 5px 18px rgba(24,95,165,0.4);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active { transform: scale(0.97); }
+
+        .btn-secondary {
+            background: #fff;
+            color: #555;
+            border: 1px solid #ddd;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .btn-secondary:hover { border-color: #185FA5; color: #185FA5; background: #E6F1FB; }
+
+        .btn-home {
+            width: 100%;
+            background: #fff;
+            color: #1a1a18;
+            border: 1px solid #ddd;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 0.85rem;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .btn-home:hover { border-color: #185FA5; color: #185FA5; background: #E6F1FB; }
+
+        /* ===== localStorage保存注意書き（スペック§6） ===== */
+        .data-notice {
+            font-size: 12px;
+            color: #888;
+            margin-top: 0.75rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        /* ===== 履歴エリア ===== */
+        .history-wrap {
+            margin-top: 1.1rem;
+            background: #EDE8DF; /* スペック§9 セクション背景 */
+            border: 0.5px solid #ddd;
+            border-radius: 0.75rem;
+            padding: 0.9rem 1rem;
+        }
+        .history-empty {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            padding: 0.4rem 0;
+            line-height: 1.8;
+        }
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.55rem 0;
+            border-bottom: 0.5px solid #ddd;
+        }
+        .history-item:last-child { border-bottom: none; }
+        .history-meta { font-size: 0.72rem; color: #888; }
+        .history-tag {
+            display: inline-block;
+            background: #fff;
+            border: 0.5px solid #B5D4F4;
+            border-radius: 0.3rem;
+            padding: 0.1rem 0.4rem;
+            font-size: 0.65rem;
+            color: #185FA5;
+            margin-top: 0.15rem;
+        }
+        .history-score {
+            font-family: 'Bebas Neue', 'Noto Sans JP', cursive;
+            font-size: 1.6rem;
+            color: #185FA5;
+            line-height: 1;
+        }
+        .history-time { font-size: 0.72rem; color: #888; text-align: right; margin-top: 0.1rem; }
+
+        /* ===== ゲーム画面 ===== */
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .progress-badge {
+            font-family: 'Bebas Neue', 'Noto Sans JP', cursive;
+            font-size: 1.05rem;
+            letter-spacing: 0.1em;
+            color: #185FA5;
+            background: #E6F1FB;
+            border: 1px solid #B5D4F4;
+            padding: 0.25rem 0.85rem;
+            border-radius: 999px;
+        }
+        .progress-bar-wrap {
+            background: #E6F1FB;
+            height: 5px;
+            border-radius: 3px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #185FA5, #0C447C);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        /* ===== 問題表示 ===== */
+        .question-display {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: #EDE8DF;
+            border-radius: 0.85rem;
+            padding: 1.75rem 1rem;
+            border: 0.5px solid #ddd;
+        }
+        .question-num-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+        .question-text {
+            font-family: 'Bebas Neue', 'Noto Sans JP', cursive;
+            font-size: 4rem;
+            letter-spacing: 0.08em;
+            color: #0C447C;
+            line-height: 1;
+        }
+
+        /* ===== 回答入力 ===== */
+        .answer-input {
+            width: 100%;
+            background: #fff;
+            border: 2px solid #B5D4F4;
+            color: #185FA5;
+            font-family: 'Bebas Neue', 'Noto Sans JP', cursive;
+            font-size: 2.8rem;
+            letter-spacing: 0.1em;
+            text-align: center;
+            padding: 0.9rem;
+            border-radius: 0.75rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            margin-bottom: 1rem;
+            -moz-appearance: textfield;
+        }
+        .answer-input::-webkit-inner-spin-button,
+        .answer-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .answer-input:focus {
+            border-color: #185FA5;
+            box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
+        }
+        .answer-input::placeholder { color: #B5D4F4; }
+
+        .btn-answer {
+            width: 100%;
+            background: #185FA5;
+            color: #fff;
+            font-family: 'Bebas Neue', 'Noto Sans JP', cursive;
+            font-size: 1.45rem;
+            letter-spacing: 0.15em;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 3px 12px rgba(24,95,165,0.3);
+        }
+        .btn-answer:hover { background: #0C447C; transform: translateY(-1px); }
+        .btn-answer:active { transform: scale(0.97); }
+
+        /* ===== 結果画面 ===== */
+        .result-score-wrap {
+            text-align: center;
+            margin-bottom: 1.25rem;
+            background: #EDE8DF;
+            border-radius: 0.85rem;
+            padding: 1.5rem 1rem;
+            border: 0.5px solid #ddd;
+        }
+        .result-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+        .result-score-big {
+            font-family: 'Bebas Neue', 'Noto Sans JP', cursive;
+            font-size: 5.5rem;
+            line-height: 1;
+            color: #185FA5;
+        }
+        .result-score-total {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #555;
+            margin-top: 0.2rem;
+        }
+        .result-time-badge {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #B5D4F4;
+            border-radius: 999px;
+            padding: 0.3rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #555;
+            margin-top: 0.65rem;
+        }
+
+        /* ===== フィードバックボックス ===== */
+        .feedback-box {
+            background: #FFF8EC;       /* スペック§9 警告・注意バナー背景 */
+            border: 1px solid #E8C97A; /* スペック§9 警告・注意バナーボーダー */
+            border-radius: 0.75rem;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #7A5500;
+            line-height: 1.7;
+        }
+        .feedback-tag {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #E67E22;
+            margin-bottom: 0.35rem;
+        }
+
+        /* ===== スコアカラー ===== */
+        .score-perfect { color: #27AE60 !important; } /* 全問正解：緑 */
+        .score-good    { color: #185FA5 !important; } /* 7問以上：ブルー */
+        .score-low     { color: #C0392B !important; } /* それ以下：赤 */
+
+        /* ===== 正解フラッシュ ===== */
+        @keyframes correctFlash {
+            0%   { background: #E6F1FB; }
+            100% { background: #EDE8DF; }
+        }
+        .correct-flash { animation: correctFlash 0.4s ease forwards; }
+
+        /* ===== ユーティリティ ===== */
+        .hidden { display: none !important; }
+        .section-gap { margin-bottom: 1.1rem; }
+        .fade-in { animation: fadeUp 0.3s ease both; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 文字拡大バー（スペック§2-A sticky型・bodyタグ直後） -->
+<div id="font-size-bar">
+    <span>文字サイズ：</span>
+    <button class="fsz-btn active" onclick="setFsz(100, this)">100%</button>
+    <button class="fsz-btn" onclick="setFsz(120, this)">120%</button>
+    <button class="fsz-btn" onclick="setFsz(140, this)">140%</button>
+    <button class="fsz-btn" onclick="setFsz(160, this)">160%</button>
+</div>
+<script>
+function setFsz(pct, btn){
+    document.documentElement.style.fontSize = (14 * pct / 100) + 'px';
+    document.querySelectorAll('.fsz-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+</script>
+
+<div class="page-wrap">
+<div class="app-container">
+
+    <!-- ロゴ・サイト名 -->
+    <div class="logo-header">
+        <div class="logo-main">チャレンジ！計算力</div>
+        <div class="logo-sub">Math Speed Challenge</div>
+        <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener" class="site-link">終活人.jp</a>
+    </div>
+
+    <!-- ================= ホーム画面 ================= -->
+    <div id="home-screen" class="card fade-in">
+
+        <div class="section-gap">
+            <div class="section-label">▶ コースを選択</div>
+            <select id="mode-select" class="mode-select">
+                <option value="add">足し算のみ</option>
+                <option value="add_sub">足し算・引き算</option>
+                <option value="add_sub_mul">足し算・引き算・掛け算</option>
+                <option value="all">四則演算（足・引・掛・割）</option>
+            </select>
+        </div>
+
+        <div class="section-gap">
+            <div class="section-label">▶ 難易度</div>
+            <div class="diff-grid">
+                <label class="diff-label">
+                    <input type="radio" name="difficulty" value="easy" checked>
+                    <div class="diff-btn" data-diff="easy">初級</div>
+                </label>
+                <label class="diff-label">
+                    <input type="radio" name="difficulty" value="normal">
+                    <div class="diff-btn" data-diff="normal">中級</div>
+                </label>
+                <label class="diff-label">
+                    <input type="radio" name="difficulty" value="hard">
+                    <div class="diff-btn" data-diff="hard">上級</div>
+                </label>
+            </div>
+        </div>
+
+        <button class="btn-primary" onclick="startGame()">START !</button>
+
+        <!-- localStorage保存注意書き（スペック§6） -->
+        <p class="data-notice">
+            ※記録データはお使いのブラウザ内にのみ保存されます。<br>
+            不要な場合はブラウザの履歴・サイトデータを削除してください。<br>
+            意図せず外部へ送信されることはありません。
+        </p>
+
+        <div class="history-wrap">
+            <div class="section-label" style="margin-bottom:0.55rem;">▶ 最近の記録</div>
+            <div id="history-container">
+                <p class="history-empty">まだ記録がありません。<br>さっそくスタートしよう！</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= ゲーム画面 ================= -->
+    <div id="game-screen" class="card hidden fade-in">
+
+        <div class="game-header">
+            <button class="btn-secondary" onclick="goHome()">← やめる</button>
+            <div id="progress-text" class="progress-badge">1 / 10</div>
+        </div>
+
+        <div class="progress-bar-wrap">
+            <div id="progress-bar" class="progress-bar-fill" style="width:0%"></div>
+        </div>
+
+        <div class="question-display" id="question-block">
+            <div class="question-num-label">問題</div>
+            <div id="question-text" class="question-text">12 + 34 =</div>
+        </div>
+
+        <form onsubmit="event.preventDefault(); submitAnswer();">
+            <input
+                type="number"
+                id="answer-input"
+                class="answer-input"
+                placeholder="?"
+                inputmode="numeric"
+                autocomplete="off"
+                required
+            >
+            <button type="submit" class="btn-answer">答える</button>
+        </form>
+
+    </div>
+
+    <!-- ================= 結果画面 ================= -->
+    <div id="result-screen" class="card hidden fade-in">
+
+        <div class="result-score-wrap">
+            <div class="result-label">Your Score</div>
+            <div id="score-text" class="result-score-big">10</div>
+            <div id="score-total" class="result-score-total">/ 10問正解</div>
+            <div id="time-text" class="result-time-badge">⏱ クリアタイム: 45.2 秒</div>
+        </div>
+
+        <div class="feedback-box">
+            <span class="feedback-tag">Comment</span>
+            <span id="feedback-message">素晴らしい！全問正解です🎉</span>
+        </div>
+
+        <button class="btn-home" onclick="goHome()">ホームに戻る</button>
+
+    </div>
+
+</div><!-- /.app-container -->
+</div><!-- /.page-wrap -->
+
+<!-- フッター（スペック§3） -->
+<footer style="
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+    padding: 20px 16px;
+    text-align: center;
+    margin-top: 2rem;
+">
+    <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener"
+       style="display:inline-block;font-weight:700;font-size:14px;color:#1f2937;
+              text-decoration:none;margin-bottom:8px;letter-spacing:.04em;">
+        終活人.jp
+    </a>
+    <p style="font-size:12px;color:#64748b;line-height:1.8;margin:0;">
+        © 終活人.jp ／ 無断転載・商用利用禁止 ／ 本ツールの著作権は終活人.jpに帰属します
+    </p>
+</footer>
+
+<script>
+    // --- 状態 ---
+    let currentMode = 'add';
+    let currentDifficulty = 'easy';
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let startTime = 0;
+    let questions = [];
+    const TOTAL = 10;
+
+    window.onload = () => { updateHistoryDisplay(); };
+
+    function rand(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    function show(id) { document.getElementById(id).classList.remove('hidden'); }
+    function hide(id) { document.getElementById(id).classList.add('hidden'); }
+
+    function generateQuestion(mode, diff) {
+        let ops = [];
+        if (mode === 'add')         ops = ['+'];
+        if (mode === 'add_sub')     ops = ['+', '-'];
+        if (mode === 'add_sub_mul') ops = ['+', '-', '*'];
+        if (mode === 'all')         ops = ['+', '-', '*', '/'];
+
+        const op = ops[Math.floor(Math.random() * ops.length)];
+        let a, b, answer;
+
+        if (op === '+') {
+            if (diff === 'easy')        { a = rand(1,9);    b = rand(1,9); }
+            else if (diff === 'normal') { a = rand(10,99);  b = rand(10,99); }
+            else                        { a = rand(100,999); b = rand(100,999); }
+            answer = a + b;
+        } else if (op === '-') {
+            if (diff === 'easy')        { a = rand(1,9);    b = rand(1,9); }
+            else if (diff === 'normal') { a = rand(10,99);  b = rand(10,99); }
+            else                        { a = rand(100,999); b = rand(100,999); }
+            if (a < b) { let t=a; a=b; b=t; }
+            answer = a - b;
+        } else if (op === '*') {
+            if (diff === 'easy')        { a = rand(1,9);   b = rand(1,9); }
+            else if (diff === 'normal') { a = rand(10,99); b = rand(2,9); }
+            else                        { a = rand(10,99); b = rand(10,99); }
+            answer = a * b;
+        } else {
+            let x, y;
+            if (diff === 'easy')        { x = rand(1,9);   y = rand(1,9); }
+            else if (diff === 'normal') { x = rand(10,99); y = rand(2,9); }
+            else                        { x = rand(10,99); y = rand(10,99); }
+            a = x * y; b = y; answer = x;
+        }
+
+        const sym = op === '*' ? '×' : (op === '/' ? '÷' : op);
+        return { text: `${a} ${sym} ${b} =`, answer };
+    }
+
+    function startGame() {
+        currentMode = document.getElementById('mode-select').value;
+        currentDifficulty = document.querySelector('input[name="difficulty"]:checked').value;
+        questions = [];
+        for (let i = 0; i < TOTAL; i++) questions.push(generateQuestion(currentMode, currentDifficulty));
+        currentQuestionIndex = 0;
+        score = 0;
+        startTime = Date.now();
+        hide('home-screen');
+        show('game-screen');
+        showNextQuestion();
+    }
+
+    function showNextQuestion() {
+        const q = questions[currentQuestionIndex];
+        document.getElementById('progress-text').textContent = `${currentQuestionIndex + 1} / ${TOTAL}`;
+        document.getElementById('progress-bar').style.width = `${(currentQuestionIndex / TOTAL) * 100}%`;
+        document.getElementById('question-text').textContent = q.text;
+        const input = document.getElementById('answer-input');
+        input.value = '';
+        setTimeout(() => { input.focus(); }, 50);
+    }
+
+    function submitAnswer() {
+        const input = document.getElementById('answer-input');
+        const val = parseInt(input.value, 10);
+        if (isNaN(val)) return;
+        if (val === questions[currentQuestionIndex].answer) {
+            score++;
+            const block = document.getElementById('question-block');
+            block.classList.remove('correct-flash');
+            void block.offsetWidth;
+            block.classList.add('correct-flash');
+        }
+        currentQuestionIndex++;
+        if (currentQuestionIndex < TOTAL) {
+            showNextQuestion();
+        } else {
+            finishGame();
+        }
+    }
+
+    function finishGame() {
+        const timeTaken = ((Date.now() - startTime) / 1000).toFixed(1);
+        const msg = saveAndCompareResult(currentMode, currentDifficulty, score, parseFloat(timeTaken));
+        const scoreEl = document.getElementById('score-text');
+        scoreEl.textContent = score;
+        scoreEl.className = 'result-score-big';
+        if (score === TOTAL)  scoreEl.classList.add('score-perfect');
+        else if (score >= 7)  scoreEl.classList.add('score-good');
+        else                  scoreEl.classList.add('score-low');
+        document.getElementById('score-total').textContent = `/ ${TOTAL}問正解`;
+        document.getElementById('time-text').textContent = `⏱ クリアタイム: ${timeTaken} 秒`;
+        document.getElementById('feedback-message').innerHTML = msg;
+        document.getElementById('progress-bar').style.width = '100%';
+        hide('game-screen');
+        show('result-screen');
+    }
+
+    function goHome() {
+        updateHistoryDisplay();
+        hide('result-screen');
+        hide('game-screen');
+        show('home-screen');
+    }
+
+    function saveAndCompareResult(mode, difficulty, newScore, timeTaken) {
+        const today = new Date().toLocaleDateString('ja-JP');
+        const key = `${mode}|${difficulty}`;
+        let db = JSON.parse(localStorage.getItem('keisanryoku_db')) || {};
+        if (!db[key]) db[key] = {};
+        const history = db[key];
+        const dates = Object.keys(history).filter(d => d !== today).sort((a,b) => new Date(b) - new Date(a));
+        const lastDate = dates.length > 0 ? dates[0] : null;
+        let message = '';
+        if (lastDate) {
+            const last = history[lastDate];
+            if (newScore > last.bestScore) {
+                message = '🎉 記録更新！<br>前回より正解数が増えました。確実に力がついています！';
+            } else if (newScore === last.bestScore) {
+                message = timeTaken < last.bestTime
+                    ? '⚡ スピードアップ！<br>同じ正解数でも、前回より速くクリアしました！'
+                    : '👏 安定した成績！<br>毎日続けることが計算力の源です。';
+            } else {
+                message = '💪 惜しい！<br>今日は少し難しかったかも。明日また挑戦してみよう！';
+            }
+        } else {
+            message = '🌟 このコースの初記録！<br>明日は今日の自分を超えましょう！';
+        }
+        if (!history[today]) {
+            history[today] = { bestScore: newScore, bestTime: timeTaken };
+        } else {
+            if (newScore > history[today].bestScore ||
+               (newScore === history[today].bestScore && timeTaken < history[today].bestTime)) {
+                history[today] = { bestScore: newScore, bestTime: timeTaken };
+                if (lastDate) message = '🔥 今日の自己ベスト更新！<br>この集中力、すごい！';
+            }
+        }
+        db[key] = history;
+        localStorage.setItem('keisanryoku_db', JSON.stringify(db));
+        return message;
+    }
+
+    function updateHistoryDisplay() {
+        const modeNames = { add:'足し算', add_sub:'足・引', add_sub_mul:'足・引・掛', all:'四則演算' };
+        const diffNames  = { easy:'初級', normal:'中級', hard:'上級' };
+        let db = JSON.parse(localStorage.getItem('keisanryoku_db')) || {};
+        let records = [];
+        for (const key in db) {
+            const [m, d] = key.split('|');
+            for (const date in db[key]) {
+                records.push({
+                    date, ts: new Date(date).getTime(),
+                    mode: modeNames[m] || m, diff: diffNames[d] || d,
+                    score: db[key][date].bestScore, time: db[key][date].bestTime
+                });
+            }
+        }
+        records.sort((a,b) => b.ts - a.ts);
+        const container = document.getElementById('history-container');
+        if (records.length === 0) {
+            container.innerHTML = `<p class="history-empty">まだ記録がありません。<br>さっそくスタートしよう！</p>`;
+            return;
+        }
+        let html = '';
+        records.slice(0, 3).forEach(r => {
+            html += `
+            <div class="history-item">
+                <div>
+                    <div class="history-meta">${r.date}</div>
+                    <div><span class="history-tag">${r.mode} / ${r.diff}</span></div>
+                </div>
+                <div style="text-align:right;">
+                    <div class="history-score">${r.score}<span style="font-family:'Noto Sans JP',sans-serif;font-size:0.75rem;font-weight:700;color:#888"> 問</span></div>
+                    <div class="history-time">${r.time} 秒</div>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+    }
+</script>
+
+</body>
+</html>
