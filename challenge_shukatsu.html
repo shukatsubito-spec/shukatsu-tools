@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>チャレンジ！終活｜10のテーマをクリアしていこう</title>
+<title>チャレンジ！終活｜10のテーマを解決していこう</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Shippori+Mincho:wght@700&display=swap');
 
@@ -15,16 +15,33 @@
   padding: 6px 14px;
   display: flex; justify-content: center; align-items: center; gap: 8px;
   backdrop-filter: blur(4px);
+  font-size: 11px !important; /* 拡大率に関係なく固定 */
 }
-#font-size-bar span { font-size: 0.75rem; color: #64748b; margin-right: 2px; }
+#font-size-bar span { font-size: 11px !important; color: #64748b; margin-right: 2px; }
 .fsz-btn {
   border: 1px solid #B5D4F4; background: #fff; color: #185FA5;
-  border-radius: 6px; padding: 4px 10px; font-size: 0.75rem;
+  border-radius: 6px; padding: 4px 10px; font-size: 11px !important;
   cursor: pointer; font-family: inherit; font-weight: 700;
   transition: all .15s;
 }
 .fsz-btn:hover { background: #E6F1FB; }
 .fsz-btn.active { background: #185FA5; color: #fff; border-color: #185FA5; }
+.site-name-bar {
+  font-size: 11px !important;
+  font-weight: 700;
+  color: #185FA5;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.fsz-divider { color: #cbd5e1; font-size: 11px !important; }
+.fsz-reset-btn {
+  border: 1px solid #fca5a5; background: #fff; color: #dc2626;
+  border-radius: 6px; padding: 4px 10px; font-size: 11px !important;
+  cursor: pointer; font-family: inherit; font-weight: 700;
+  white-space: nowrap;
+  transition: all .15s;
+}
+.fsz-reset-btn:hover { background: #fef2f2; }
 
 :root {
   --ink: #1a1a2e;
@@ -512,10 +529,14 @@ body {
 
 <!-- 文字拡大バー -->
 <div id="font-size-bar">
+  <span class="site-name-bar">終活人.jp</span>
+  <span class="fsz-divider">｜</span>
   <span>文字サイズ：</span>
   <button class="fsz-btn active" onclick="setFsz(100, this)">100%</button>
   <button class="fsz-btn" onclick="setFsz(120, this)">120%</button>
   <button class="fsz-btn" onclick="setFsz(140, this)">140%</button>
+  <span class="fsz-divider">｜</span>
+  <button class="fsz-reset-btn" onclick="resetAll()">このページをリセット</button>
 </div>
 <script>
 function setFsz(pct, btn){
@@ -523,15 +544,20 @@ function setFsz(pct, btn){
   document.querySelectorAll('.fsz-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
+function resetAll(){
+  if(!confirm('このページの進捗をすべてリセットします。よろしいですか？')) return;
+  try { localStorage.removeItem('challenge-shukatsu-v1'); } catch(_){}
+  location.reload();
+}
 </script>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">チャレンジ！終活</div>
-  <h1>10のテーマを<br><span>一つずつクリアしていこう</span></h1>
+  <h1>10のテーマを<br><span>一つずつ解決していこう</span></h1>
   <p class="hero-lead">
     終活には正しい順番も、完璧な答えもありません。<br>
-    まず「知る」ことから。10テーマを一つずつクリアして、<br>
+    まず「知る」ことから。10テーマを一つずつ解決して、<br>
     あなたらしい終活の地図を描きましょう。
   </p>
   <div class="overall-progress">
@@ -542,7 +568,7 @@ function setFsz(pct, btn){
     <div class="op-bar-wrap">
       <div class="op-bar" id="opBar"></div>
     </div>
-    <div class="op-checkpoints" id="opCheckpoints">0 / 10 ステージクリア</div>
+    <div class="op-checkpoints" id="opCheckpoints">0 / 10 ステージ解決</div>
   </div>
 </section>
 
@@ -561,7 +587,7 @@ function setFsz(pct, btn){
       </div>
       <div class="intro-step">
         <div class="step-num">3</div>
-        <p>「理解した・確認済み」にチェックを入れてクリア</p>
+        <p>「理解した・確認済み」にチェックを入れて解決</p>
       </div>
     </div>
     <p style="font-size: 0.75rem;color:var(--muted);margin-top:8px;">※一度に全部やる必要はありません。途中で閉じても進捗は保存されます。<br>（進捗データはお使いのPCブラウザ内にのみ保存されます。不要な場合はブラウザの履歴・サイトデータを削除してください。意図せず外部へ送信されることはありません）</p>
@@ -573,7 +599,7 @@ function setFsz(pct, btn){
   <div class="goal-inner">
     <div class="goal-emoji">🏆</div>
     <h2>チャレンジ完了おめでとうございます！</h2>
-    <p>10のテーマをすべてクリアしました。<br>
+    <p>10のテーマをすべて解決しました。<br>
     終活の全体像を把握できたことが、最大の財産です。<br>
     次は「気になるテーマ」の専門家に相談してみましょう。</p>
     <div class="goal-tags" id="goalTags"></div>
@@ -797,7 +823,7 @@ function updateOverallProgress(){
   const pct = Math.round(cleared / total * 100);
   document.getElementById('opBar').style.width = pct + '%';
   document.getElementById('opPercent').textContent = pct + '%';
-  document.getElementById('opCheckpoints').textContent = cleared + ' / ' + total + ' ステージクリア';
+  document.getElementById('opCheckpoints').textContent = cleared + ' / ' + total + ' ステージ解決';
 
   // ゴール
   const banner = document.getElementById('goalBanner');
@@ -918,8 +944,8 @@ function renderStages(){
     clearWrap.className = 'clear-btn-wrap';
     const clearBtn = document.createElement('button');
     clearBtn.className = 'btn-clear-stage';
-    clearBtn.textContent = ss.cleared ? '✅ クリア済み（取消）' : '🏁 このステージをクリアする';
-    clearBtn.disabled = !allChecked && !ss.cleared;
+    clearBtn.textContent = ss.cleared ? '✅ このステージは解決済（☑外しはボタン再押し）' : '🏁 このステージは解決済';
+    clearBtn.disabled = false;
     clearBtn.addEventListener('click', () => toggleClearStage(stage.id));
     clearWrap.appendChild(clearBtn);
     body.appendChild(clearWrap);
@@ -1012,10 +1038,9 @@ window.addEventListener('DOMContentLoaded', () => {
   text-align:center;
   margin-top:0;
 ">
-  <a href="https://www.shukatsubito.jp/" target="_blank" rel="noopener"
-     style="display:inline-block;font-weight:700;font-size: 0.938rem;color:#1a1a2e;text-decoration:none;margin-bottom:8px;letter-spacing:.04em;">
+  <span style="display:inline-block;font-weight:700;font-size:0.938rem;color:#1a1a2e;margin-bottom:8px;letter-spacing:.04em;">
     終活人.jp
-  </a>
+  </span>
   <p style="font-size: 0.75rem;color:#64748b;line-height:1.8;margin:0;">
     © 終活人.jp ／ 無断転載・商用利用禁止 ／ 本ツールの著作権は終活人.jpに帰属します。
   </p>
