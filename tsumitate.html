@@ -181,6 +181,20 @@
         .footer-credit a:hover {
             text-decoration: underline;
         }
+
+        .btn-reset {
+            grid-column: span 2;
+            padding: 15px;
+            background-color: #C62828;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.125em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-reset:hover { background-color: #B71C1C; }
     </style>
 </head>
 <body>
@@ -199,16 +213,17 @@
     <div class="input-group">
         <div class="control">
             <label>毎月の積立額 (1,000〜100,000円)</label>
-            <input type="text" id="monthlyAmount" value="10,000" onblur="formatCurrency(this)">
+            <input type="text" id="monthlyAmount" value="" onblur="formatCurrency(this)">
         </div>
         <div class="control">
             <label>想定利回り (1.0〜15.0%)</label>
-            <input type="number" id="annualRate" value="3.0" min="1" max="15" step="0.1">
+            <input type="number" id="annualRate" value="" min="1" max="15" step="0.1">
         </div>
         <div class="control">
             <label>積立期間 (1〜40年)</label>
-            <input type="number" id="years" value="20" min="1" max="40" step="1">
+            <input type="number" id="years" value="" min="1" max="40" step="1">
         </div>
+        <button type="button" class="btn-reset" onclick="resetForm()">リセット</button>
         <button onclick="calculate()">計算する</button>
     </div>
 
@@ -252,11 +267,19 @@
     }
 
     function calculate() {
+        const aVal = document.getElementById('monthlyAmount').value.replace(/,/g,'');
+        const rVal = document.getElementById('annualRate').value;
+        const yVal = document.getElementById('years').value;
+        if (aVal === '' || rVal === '' || yVal === '') {
+            document.getElementById('totalPrincipal').innerText = '- 円';
+            document.getElementById('totalAmount').innerText = '- 円';
+            return;
+        }
         const A = getNumber('monthlyAmount');
         const annualRate = parseFloat(document.getElementById('annualRate').value) / 100;
         const years = parseInt(document.getElementById('years').value);
         
-        const r = annualRate / 12;
+        const r = Math.pow(1 + annualRate, 1/12) - 1; // 年利を正確に月利換算
 
         let labels = [];
         let principalData = [];
@@ -300,7 +323,15 @@
         });
     }
 
-    window.onload = calculate;
+    function resetForm() {
+        document.getElementById('monthlyAmount').value = '';
+        document.getElementById('annualRate').value = '';
+        document.getElementById('years').value = '';
+        document.getElementById('totalPrincipal').innerText = '- 円';
+        document.getElementById('totalAmount').innerText = '- 円';
+    }
+
+    window.onload = resetForm;
 </script>
 
 </body>
